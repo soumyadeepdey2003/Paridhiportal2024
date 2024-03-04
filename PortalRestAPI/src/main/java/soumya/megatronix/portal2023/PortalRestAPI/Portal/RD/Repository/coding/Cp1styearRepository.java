@@ -8,5 +8,5 @@ import java.util.List;
 
 
 public interface Cp1styearRepository extends JpaRepository<Cp1styearModel, Long> {
-    List<CpAllyearModel> findBySelectedcodingevent(String selectedcodingevent);
+    List<Cp1styearModel> findBySelectedcodingevent(String selectedcodingevent);
 }

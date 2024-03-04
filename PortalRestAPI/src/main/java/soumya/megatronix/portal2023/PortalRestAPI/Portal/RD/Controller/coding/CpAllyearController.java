@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.Cp1styearModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.CpAllyearModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Repository.coding.CpAllyearRepository;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Service.coding.CpAllyearService;
@@ -23,9 +22,6 @@ public class CpAllyearController {
     private AsyncTaskExecutor asyncTaskExecutor;
     @Autowired
     private CpAllyearService service;
-
-    @Autowired
-    private CpAllyearRepository repository;
 
     @GetMapping("/allyearcp")
     @Async
@@ -54,7 +50,7 @@ public class CpAllyearController {
     @GetMapping("/allyearcp/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateCpAllyear(@RequestParam("gid") String gid) {
-        return service.chackgid(gid).thenApply(savedMember -> {
+        return service.checkgid(gid).thenApply(savedMember -> {
             if (savedMember != null && savedMember.getGid() != null) {
                 return ResponseEntity.ok().body(savedMember.getName());
             } else {

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.Cp1styearModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.WebModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Repository.coding.WebRepository;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Service.coding.WebService;
@@ -24,9 +23,6 @@ public class WebController {
 
     @Autowired
     private WebService service;
-
-    @Autowired
-    private WebRepository repository;
 
     @GetMapping("/web")
     @Async
@@ -55,7 +51,7 @@ public class WebController {
     @GetMapping("/web/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateWeb(@RequestParam("gid") String gid) {
-        return service.chackgid(gid).thenApply(savedMember -> {
+        return service.checkgid(gid).thenApply(savedMember -> {
             if (savedMember != null && savedMember.getGid() != null) {
                 return ResponseEntity.ok().body(savedMember.getName());
             } else {

@@ -24,9 +24,6 @@ public class Cp1styearController {
     @Autowired
     private Cp1styearService service;
 
-    @Autowired
-    private Cp1styearRepository repository;
-
     @GetMapping("/1styearcp")
     @Async
     public CompletableFuture<ResponseEntity<Cp1styearModel>> Cp1styearForm() {
@@ -55,7 +52,7 @@ public class Cp1styearController {
     @GetMapping("/1styearcp/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateCp1styear(@RequestParam("gid") String gid) {
-         return service.chackgid(gid).thenApply(savedMember -> {
+         return service.checkgid(gid).thenApply(savedMember -> {
              if (savedMember != null && savedMember.getGid() != null) {
                  return ResponseEntity.ok().body(savedMember.getName());
              } else {

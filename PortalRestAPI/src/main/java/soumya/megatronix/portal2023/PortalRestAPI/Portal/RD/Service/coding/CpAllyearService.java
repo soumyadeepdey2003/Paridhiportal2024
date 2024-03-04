@@ -5,7 +5,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Model.MrdModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Repository.MrdRepository;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.Cp1styearModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.CpAllyearModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Repository.coding.CpAllyearRepository;
 
@@ -37,37 +36,34 @@ public class CpAllyearService {
                         (member.getGid2() != null && member.getGid2().equals(i.getGid2()) ) ||
                         (member.getGid2() != null && member.getGid2().equals(i.getGid1()) )
                 ) {
-                    throw new RuntimeException("gid  already exists.");
+                    throw new RuntimeException("GID already exists.");
                 }
             }
             if(
-                    member.getGid1().equals(member.getGid2()) ||
-                            (member.getGid2()!=null && member.getGid2().equals(member.getGid1()))
-
-
+                member.getGid1().equals(member.getGid2()) ||
+                    (member.getGid2()!=null && member.getGid2().equals(member.getGid1()))
             ){
-                throw new RuntimeException("gid  already exists.");
-            }
-            else {
+                throw new RuntimeException("GID already exists.");
+            } else {
                 return CompletableFuture.completedFuture(coding.save(member));
             }
         }
-        throw new RuntimeException("gid  not present");
+        throw new RuntimeException("GID not present");
     }
 
     @Async
-    public CompletableFuture<MrdModel> chackgid(String gid) {
+    public CompletableFuture<MrdModel> checkgid(String gid) {
         MrdModel cp = repo.getModelByGid(gid);
         if (cp != null) {
             for (CpAllyearModel i : coding.findAll()) {
                 if (cp.getGid().equals(i.getGid1()) || cp.getGid().equals(i.getGid2())) {
-                    throw new RuntimeException("gid  already exists.");
+                    throw new RuntimeException("GID already exists.");
                 }
             }
 
             return CompletableFuture.completedFuture(cp);
         } else {
-            throw new RuntimeException("gid  not present");
+            throw new RuntimeException("GID not present");
         }
     }
 }
