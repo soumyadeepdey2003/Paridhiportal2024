@@ -51,4 +51,16 @@ public class CpAllyearController {
         }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
+    @GetMapping("/allyearcp/{gid}")
+    @Async
+    public CompletableFuture<ResponseEntity<?>> validateCpAllyear(@RequestParam("gid") String gid) {
+        return service.chackgid(gid).thenApply(savedMember -> {
+            if (savedMember != null && savedMember.getGid() != null) {
+                return ResponseEntity.ok().body(savedMember.getName());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+    }
+
 }

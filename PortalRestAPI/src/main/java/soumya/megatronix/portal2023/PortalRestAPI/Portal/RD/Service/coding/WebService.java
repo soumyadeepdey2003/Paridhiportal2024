@@ -55,4 +55,19 @@ public class WebService {
         throw new RuntimeException("gid  not present");
     }
 
+    @Async
+    public CompletableFuture<MrdModel> chackgid(String gid) {
+        MrdModel cp = repo.getModelByGid(gid);
+        if (cp != null) {
+            for (WebModel i : coding.findAll()) {
+                if (cp.getGid().equals(i.getGid1()) || cp.getGid().equals(i.getGid2())) {
+                    throw new RuntimeException("gid  already exists.");
+                }
+            }
+
+            return CompletableFuture.completedFuture(cp);
+        } else {
+            throw new RuntimeException("gid  not present");
+        }
+    }
 }

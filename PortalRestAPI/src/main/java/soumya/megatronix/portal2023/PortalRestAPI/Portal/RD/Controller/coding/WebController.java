@@ -51,4 +51,16 @@ public class WebController {
             }
         }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
+
+    @GetMapping("/web/{gid}")
+    @Async
+    public CompletableFuture<ResponseEntity<?>> validateWeb(@RequestParam("gid") String gid) {
+        return service.chackgid(gid).thenApply(savedMember -> {
+            if (savedMember != null && savedMember.getGid() != null) {
+                return ResponseEntity.ok().body(savedMember.getName());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+    }
 }

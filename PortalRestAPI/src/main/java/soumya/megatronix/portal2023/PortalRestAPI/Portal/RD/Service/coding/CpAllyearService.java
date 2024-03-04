@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Model.MrdModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Repository.MrdRepository;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.Cp1styearModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.CpAllyearModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Repository.coding.CpAllyearRepository;
 
@@ -54,4 +55,19 @@ public class CpAllyearService {
         throw new RuntimeException("gid  not present");
     }
 
+    @Async
+    public CompletableFuture<MrdModel> chackgid(String gid) {
+        MrdModel cp = repo.getModelByGid(gid);
+        if (cp != null) {
+            for (CpAllyearModel i : coding.findAll()) {
+                if (cp.getGid().equals(i.getGid1()) || cp.getGid().equals(i.getGid2())) {
+                    throw new RuntimeException("gid  already exists.");
+                }
+            }
+
+            return CompletableFuture.completedFuture(cp);
+        } else {
+            throw new RuntimeException("gid  not present");
+        }
+    }
 }

@@ -51,4 +51,16 @@ public class Cp1styearController {
          }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
 
     }
+
+    @GetMapping("/1styearcp/{gid}")
+    @Async
+    public CompletableFuture<ResponseEntity<?>> validateCp1styear(@RequestParam("gid") String gid) {
+         return service.chackgid(gid).thenApply(savedMember -> {
+             if (savedMember != null && savedMember.getGid() != null) {
+                 return ResponseEntity.ok().body(savedMember.getName());
+             } else {
+                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+             }
+         }) .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+    }
 }
