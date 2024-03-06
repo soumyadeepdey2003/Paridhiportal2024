@@ -23,13 +23,13 @@ public class WebService {
 
     @Async
     public CompletableFuture<WebModel> webRd(WebModel member) {
-        Optional<MrdModel> gid1 = repo.findById(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findById);
+        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
 
         if (gid1.isPresent() &&
                 (gid2.isPresent() || member.getGid2() == null)) {
-            List<CpAllyearModel> list = coding.findBySelectedcodingevent(member.getSelectedcodingevent());
-            for (CpAllyearModel i : list) {
+            List<WebModel> list = coding.findBySelectedcodingevent(member.getSelectedcodingevent());
+            for (WebModel i : list) {
                 if (member.getGid1().equals(i.getGid1()) ||
                         member.getGid1().equals(i.getGid2()) ||
                         member.getGid1().equals(member.getGid2())||
@@ -49,7 +49,10 @@ public class WebService {
                 throw new RuntimeException("gid  already exists.");
             }
             else {
-                return CompletableFuture.completedFuture(coding.save(member));
+                CompletableFuture<WebModel> web=CompletableFuture.completedFuture(coding.save(member));
+                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
+                coding.save(member);
+                return web;
             }
         }
         throw new RuntimeException("gid  not present");

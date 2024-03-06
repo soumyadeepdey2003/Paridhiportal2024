@@ -23,8 +23,8 @@ public class CpAllyearService {
 
     @Async
     public CompletableFuture<CpAllyearModel> CpAllyearRd(CpAllyearModel member) {
-        Optional<MrdModel> gid1 = repo.findById(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findById);
+        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
 
         if (gid1.isPresent() &&
                 (gid2.isPresent() || member.getGid2() == null)) {
@@ -49,7 +49,10 @@ public class CpAllyearService {
                 throw new RuntimeException("gid  already exists.");
             }
             else {
-                return CompletableFuture.completedFuture(coding.save(member));
+                CompletableFuture<CpAllyearModel> cpall=CompletableFuture.completedFuture(coding.save(member));
+                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
+                coding.save(member);
+                return cpall;
             }
         }
         throw new RuntimeException("gid  not present");

@@ -16,4 +16,6 @@ public class TrackOTeasureModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String gid1;
+
 }

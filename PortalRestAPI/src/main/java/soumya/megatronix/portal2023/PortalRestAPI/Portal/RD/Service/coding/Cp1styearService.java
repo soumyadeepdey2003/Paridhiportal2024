@@ -24,13 +24,13 @@ public class Cp1styearService {
     private MrdRepository repo;
     @Async
     public CompletableFuture<Cp1styearModel> Cp1styearRd(Cp1styearModel member) {
-        Optional<MrdModel> gid1 = repo.findById(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findById);
+        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
 
         if (gid1.isPresent() &&
                 (gid2.isPresent() || member.getGid2() == null)) {
-            List<CpAllyearModel> list = coding.findBySelectedcodingevent(member.getSelectedcodingevent());
-            for (CpAllyearModel i : list) {
+            List<Cp1styearModel> list = coding.findBySelectedcodingevent(member.getSelectedcodingevent());
+            for (Cp1styearModel i : list) {
                 if (member.getGid1().equals(i.getGid1()) ||
                         member.getGid1().equals(i.getGid2()) ||
                         member.getGid1().equals(member.getGid2())||
@@ -50,7 +50,10 @@ public class Cp1styearService {
                 throw new RuntimeException("gid  already exists.");
             }
             else {
-                return CompletableFuture.completedFuture(coding.save(member));
+                CompletableFuture<Cp1styearModel> cp1st=CompletableFuture.completedFuture(coding.save(member));
+                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
+                coding.save(member);
+                return cp1st;
             }
         }
         throw new RuntimeException("gid  not present");
