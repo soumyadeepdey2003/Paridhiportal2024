@@ -23,11 +23,11 @@ public class SetuBandhanService {
 
   @Async
   public CompletableFuture<SetuBandhanModel> setuBandhanRd(SetuBandhanModel member) {
-    Optional<MrdModel> gid1 = repo.findById(member.getGid1());
-    Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findById);
-    Optional<MrdModel> gid3 = Optional.ofNullable(member.getGid3()).flatMap(repo::findById);
-    Optional<MrdModel> gid4 = Optional.ofNullable(member.getGid4()).flatMap(repo::findById);
-    Optional<MrdModel> gid5 = Optional.ofNullable(member.getGid5()).flatMap(repo::findById);
+    Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+    Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
+    Optional<MrdModel> gid3 = Optional.ofNullable(member.getGid3()).flatMap(repo::findByGid);
+    Optional<MrdModel> gid4 = Optional.ofNullable(member.getGid4()).flatMap(repo::findByGid);
+    Optional<MrdModel> gid5 = Optional.ofNullable(member.getGid5()).flatMap(repo::findByGid);
     if ( gid1.isPresent() &&
         (gid2.isPresent() || member.getGid2() == null )&&
         (gid3.isPresent() || member.getGid3() == null)  &&
@@ -138,7 +138,10 @@ public class SetuBandhanService {
       )
         throw new RuntimeException("GID already exists");
       else {
-        return CompletableFuture.completedFuture(civil.save(member));
+        CompletableFuture<SetuBandhanModel> setuBandhan = CompletableFuture.completedFuture(civil.save(member));
+        member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
+        civil.save(member);
+        return setuBandhan;
       }
     }
     throw new RuntimeException("GID not present");

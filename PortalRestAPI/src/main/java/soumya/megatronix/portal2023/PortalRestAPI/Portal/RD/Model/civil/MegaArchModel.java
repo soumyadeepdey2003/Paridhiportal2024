@@ -13,49 +13,37 @@ import org.springframework.scheduling.annotation.Async;
 @NoArgsConstructor
 @Async
 public class MegaArchModel {
+  public MegaArchModel(String gid1, String gid2, String gid3, String gid4, String gid5, String number1){
+      this.gid1=gid1;
+      this.gid2=gid2;
+      this.gid3=gid3;
+      this.gid4=gid4;
+      this.gid5=gid5;
+      this.number1 = number1;
+  }
 
-<<<<<<< HEAD
-    public MegaArchModel(String teamnname, Long gid1, Long gid2, Long gid3, Long gid4, Long gid5, String number1){
-        this.teamname = teamnname;
-=======
-    public MegaArchModel(Long gid1, Long gid2, Long gid3, Long gid4, Long gid5, String number1){
->>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b
-        this.gid1=gid1;
-        this.gid2=gid2;
-        this.gid3=gid3;
-        this.gid4=gid4;
-        this.gid5=gid5;
-        this.number1 = number1;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Column(name = "selectedcivilevent" )
+  private  String selectedcivilevent = "Mega Arch";
 
-<<<<<<< HEAD
-    @Column(nullable = true)
-    private String teamname;
-=======
->>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b
+  private String gid1;
 
-    @Column(name = "selectedcivilevent" )
-    private  String selectedcivilevent = "Mega Arch";
+  @Column(nullable = true)
+  private String gid2;
 
-    private Long gid1;
+  @Column(nullable = true)
+  private String gid3;
 
-    @Column(nullable = true)
-    private Long gid2;
+  @Column(nullable = true)
+  private String gid4;
 
-    @Column(nullable = true)
-    private Long gid3;
+  @Column(nullable = true)
+  private String gid5;
 
-    @Column(nullable = true)
-    private Long gid4;
-
-    @Column(nullable = true)
-    private Long gid5;
-
-    private String number1;
-    private String tid="paridhi"+id+"2002"+id+"05202024";
-    private boolean played=false;
+  private String number1;
+  private String tid;
+  private boolean played=false;
 }

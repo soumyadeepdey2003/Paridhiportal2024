@@ -50,13 +50,13 @@ public class SetuBandhanController {
 
   @GetMapping("/setuBandhan/{gid}")
   @Async
-  public CompletableFuture<ResponseEntity<?>> validateSetuBandhan(@RequestParam("gid") String gid) {
+  public CompletableFuture<ResponseEntity<?>> validateSetuBandhan(@PathVariable("gid") String gid) {
     return service.checkgid(gid).thenApply(savedMember -> {
       if (savedMember != null && savedMember.getGid() != null) {
         return ResponseEntity.ok().body(savedMember.getName());
       } else {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
       }
-    }) .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+    }) .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage()));
   }
 }

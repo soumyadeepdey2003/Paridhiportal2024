@@ -14,8 +14,7 @@ import org.springframework.scheduling.annotation.Async;
 @Async
 public class SetuBandhanModel {
 
-    public SetuBandhanModel(String teamnname, Long gid1, Long gid2, Long gid3, Long gid4, Long gid5, String number1){
-        this.teamname = teamnname;
+    public SetuBandhanModel(String gid1, String gid2, String gid3, String gid4, String gid5, String number1){
         this.gid1=gid1;
         this.gid2=gid2;
         this.gid3=gid3;
@@ -28,27 +27,24 @@ public class SetuBandhanModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true)
-    private String teamname;
-
     @Column(name = "selectedcivilevent" )
     private  String selectedcivilevent = "Setu Bandhan";
 
-    private Long gid1;
+    private String gid1;
 
     @Column(nullable = true)
-    private Long gid2;
+    private String gid2;
 
     @Column(nullable = true)
-    private Long gid3;
+    private String gid3;
 
     @Column(nullable = true)
-    private Long gid4;
+    private String gid4;
 
     @Column(nullable = true)
-    private Long gid5;
+    private String gid5;
 
     private String number1;
-    private String tid="paridhi"+id+"2002"+id+"05202024";
+    private String tid;
     private boolean played=false;
 }

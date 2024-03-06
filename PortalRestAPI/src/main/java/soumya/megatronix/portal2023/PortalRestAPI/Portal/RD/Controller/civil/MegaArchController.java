@@ -17,89 +17,44 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/paridhi/event/civil")
 public class MegaArchController {
 
-<<<<<<< HEAD
   @Autowired
   private AsyncTaskExecutor asyncTaskExecutor;
 
   @Autowired
   private MegaArchService service;
-
   @GetMapping("/megaArch")
   @Async
   public CompletableFuture<ResponseEntity<MegaArchModel>> megaArchForm() {
-    CompletableFuture<MegaArchModel> future = CompletableFuture.supplyAsync(() -> {
-      // Here you can perform any necessary processing to prepare your data
-      MegaArchModel user = new MegaArchModel();
-      return user;
-    }, asyncTaskExecutor);
-    return future.thenApply(result -> ResponseEntity.ok().body(result))
-        .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+      CompletableFuture<MegaArchModel> future = CompletableFuture.supplyAsync(() -> {
+          // Here you can perform any necessary processing to prepare your data
+          MegaArchModel user = new MegaArchModel();
+          return user;
+      }, asyncTaskExecutor);
+      return future.thenApply(result -> ResponseEntity.ok().body(result))
+              .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
   }
 
   @PostMapping("/megaArch")
   @Async
   public CompletableFuture<ResponseEntity<?>> megaArchMember(@RequestBody MegaArchModel member) {
-    return service.MegaArchRd(member).thenApply(savedMember -> {
-      if (savedMember != null && savedMember.getTid() != null) {
-        return ResponseEntity.ok().body(savedMember.getTid());
-      } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-      }
-    }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+      return service.MegaArchRd(member).thenApply(savedMember -> {
+          if (savedMember != null && savedMember.getTid() != null) {
+              return ResponseEntity.ok().body(savedMember.getTid());
+          } else {
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+          }
+      }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
   }
 
   @GetMapping("/megaArch/{gid}")
   @Async
-  public CompletableFuture<ResponseEntity<?>> validateMegaArch(@RequestParam("gid") String gid) {
-    return service.checkgid(gid).thenApply(savedMember -> {
-      if (savedMember != null && savedMember.getGid() != null) {
-        return ResponseEntity.ok().body(savedMember.getName());
-      } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-      }
-    }) .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+  public CompletableFuture<ResponseEntity<?>> validateMegaArch(@PathVariable("gid") String gid) {
+      return service.checkgid(gid).thenApply(savedMember -> {
+          if (savedMember != null && savedMember.getGid() != null) {
+              return ResponseEntity.ok().body(savedMember.getName());
+          } else {
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+          }
+      }) .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage()));
   }
 }
-=======
-    @Autowired
-    private AsyncTaskExecutor asyncTaskExecutor;
-
-    @Autowired
-    private MegaArchService service;
-    @GetMapping("/megaArch")
-    @Async
-    public CompletableFuture<ResponseEntity<MegaArchModel>> megaArchForm() {
-        CompletableFuture<MegaArchModel> future = CompletableFuture.supplyAsync(() -> {
-            // Here you can perform any necessary processing to prepare your data
-            MegaArchModel user = new MegaArchModel();
-            return user;
-        }, asyncTaskExecutor);
-        return future.thenApply(result -> ResponseEntity.ok().body(result))
-                .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
-    }
-
-    @PostMapping("/megaArch")
-    @Async
-    public CompletableFuture<ResponseEntity<?>> megaArchMember(@RequestBody MegaArchModel member) {
-        return service.MegaArchRd(member).thenApply(savedMember -> {
-            if (savedMember != null && savedMember.getTid() != null) {
-                return ResponseEntity.ok().body(savedMember.getTid());
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-        }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
-    }
-
-    @GetMapping("/megaArch/{gid}")
-    @Async
-    public CompletableFuture<ResponseEntity<?>> validateMegaArch(@RequestParam("gid") String gid) {
-        return service.checkgid(gid).thenApply(savedMember -> {
-            if (savedMember != null && savedMember.getGid() != null) {
-                return ResponseEntity.ok().body(savedMember.getName());
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-        }) .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
-    }
-}
->>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b
