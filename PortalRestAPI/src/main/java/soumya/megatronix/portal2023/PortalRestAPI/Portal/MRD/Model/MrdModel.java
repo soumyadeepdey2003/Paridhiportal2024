@@ -58,6 +58,6 @@ public class MrdModel {
     @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid Indian phone number")
     private String phoneNumber;
 
-    private String gid="paridhi200002"+id+"02052"+id+"024";
+    private String gid;
 
 }

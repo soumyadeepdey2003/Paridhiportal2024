@@ -40,7 +40,7 @@ public class MrdController {
                 .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registration")
     @Async
     public CompletableFuture<ResponseEntity<?>> registerMember(@RequestBody MrdModel member) {
 

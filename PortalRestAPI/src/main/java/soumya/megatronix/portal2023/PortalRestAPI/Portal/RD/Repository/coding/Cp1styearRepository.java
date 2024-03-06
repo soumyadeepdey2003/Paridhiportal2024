@@ -9,4 +9,8 @@ import java.util.List;
 
 public interface Cp1styearRepository extends JpaRepository<Cp1styearModel, Long> {
     List<Cp1styearModel> findBySelectedcodingevent(String selectedcodingevent);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b

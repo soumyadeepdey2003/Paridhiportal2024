@@ -27,6 +27,7 @@ public class TrackOTeasureModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+<<<<<<< HEAD
 
     @Column(nullable = true)
     private String teamname;
@@ -52,3 +53,8 @@ public class TrackOTeasureModel {
     private String tid="paridhi"+id+"2002"+id+"05202024";
     private boolean played=false;
 }
+=======
+    private String gid1;
+
+}
+>>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b

@@ -14,8 +14,12 @@ import org.springframework.scheduling.annotation.Async;
 @Async
 public class MegaArchModel {
 
+<<<<<<< HEAD
     public MegaArchModel(String teamnname, Long gid1, Long gid2, Long gid3, Long gid4, Long gid5, String number1){
         this.teamname = teamnname;
+=======
+    public MegaArchModel(Long gid1, Long gid2, Long gid3, Long gid4, Long gid5, String number1){
+>>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b
         this.gid1=gid1;
         this.gid2=gid2;
         this.gid3=gid3;
@@ -28,8 +32,11 @@ public class MegaArchModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+<<<<<<< HEAD
     @Column(nullable = true)
     private String teamname;
+=======
+>>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b
 
     @Column(name = "selectedcivilevent" )
     private  String selectedcivilevent = "Mega Arch";
