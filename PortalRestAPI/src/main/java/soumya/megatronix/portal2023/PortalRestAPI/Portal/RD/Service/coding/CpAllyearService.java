@@ -43,19 +43,13 @@ public class CpAllyearService {
                 member.getGid1().equals(member.getGid2()) ||
                     (member.getGid2()!=null && member.getGid2().equals(member.getGid1()))
             ){
-<<<<<<< HEAD
                 throw new RuntimeException("GID already exists.");
-            } else {
-                return CompletableFuture.completedFuture(coding.save(member));
-=======
-                throw new RuntimeException("gid  already exists.");
             }
             else {
                 CompletableFuture<CpAllyearModel> cpall=CompletableFuture.completedFuture(coding.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 coding.save(member);
                 return cpall;
->>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b
             }
         }
         throw new RuntimeException("GID not present");

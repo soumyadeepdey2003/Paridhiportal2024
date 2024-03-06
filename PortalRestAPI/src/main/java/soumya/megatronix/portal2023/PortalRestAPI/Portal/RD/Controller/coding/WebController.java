@@ -50,13 +50,8 @@ public class WebController {
 
     @GetMapping("/web/{gid}")
     @Async
-<<<<<<< HEAD
-    public CompletableFuture<ResponseEntity<?>> validateWeb(@RequestParam("gid") String gid) {
-        return service.checkgid(gid).thenApply(savedMember -> {
-=======
     public CompletableFuture<ResponseEntity<?>> validateWeb(@PathVariable("gid") String gid) {
-        return service.chackgid(gid).thenApply(savedMember -> {
->>>>>>> 4c2fc980c5f75e44f7f2cf08efc591bdb1ab963b
+        return service.checkgid(gid).thenApply(savedMember -> {
             if (savedMember != null && savedMember.getGid() != null) {
                 return ResponseEntity.ok().body(savedMember.getName());
             } else {
