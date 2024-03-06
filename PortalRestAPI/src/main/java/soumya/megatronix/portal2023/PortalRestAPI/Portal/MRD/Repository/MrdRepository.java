@@ -9,10 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface MrdRepository  extends JpaRepository<MrdModel,Long> {
-
     MrdModel getModelByGid(String gid);
 
     Optional<MrdModel> findByGid(String gid1);
-
-
 }
