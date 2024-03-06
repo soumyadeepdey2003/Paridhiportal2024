@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface WebRepository extends JpaRepository<WebModel, Long> {
-    List<CpAllyearModel> findBySelectedcodingevent(String selectedcodingevent);
+    List<WebModel> findBySelectedcodingevent(String selectedcodingevent);
 }

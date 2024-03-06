@@ -23,51 +23,89 @@ public class WebService {
 
     @Async
     public CompletableFuture<WebModel> webRd(WebModel member) {
-        Optional<MrdModel> gid1 = repo.findById(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findById);
+        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
+        Optional<MrdModel> gid3 = Optional.ofNullable(member.getGid3()).flatMap(repo::findByGid);
 
-        if (gid1.isPresent() &&
-                (gid2.isPresent() || member.getGid2() == null)) {
-            List<CpAllyearModel> list = coding.findBySelectedcodingevent(member.getSelectedcodingevent());
-            for (CpAllyearModel i : list) {
-                if (member.getGid1().equals(i.getGid1()) ||
-                        member.getGid1().equals(i.getGid2()) ||
-                        member.getGid1().equals(member.getGid2())||
-                        (member.getGid2() !=null && member.getGid2().equals(member.getGid1()))||
-                        (member.getGid2() != null && member.getGid2().equals(i.getGid2()) ) ||
-                        (member.getGid2() != null && member.getGid2().equals(i.getGid1()) )
+        if (
+                gid1.isPresent() &&
+                        (gid2.isPresent() || member.getGid2() == null )&&
+                        (gid3.isPresent() || member.getGid3() == null)
+        ) {
+            List<WebModel> list = coding.findAll();
+            for (WebModel i : list) {
+                if (
+                        (
+                                member.getGid1().equals(i.getGid1()) ||
+                                        member.getGid1().equals(i.getGid2()) ||
+                                        member.getGid1().equals(i.getGid3()) ||
+
+                                        member.getGid1().equals(member.getGid2())||
+                                        member.getGid1().equals(member.getGid3())
+                        )||
+                                (
+                                        (member.getGid2() != null &&member.getGid2().equals(i.getGid1())) ||
+                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid2()) )||
+                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid3())) ||
+
+                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid1()))||
+                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid3()))
+                                ) ||
+                                (
+                                        (member.getGid3() != null && member.getGid3().equals(i.getGid3())) ||
+                                                (member.getGid3() != null &&member.getGid3().equals(i.getGid1())) ||
+                                                (member.getGid3() != null &&member.getGid3().equals(i.getGid2()) ) ||
+
+                                                (member.getGid3() != null &&member.getGid3().equals(member.getGid1()))||
+                                                (member.getGid3() != null &&member.getGid3().equals(member.getGid2()))
+                                )
                 ) {
-                    throw new RuntimeException("gid  already exists.");
+                    throw new RuntimeException("GID already exists.");
                 }
             }
-            if(
-                    member.getGid1().equals(member.getGid2()) ||
-                            (member.getGid2()!=null && member.getGid2().equals(member.getGid1()))
-
-
-            ){
-                throw new RuntimeException("gid  already exists.");
+            if (
+                    (
+                            member.getGid1().equals(member.getGid2())||
+                                    member.getGid1().equals(member.getGid3())
+                    )||
+                            (
+                                    member.getGid2() != null &&member.getGid2().equals(member.getGid1())||
+                                            member.getGid2() != null &&member.getGid2().equals(member.getGid3())
+                            )||
+                            (
+                                    member.getGid3() != null &&member.getGid3().equals(member.getGid2())||
+                                            member.getGid3() != null &&member.getGid3().equals(member.getGid1())
+                            )
+            ) {
+                throw new RuntimeException("GID already exists.");
             }
             else {
-                return CompletableFuture.completedFuture(coding.save(member));
+                CompletableFuture<WebModel> web=CompletableFuture.completedFuture(coding.save(member));
+                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
+                coding.save(member);
+                return web;
             }
         }
-        throw new RuntimeException("gid  not present");
+        throw new RuntimeException("GID not present");
     }
 
     @Async
-    public CompletableFuture<MrdModel> chackgid(String gid) {
+    public CompletableFuture<MrdModel> checkgid(String gid) {
         MrdModel cp = repo.getModelByGid(gid);
         if (cp != null) {
             for (WebModel i : coding.findAll()) {
-                if (cp.getGid().equals(i.getGid1()) || cp.getGid().equals(i.getGid2())) {
-                    throw new RuntimeException("gid  already exists.");
+                if (
+                        cp.getGid().equals(i.getGid1()) ||
+                                cp.getGid().equals(i.getGid2()) ||
+                                cp.getGid().equals(i.getGid3())
+                ) {
+                    throw new RuntimeException("GID already exists.");
                 }
             }
 
             return CompletableFuture.completedFuture(cp);
         } else {
-            throw new RuntimeException("gid  not present");
+            throw new RuntimeException("GID not present");
         }
     }
 }

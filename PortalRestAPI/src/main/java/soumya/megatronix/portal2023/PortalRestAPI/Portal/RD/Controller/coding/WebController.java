@@ -1,6 +1,7 @@
 package soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Controller.coding;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,12 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/paridhi/event/coding")
 public class WebController {
 
+    @Qualifier("asyncExecutor")
     @Autowired
     private AsyncTaskExecutor asyncTaskExecutor;
 
     @Autowired
     private WebService service;
-
-    @Autowired
-    private WebRepository repository;
 
     @GetMapping("/web")
     @Async
@@ -54,13 +53,13 @@ public class WebController {
 
     @GetMapping("/web/{gid}")
     @Async
-    public CompletableFuture<ResponseEntity<?>> validateWeb(@RequestParam("gid") String gid) {
-        return service.chackgid(gid).thenApply(savedMember -> {
+    public CompletableFuture<ResponseEntity<?>> validateWeb(@PathVariable("gid") String gid) {
+        return service.checkgid(gid).thenApply(savedMember -> {
             if (savedMember != null && savedMember.getGid() != null) {
                 return ResponseEntity.ok().body(savedMember.getName());
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
-        }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+        }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage()));
     }
 }

@@ -16,7 +16,11 @@ public class MrdService {
 
     @Async
     public CompletableFuture<MrdModel> registerMember(MrdModel member) {
-
-        return CompletableFuture.completedFuture(MrdRepository.save(member));
+        CompletableFuture<MrdModel> mrd=CompletableFuture.completedFuture(MrdRepository.save(member));
+        member.setGid("paridhi200002"+member.getId()+"02052"+member.getId()+"024");
+        MrdRepository.save(member);
+        return mrd;
     }
+
+
 }

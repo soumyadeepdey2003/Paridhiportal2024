@@ -14,10 +14,11 @@ import org.springframework.scheduling.annotation.Async;
 @Async
 public class Cp1styearModel {
 
-    public Cp1styearModel(String teamname, Long gid1, Long gid2, String number1){
+    public Cp1styearModel(String teamname, String gid1, String gid2, String gid3, String number1){
         this.teamname=teamname;
         this.gid1=gid1;
         this.gid2=gid2;
+        this.gid3=gid3;
         this.number1 = number1;
     }
 
@@ -29,11 +30,14 @@ public class Cp1styearModel {
     private String teamname;
     @Column(name = "selectedcodingevent" )
     private  String selectedcodingevent="Cp1styear";
-    private Long gid1;
+    private String gid1;
     @Column(nullable = true)
-    private Long gid2;
+    private String gid2;
+    @Column(nullable = true)
+    private String gid3;
 
     private String number1;
-    private String tid="paridhi"+id+"2002"+id+"05202024";
+    private String tid;
     private boolean played=false;
+    private boolean paid=false;
 }
