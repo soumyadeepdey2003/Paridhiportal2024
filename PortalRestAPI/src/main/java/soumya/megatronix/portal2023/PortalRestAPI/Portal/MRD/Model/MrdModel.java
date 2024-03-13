@@ -60,4 +60,5 @@ public class MrdModel {
 
     private String gid;
 
+    private  boolean paid=false;
 }
