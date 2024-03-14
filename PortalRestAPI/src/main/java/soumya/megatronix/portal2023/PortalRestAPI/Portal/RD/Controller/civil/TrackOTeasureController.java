@@ -46,7 +46,12 @@ public class TrackOTeasureController {
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
-        }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+        }).exceptionally(ex -> {
+            // Log the exception or handle it in some other way
+            System.err.println("An error occurred: " + ex.getMessage());
+            // Return a default value
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ex.getMessage());
+        });
     }
 
     @GetMapping("/tot/{gid}")
