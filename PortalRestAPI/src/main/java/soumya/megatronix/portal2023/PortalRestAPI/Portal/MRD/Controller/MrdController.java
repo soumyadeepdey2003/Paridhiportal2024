@@ -1,6 +1,7 @@
 package soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/paridhi")
+@RequestMapping("/megatronix/paridhi")
 public class MrdController {
 
     @Autowired
@@ -24,6 +25,7 @@ public class MrdController {
     @Autowired
     private MrdRepository mrdRepository;
 
+    @Qualifier("asyncExecutor")
     @Autowired
     private AsyncTaskExecutor asyncTaskExecutor;
 

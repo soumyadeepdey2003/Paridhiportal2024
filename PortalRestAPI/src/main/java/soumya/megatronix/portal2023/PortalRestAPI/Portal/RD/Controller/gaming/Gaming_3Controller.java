@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/paridhi/event/gaming")
+@RequestMapping("/megatronix/paridhi/event/gaming")
 public class Gaming_3Controller {
 
     @Qualifier("asyncExecutor")

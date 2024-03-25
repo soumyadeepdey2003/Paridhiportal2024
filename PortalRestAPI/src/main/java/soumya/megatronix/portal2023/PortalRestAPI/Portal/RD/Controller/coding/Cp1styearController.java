@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/paridhi/event/coding")
+@RequestMapping("/megatronix/paridhi/event/coding")
 public class Cp1styearController {
 
     @Qualifier("asyncExecutor")

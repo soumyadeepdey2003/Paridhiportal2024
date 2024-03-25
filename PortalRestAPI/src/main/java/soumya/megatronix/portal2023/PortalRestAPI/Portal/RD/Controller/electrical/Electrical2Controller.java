@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/paridhi/event/electrical")
+@RequestMapping("/megatronix/paridhi/event/electrical")
 public class Electrical2Controller {
 
     @Qualifier("asyncExecutor")

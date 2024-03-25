@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/paridhi/event/robotics")
+@RequestMapping("/megatronix/paridhi/event/robotics")
 public class War15KgController {
 
     @Qualifier("asyncExecutor") // This is the bean name of the AsyncTaskExecutor

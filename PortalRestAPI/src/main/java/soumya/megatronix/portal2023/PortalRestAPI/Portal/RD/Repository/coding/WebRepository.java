@@ -6,8 +6,11 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.CpAllye
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.coding.WebModel;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface WebRepository extends JpaRepository<WebModel, Long> {
     List<WebModel> findBySelectedcodingevent(String selectedcodingevent);
+
+    Optional<WebModel> findByGid(String gid);
 }

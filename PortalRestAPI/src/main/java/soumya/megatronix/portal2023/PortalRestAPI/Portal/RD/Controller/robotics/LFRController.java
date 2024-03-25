@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/paridhi/event/robotics")
+@RequestMapping("/megatronix/paridhi/event/robotics")
 public class LFRController {
 
     @Qualifier("asyncExecutor")

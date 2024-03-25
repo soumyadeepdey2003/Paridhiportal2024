@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.electrical.Electrical1;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.RD.Model.electrical.Electrical2;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface Electrical2Repository extends JpaRepository<Electrical2, Long> {
+    Optional<Electrical2> findByGid(String gid);
 }
