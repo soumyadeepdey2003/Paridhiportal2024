@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<h1>Registration Form</h1>
+<form th:action="@{/registration}" method="post" th:object="${user}">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required>
+    </div>
+    <div>
+        <label for="college">College:</label>
+        <input type="text" id="college" th:field="*{college}" required>
+    </div>
+    <div>
+        <label for="year">Year:</label>
+        <input type="text" id="year" th:field="*{year}" required>
+    </div>
+    <div>
+        <label for="department">Department:</label>
+        <input type="text" id="department" th:field="*{department}" required>
+    </div>
+    <div>
+        <label for="roll">Roll:</label>
+        <input type="text" id="roll" th:field="*{roll}" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required>
+    </div>
+    <div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required>
+    </div>
+    <div>
+        <input type="submit" value="Register">
+    </div>
+</form>
+</body>
+</html>

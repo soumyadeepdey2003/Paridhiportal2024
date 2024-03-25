@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Coding CRD</title>
+</head>
+<body>
+<h1>Coding CRD</h1>
+<form th:action="@{/crd/codingcrd}" method="post" th:object="${codingcrd}">
+    <div>
+        <label for="selectedcodingevent">Select Coding Event:</label>
+        <select id="selectedcodingevent" name="selectedcodingevent" th:field="*{selectedcodingevent}">
+            <option value="web">Web Wizards</option>
+            <option value="cp">Code Byte</option>
+            <option value="debug">Bug Busters</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+</body>
+</html>

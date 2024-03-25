@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>civil Results</title>
+    <!-- Add your CSS styles if needed -->
+</head>
+<body>
+
+<h2>civil Results for Event:</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>GID1</th>
+        <th>GID2</th>
+        <th>GID3</th>
+        <th>GID4</th>
+        <th>GID5</th>
+        <th>Number1</th>
+        <th>Number2</th>
+        <th>Played</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over the civilModels list and display data in the table -->
+    <tr th:each="civilModel : ${civilModels}">
+        <form th:action="@{'/updatePlayedStatuscivil/' + ${civilModel.id}}" method="post">
+            <td th:text="${civilModel.id}"></td>
+            <td th:text="${civilModel.gid1}"></td>
+            <td th:text="${civilModel.gid2}"></td>
+            <td th:text="${civilModel.gid3}"></td>
+            <td th:text="${civilModel.gid4}"></td>
+            <td th:text="${civilModel.gid5}"></td>
+            <td th:text="${civilModel.number1}"></td>
+            <td th:text="${civilModel.number2}"></td>
+            <td th:text="${civilModel.played} ? 'Yes' : 'No'"></td>
+            <td>
+                <!-- Button to submit the form and mark as played -->
+                <button th:if="${not civilModel.played}" type="submit">Mark as Played</button>
+                <!-- You can add additional actions/buttons as needed -->
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

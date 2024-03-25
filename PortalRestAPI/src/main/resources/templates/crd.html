@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Domain Selection</title>
+</head>
+<body>
+<h1>Select a Domain:</h1>
+<form th:action="@{/crd}" method="post" th:object="${crdmain}">
+    <label for="selectedDomain">Choose a Domain:</label>
+    <select id="selectedDomain" name="selectedDomain" th:field="*{selectedDomain}">
+        <option value="codingcrd">Coding Domain</option>
+        <option value="roboticscrd">Robotics Domain</option>
+        <option value="civilcrd">Civil Domain</option>
+        <option value="gamingcrd">Gaming Domain</option>
+        <option value="generalcrd">General Domain</option>
+        <option value="electricalcrd">Electrical Domain</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

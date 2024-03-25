@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gaming CRD</title>
+</head>
+<body>
+<h1>Gaming CRD</h1>
+<form th:action="@{/crd/gamingcrd}" method="post" th:object="${gamingcrd}">
+    <div>
+        <label for="selectedgamingevent">Select Gaming Event:</label>
+        <select id="selectedgamingevent" name="selectedgamingevent" th:field="*{selectedgamingevent}">
+            <option value="Event1">NFS</option>
+            <option value="Event2">Fifa</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Electrical CRD</title>
+</head>
+<body>
+<h1>Electrical CRD</h1>
+    <form th:action="@{/crd/electricalcrd}" method="post" th:object="${electricalcrd}">
+
+        <div>
+            <label for="selectedelectricalevent">Select Electrical Event:</label>
+            <select id="selectedelectricalevent" name="selectedelectricalevent" th:field="*{selectedelectricalevent}">
+                <option value="Event1">Electravia</option>
+                <option value="Event2">Lumino Press</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+
+    </form>
+</body>
+</html>

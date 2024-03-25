@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Robotics RD Form</title>
+</head>
+<body>
+<h1>Robotics RD Form</h1>
+<form th:action="@{/rd/robotics}" method="post" th:object="${robotics}">
+    <div>
+        <label for="teamname">Team Name:</label>
+        <input type="text" id="teamname" name="teamname" th:field="*{teamname}">
+    </div>
+
+    <div>
+        <label for="selectedroboticsevent">Select Robotics Event:</label>
+        <select id="selectedroboticsevent" name="selectedroboticsevent" th:field="*{selectedroboticsevent}">
+            <option value="Event1">Rising Wings</option>
+            <option value="Event2">Robo Rumble</option>
+            <option value="Event3">Dribble</option>
+            <option value="Event4">Gagandurg</option>
+            <option value="Event5">Robo Striker</option>
+            <option value="Event6">Fuse-n-Persue</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="gid1">GID1:</label>
+        <input type="number" id="gid1" name="gid1" th:field="*{gid1}">
+    </div>
+
+    <div>
+        <label for="gid2">GID2:</label>
+        <input type="number" id="gid2" name="gid2" th:field="*{gid2}">
+    </div>
+
+    <div>
+        <label for="gid3">GID3:</label>
+        <input type="number" id="gid3" name="gid3" th:field="*{gid3}">
+    </div>
+
+    <div>
+        <label for="gid4">GID4:</label>
+        <input type="number" id="gid4" name="gid4" th:field="*{gid4}">
+    </div>
+
+    <div>
+        <label for="gid5">GID5:</label>
+        <input type="number" id="gid5" name="gid5" th:field="*{gid5}">
+    </div>
+
+    <div>
+        <label for="number1">Phone Number:</label>
+        <input type="text" id="number1" name="number1" th:field="*{number1}">
+    </div>
+
+    <div>
+        <label for="number2">Phone Number 2:</label>
+        <input type="text" id="number2" name="number2" th:field="*{number2}">
+    </div>
+
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+</body>
+</html>

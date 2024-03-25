@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>Coding RD Form</title>
+</head>
+<body>
+<h1>Coding RD Form</h1>
+<form th:action="@{/rd/coding}" method="post" th:object="${coding}">
+    <div>
+        <label for="teamname">Team Name:</label>
+        <input type="text" id="teamname" name="teamname" th:field="*{teamname}">
+    </div>
+
+    <div>
+        <label for="selectedcodingevent">Select Coding Event:</label>
+        <select id="selectedcodingevent" name="selectedcodingevent" th:field="*{selectedcodingevent}">
+            <option value="web">Web Wizards</option>
+            <option value="cp">Code Byte</option>
+            <option value="debug">Bug Busters</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="gid1">GID1:</label>
+        <input type="number" id="gid1" name="gid1" th:field="*{gid1}">
+    </div>
+
+    <div>
+        <label for="gid2">GID2:</label>
+        <input type="number" id="gid2" name="gid2" th:field="*{gid2}">
+    </div>
+
+    <div>
+        <label for="number1">Phone Number:</label>
+        <input type="text" id="number1" name="number1" th:field="*{number1}">
+    </div>
+
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+</body>
+</html>

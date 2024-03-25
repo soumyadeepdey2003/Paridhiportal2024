@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Robotics CRD</title>
+</head>
+<body>
+<h1>Robotics CRD</h1>
+<form th:action="@{/crd/roboticscrd}" method="post" th:object="${roboticscrd}">
+
+    <div>
+        <label for="selectedroboticsevent">Select Robotics Event:</label>
+        <select id="selectedroboticsevent" name="selectedroboticsevent" th:field="*{selectedroboticsevent}">
+            <option value="Event1">Rising Wings</option>
+            <option value="Event2">Robo Rumble</option>
+            <option value="Event3">Dribble</option>
+            <option value="Event4">Gagandurg</option>
+            <option value="Event5">Robo Striker</option>
+            <option value="Event6">Fuse-n-Persue</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
+</body>
+</html>
