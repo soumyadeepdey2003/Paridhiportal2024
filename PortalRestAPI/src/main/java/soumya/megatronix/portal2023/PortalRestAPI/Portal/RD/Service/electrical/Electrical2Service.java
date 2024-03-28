@@ -167,4 +167,26 @@ public class Electrical2Service {
             throw new RuntimeException("GID not present");
         }
     }
+
+    public Optional<Electrical2> findByGid(String gid) {
+        Optional<Electrical2> gid1 = electrical.findByGid1(gid);
+        Optional<Electrical2> gid2 = electrical.findByGid2(gid);
+        Optional<Electrical2> gid3 = electrical.findByGid3(gid);
+        Optional<Electrical2> gid4 = electrical.findByGid4(gid);
+        Optional<Electrical2> gid5 = electrical.findByGid5(gid);
+
+        if(gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid1;
+        } else if(!gid1.isPresent() && gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid2;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid3;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && gid4.isPresent() && !gid5.isPresent()) {
+            return gid4;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && gid5.isPresent()) {
+            return gid5;
+        } else {
+            return Optional.empty();
+        }
+    }
 }

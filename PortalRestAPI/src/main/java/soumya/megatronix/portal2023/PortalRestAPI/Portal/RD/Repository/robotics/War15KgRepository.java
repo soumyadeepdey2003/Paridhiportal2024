@@ -9,5 +9,15 @@ import java.util.Optional;
 
 @Repository
 public interface War15KgRepository extends JpaRepository<War15KgModel, Long> {
-    Optional<War15KgModel> findByGid(String gid);
+
+
+    Optional<War15KgModel> findByGid1(String gid);
+
+    Optional<War15KgModel> findByGid2(String gid);
+
+    Optional<War15KgModel> findByGid3(String gid);
+
+    Optional<War15KgModel> findByGid4(String gid);
+
+    Optional<War15KgModel> findByGid5(String gid);
 }

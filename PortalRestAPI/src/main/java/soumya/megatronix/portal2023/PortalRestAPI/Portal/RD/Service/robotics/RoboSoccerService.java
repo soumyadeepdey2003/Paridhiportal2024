@@ -166,4 +166,25 @@ public class RoboSoccerService {
             throw new RuntimeException("GID not present");
         }
     }
+    public Optional<RoboSoccerModel> findByGid (String gid) {
+        Optional<RoboSoccerModel> gid1 = robotics.findByGid1(gid);
+        Optional<RoboSoccerModel> gid2 = robotics.findByGid2(gid);
+        Optional<RoboSoccerModel> gid3 = robotics.findByGid3(gid);
+        Optional<RoboSoccerModel> gid4 = robotics.findByGid4(gid);
+        Optional<RoboSoccerModel> gid5 = robotics.findByGid5(gid);
+
+        if(gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid1;
+        } else if(!gid1.isPresent() && gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid2;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid3;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && gid4.isPresent() && !gid5.isPresent()) {
+            return gid4;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && gid5.isPresent()) {
+            return gid5;
+        } else {
+            return Optional.empty();
+        }
+    }
 }

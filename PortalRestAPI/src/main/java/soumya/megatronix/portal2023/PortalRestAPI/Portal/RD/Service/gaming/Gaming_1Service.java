@@ -167,4 +167,25 @@ public class Gaming_1Service {
             throw new RuntimeException("GID not present");
         }
     }
+    public Optional<Gaming_1> findByGid (String gid) {
+        Optional<Gaming_1> gid1 = gaming.findByGid1(gid);
+        Optional<Gaming_1> gid2 = gaming.findByGid2(gid);
+        Optional<Gaming_1> gid3 = gaming.findByGid3(gid);
+        Optional<Gaming_1> gid4 = gaming.findByGid4(gid);
+        Optional<Gaming_1> gid5 = gaming.findByGid5(gid);
+
+        if(gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid1;
+        } else if(!gid1.isPresent() && gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid2;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid3;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && gid4.isPresent() && !gid5.isPresent()) {
+            return gid4;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && gid5.isPresent()) {
+            return gid5;
+        } else {
+            return Optional.empty();
+        }
+    }
 }

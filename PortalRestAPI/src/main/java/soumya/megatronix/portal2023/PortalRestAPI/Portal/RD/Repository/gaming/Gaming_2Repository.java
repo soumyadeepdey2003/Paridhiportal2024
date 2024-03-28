@@ -10,5 +10,14 @@ import java.util.Optional;
 
 @Repository
 public interface Gaming_2Repository extends JpaRepository<Gaming_2, Long> {
-    Optional<Gaming_2> findByGid(String gid);
+
+    Optional<Gaming_2> findByGid1(String gid);
+
+    Optional<Gaming_2> findByGid2(String gid);
+
+    Optional<Gaming_2> findByGid3(String gid);
+
+    Optional<Gaming_2> findByGid4(String gid);
+
+    Optional<Gaming_2> findByGid5(String gid);
 }

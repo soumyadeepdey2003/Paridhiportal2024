@@ -1,6 +1,7 @@
 package soumya.megatronix.portal2023.PortalRestAPI.Portal.Profile.mainprofile.model;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -89,29 +91,45 @@ public class profileModel {
         private String gid;
 
         //civil
+        @Nullable
         private String megaArchTid;
+        @Nullable
         private String setuBandhanTid;
+        @Nullable
         private String TrackoteasureTid;
 
         //coding
+        @Nullable
         private String cp1styearTid;
+        @Nullable
         private String cpAllyearTid;
+        @Nullable
         private String webTid;
 
         //electrical
+        @Nullable
         private String electrical1Tid;
+        @Nullable
         private String electrical2Tid;
 
         //gaming
+        @Nullable
         private String gaming1Tid;
+        @Nullable
         private String gaming2Tid;
+        @Nullable
         private String gaming3Tid;
 
         //robotics
+        @Nullable
         private String LFRTid;
+        @Nullable
         private String roboraceTid;
+        @Nullable
         private String roboSoccerTid;
+        @Nullable
         private String roboWar8kgTid;
+        @Nullable
         private String roboWar15kgTid;
 
 

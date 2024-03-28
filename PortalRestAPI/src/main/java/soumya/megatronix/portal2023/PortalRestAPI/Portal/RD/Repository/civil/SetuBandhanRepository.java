@@ -8,5 +8,15 @@ import java.util.Optional;
 
 @Repository
 public interface SetuBandhanRepository extends JpaRepository<SetuBandhanModel, Long> {
-   Optional<SetuBandhanModel> findByGid(String gid);
+
+
+    Optional<SetuBandhanModel> findByGid1(String gid);
+
+    Optional<SetuBandhanModel> findByGid2(String gid);
+
+    Optional<SetuBandhanModel> findByGid3(String gid);
+
+    Optional<SetuBandhanModel> findByGid4(String gid);
+
+    Optional<SetuBandhanModel> findByGid5(String gid);
 }

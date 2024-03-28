@@ -11,7 +11,11 @@ import java.util.Optional;
 public interface Cp1styearRepository extends JpaRepository<Cp1styearModel, Long> {
     List<Cp1styearModel> findBySelectedcodingevent(String selectedcodingevent);
 
-  Optional<Cp1styearModel> findByGid(String gid);
 
-    Optional<Cp1styearModel> findByEmail(String email);
+
+
+
+    Optional<Cp1styearModel> findByGid1(String gid);
+
+    Optional<Cp1styearModel> findByGid2(String gid);
 }

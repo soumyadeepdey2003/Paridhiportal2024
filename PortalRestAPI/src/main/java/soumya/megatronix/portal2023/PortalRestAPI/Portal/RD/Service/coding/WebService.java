@@ -108,4 +108,17 @@ public class WebService {
             throw new RuntimeException("GID not present");
         }
     }
+
+    public Optional<WebModel> findByGid(String gid) {
+        Optional<WebModel> gid1 = coding.findByGid1(gid);
+        Optional<WebModel> gid2 = coding.findByGid2(gid);
+
+        if (gid1.isPresent() && !gid2.isPresent()) {
+            return gid1;
+        } else if (!gid1.isPresent() && gid2.isPresent()) {
+            return gid2;
+        } else {
+            return Optional.empty();
+        }
+    }
 }

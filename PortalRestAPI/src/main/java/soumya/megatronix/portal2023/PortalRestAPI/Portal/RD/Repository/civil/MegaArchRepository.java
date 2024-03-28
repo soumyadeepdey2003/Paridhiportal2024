@@ -11,5 +11,15 @@ import java.util.Optional;
 public interface MegaArchRepository extends JpaRepository<MegaArchModel, Long> {
     List<MegaArchModel> findBySelectedcivilevent(String selectedcivilevent);
 
-   Optional< MegaArchModel> findByGid(String gid);
+
+
+    Optional<MegaArchModel> findByGid1(String gid);
+
+    Optional<MegaArchModel> findByGid2(String gid);
+
+    Optional<MegaArchModel> findByGid3(String gid);
+
+    Optional<MegaArchModel> findByGid4(String gid);
+
+    Optional<MegaArchModel> findByGid5(String gid);
 }

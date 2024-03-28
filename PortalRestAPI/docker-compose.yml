@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  portal-rest-api:
+    # image: openjdk:20
+    ports:
+      - 6001:6002
+    networks:
+      - portalapp
+    build: ./target
+    depends_on:
+      - mysql
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysql:3306/MegatronixportalRESTAPI?createDatabaseIfNotExist=true
+      - spring.datasource.username=root
+      - spring.datasource.password=soumya@0210
+
+
+  mysql:
+    image: mysql:8.0.33
+    environment:
+      MYSQL_ROOT_PASSWORD: soumya@0210
+    ports:
+      - 3307:3306
+    networks:
+      - portalapp
+    volumes:
+      - ./data:/var/lib/mysql
+    # Add network alias for MySQL service
+    # networks:
+    #   portalapp:
+    #     aliases:
+    #       - mysql
+
+networks:
+  portalapp:
+    driver: bridge

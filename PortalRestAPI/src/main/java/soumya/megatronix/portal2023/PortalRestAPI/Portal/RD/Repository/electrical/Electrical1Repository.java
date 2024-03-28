@@ -12,5 +12,15 @@ import java.util.Optional;
 public interface Electrical1Repository extends JpaRepository<Electrical1, Long> {
 
 
-    Optional<Electrical1> findByGid(String gid);
+
+
+    Optional<Electrical1> findByGid1(String gid);
+
+    Optional<Electrical1> findByGid2(String gid);
+
+    Optional<Electrical1> findByGid3(String gid);
+
+    Optional<Electrical1> findByGid4(String gid);
+
+    Optional<Electrical1> findByGid5(String gid);
 }

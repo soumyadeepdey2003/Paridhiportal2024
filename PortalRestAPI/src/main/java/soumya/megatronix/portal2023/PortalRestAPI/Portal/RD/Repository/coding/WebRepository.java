@@ -12,5 +12,9 @@ import java.util.Optional;
 public interface WebRepository extends JpaRepository<WebModel, Long> {
     List<WebModel> findBySelectedcodingevent(String selectedcodingevent);
 
-    Optional<WebModel> findByGid(String gid);
+
+
+    Optional<WebModel> findByGid1(String gid);
+
+    Optional<WebModel> findByGid2(String gid);
 }

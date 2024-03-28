@@ -167,4 +167,26 @@ public class MegaArchService {
             throw new RuntimeException("GID not present");
         }
     }
+
+    public Optional<MegaArchModel> findByGid(String gid) {
+        Optional<MegaArchModel> gid1 = civil.findByGid1(gid);
+        Optional<MegaArchModel> gid2 = civil.findByGid2(gid);
+        Optional<MegaArchModel> gid3 = civil.findByGid3(gid);
+        Optional<MegaArchModel> gid4 = civil.findByGid4(gid);
+        Optional<MegaArchModel> gid5 = civil.findByGid5(gid);
+
+        if(gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid1;
+        } else if(!gid1.isPresent() && gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid2;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && gid3.isPresent() && !gid4.isPresent() && !gid5.isPresent()) {
+            return gid3;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && gid4.isPresent() && !gid5.isPresent()) {
+            return gid4;
+        } else if(!gid1.isPresent() && !gid2.isPresent() && !gid3.isPresent() && !gid4.isPresent() && gid5.isPresent()) {
+            return gid5;
+        } else {
+            return Optional.empty();
+        }
+    }
 }

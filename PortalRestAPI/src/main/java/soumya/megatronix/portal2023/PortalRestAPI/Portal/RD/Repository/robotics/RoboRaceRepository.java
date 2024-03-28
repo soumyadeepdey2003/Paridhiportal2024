@@ -9,5 +9,15 @@ import java.util.Optional;
 
 @Repository
 public interface RoboRaceRepository extends JpaRepository<RoboRaceModel, Long> {
-    Optional<RoboRaceModel> findByGid(String gid);
+
+
+    Optional<RoboRaceModel> findByGid1(String gid);
+
+    Optional<RoboRaceModel> findByGid2(String gid);
+
+    Optional<RoboRaceModel> findByGid3(String gid);
+
+    Optional<RoboRaceModel> findByGid4(String gid);
+
+    Optional<RoboRaceModel> findByGid5(String gid);
 }

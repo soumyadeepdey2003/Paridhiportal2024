@@ -11,5 +11,9 @@ import java.util.Optional;
 public interface CpAllyearRepository extends JpaRepository<CpAllyearModel, Long> {
     List<CpAllyearModel> findBySelectedcodingevent(String selectedcodingevent);
 
-    Optional<CpAllyearModel> findByGid(String gid);
+
+
+    Optional<CpAllyearModel> findByGid1(String gid);
+
+    Optional<CpAllyearModel> findByGid2(String gid);
 }

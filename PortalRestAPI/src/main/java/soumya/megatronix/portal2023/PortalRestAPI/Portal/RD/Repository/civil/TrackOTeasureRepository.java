@@ -10,5 +10,13 @@ import java.util.Optional;
 @Repository
 public interface TrackOTeasureRepository extends JpaRepository<TrackOTeasureModel, Long> {
 
-    Optional<TrackOTeasureModel> findByGid(String gid);
+
+
+    Optional<TrackOTeasureModel> findByGid1(String gid);
+
+    Optional<TrackOTeasureModel> findByGid2(String gid);
+
+    Optional<TrackOTeasureModel> findByGid3(String gid);
+
+    Optional<TrackOTeasureModel> findByGid4(String gid);
 }

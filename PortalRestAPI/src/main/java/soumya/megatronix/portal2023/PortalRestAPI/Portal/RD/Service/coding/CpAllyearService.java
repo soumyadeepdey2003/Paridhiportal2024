@@ -70,4 +70,16 @@ public class CpAllyearService {
             throw new RuntimeException("GID not present");
         }
     }
+    public Optional<CpAllyearModel> findByGid(String gid) {
+        Optional<CpAllyearModel> gid1 = coding.findByGid1(gid);
+        Optional<CpAllyearModel> gid2 = coding.findByGid2(gid);
+
+        if (gid1.isPresent() && !gid2.isPresent()) {
+            return gid1;
+        } else if (!gid1.isPresent() && gid2.isPresent()) {
+            return gid2;
+        } else {
+            return Optional.empty();
+        }
+    }
 }

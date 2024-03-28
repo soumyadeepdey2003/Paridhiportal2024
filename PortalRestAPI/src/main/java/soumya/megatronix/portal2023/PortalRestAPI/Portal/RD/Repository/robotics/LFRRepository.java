@@ -9,5 +9,15 @@ import java.util.Optional;
 
 @Repository
 public interface LFRRepository extends JpaRepository<LFRModel, Long> {
-    Optional<LFRModel> findByGid(String gid);
+
+
+    Optional<LFRModel> findByGid1(String gid);
+
+    Optional<LFRModel> findByGid2(String gid);
+
+    Optional<LFRModel> findByGid3(String gid);
+
+    Optional<LFRModel> findByGid4(String gid);
+
+    Optional<LFRModel> findByGid5(String gid);
 }
