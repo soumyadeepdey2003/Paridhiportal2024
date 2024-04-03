@@ -20,9 +20,6 @@ public class OTPController {
     @Autowired
     private OTPService otpService;
 
-    @Autowired
-    private MrdRepository mrdRepository;
-
     @PostMapping("/generateOTP")
     public CompletableFuture<ResponseEntity<?>> generateOtp (
             @RequestParam String name,

@@ -5,6 +5,7 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -15,6 +16,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Async
     public CompletableFuture<Void> sendEmail(String email, String subject, String message) {
         CompletableFuture<Void> completableFuture = new CompletableFuture<>();
 
@@ -33,5 +35,28 @@ public class EmailService {
         }
 
         return completableFuture;
+    }
+
+    @Async
+    public CompletableFuture<Boolean> sendRegistrationMail (String email, String gid, String name) {
+        String subject = "Welcome to Paridhi!";
+        String message = "Hello " + name + ", \n" +
+                "\n" +
+                "Congratulations on registering for Paridhi 2024, your GID is " + gid + ".\n" +
+                "\n" +
+                "We're thrilled to have you on board and look forward to your participation in our upcoming events.\n" +
+                "\n" +
+                "Best Regards,\n" +
+                "Team Megatronix.";
+
+
+        CompletableFuture<Void> emailSendingFuture = sendEmail(email, subject, message);
+
+        return emailSendingFuture
+                .thenApplyAsync(result -> true)
+                .exceptionally(ex -> {
+                    System.out.println(ex.getMessage());
+                    return false;
+                });
     }
 }
