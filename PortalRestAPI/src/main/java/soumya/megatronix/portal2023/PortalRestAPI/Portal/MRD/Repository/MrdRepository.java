@@ -14,8 +14,5 @@ public interface MrdRepository  extends JpaRepository<MrdModel,Long> {
 
     Optional<MrdModel> findByGid(String gid1);
 
-
     Optional<MrdModel> findByEmail(String email);
-
-
 }

@@ -10,5 +10,4 @@ public class PortalRestApiApplication {
 		SpringApplication.run(PortalRestApiApplication.class, args);
 		System.out.println("hi RESTAPI");
 	}
-
 }

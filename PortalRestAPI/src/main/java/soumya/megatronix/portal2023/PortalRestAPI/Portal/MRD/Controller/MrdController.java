@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Model.MrdModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Repository.MrdRepository;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Service.MrdService;
+import soumya.megatronix.portal2023.PortalRestAPI.Verification.Email.Service.EmailService;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -54,8 +55,4 @@ public class MrdController {
                     }
                 }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
-
-
-
-
 }

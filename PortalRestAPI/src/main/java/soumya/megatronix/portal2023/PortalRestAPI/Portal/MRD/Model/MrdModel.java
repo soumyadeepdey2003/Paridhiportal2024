@@ -26,9 +26,7 @@ public class MrdModel {
         this.roll=roll;
         this.email=email;
         this.phoneNumber=phoneNumber;
-
     }
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,4 +59,7 @@ public class MrdModel {
     private String gid;
 
     private  boolean paid=false;
+
+    private boolean isEmailVerified=false;
+    private boolean isPhoneVerified=false;
 }
