@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Model.MrdModel;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.MRD.Repository.MrdRepository;
 import soumya.megatronix.portal2023.PortalRestAPI.Verification.OTP.Model.OTPModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Verification.OTP.Service.OTPService;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 

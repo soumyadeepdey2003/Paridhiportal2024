@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="restfulCloudConfig">
+    <option name="selectProjects">
+      <set />
+    </option>
+    <option name="selectRequestTypes">
+      <set>
+        <option value="GET" />
+        <option value="HEAD" />
+        <option value="POST" />
+        <option value="DELETE" />
+        <option value="PUT" />
+        <option value="PATCH" />
+        <option value="OPTIONS" />
+        <option value="TRACE" />
+        <option value="ALL" />
+      </set>
+    </option>
+    <option name="selectSoaTypes">
+      <set>
+        <option value="SERVICE" />
+        <option value="CLIENT" />
+        <option value="SOA_SERVICE" />
+        <option value="SOA_CLIENT" />
+      </set>
+    </option>
+  </component>
+</project>
