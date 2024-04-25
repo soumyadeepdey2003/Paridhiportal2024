@@ -5,9 +5,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Model.MrdModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Repository.MrdRepository;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.BgmiLan;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.robotics.War15KgModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Repository.robotics.War15KgRepository;
+import soumya.megatronix.portal2023.PortalRestAPI.Verification.Email.Service.EmailService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -19,6 +22,9 @@ public class War15KgService {
 
     @Autowired
     private MrdRepository repo;
+
+    @Autowired
+    private EmailService emailService;
 
     @Async
     public CompletableFuture<War15KgModel> war15KgRd(War15KgModel member) {
@@ -140,6 +146,7 @@ public class War15KgService {
                 CompletableFuture<War15KgModel> war15Kg = CompletableFuture.completedFuture(robotics.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 robotics.save(member);
+                sendEmail(member.getTid(), member.getTeamname());
                 return war15Kg;
             }
         }
@@ -187,5 +194,34 @@ public class War15KgService {
         } else {
             return Optional.empty();
         }
+    }
+
+    @Async
+    protected void sendEmail(String tid, String teamName) {
+        Optional<War15KgModel> model = robotics.findByTid(tid);
+        Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
+        Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
+        Optional<MrdModel> user3 = repo.findByGid(model.get().getGid3());
+        Optional<MrdModel> user4 = repo.findByGid(model.get().getGid4());
+        Optional<MrdModel> user5 = repo.findByGid(model.get().getGid5());
+        List<String> emails = new ArrayList<>();
+        if (user1.isPresent() && user1.get().getEmail() != null && !user1.get().getEmail().isEmpty()) {
+            emails.add(user1.get().getEmail());
+        }
+        if (user2.isPresent() && user2.get().getEmail() != null && !user2.get().getEmail().isEmpty()) {
+            emails.add(user2.get().getEmail());
+        }
+        if (user3.isPresent() && user3.get().getEmail() != null && !user3.get().getEmail().isEmpty()) {
+            emails.add(user3.get().getEmail());
+        }
+        if (user4.isPresent() && user4.get().getEmail() != null && !user4.get().getEmail().isEmpty()) {
+            emails.add(user4.get().getEmail());
+        }
+        if (user5.isPresent() && user5.get().getEmail() != null && !user5.get().getEmail().isEmpty()) {
+            emails.add(user5.get().getEmail());
+        }
+
+        System.out.println(emails);
+        emailService.sendEventRegistrationEmail(tid, "Throne-Of-Bots", teamName, emails.toArray(new String[0]));
     }
 }

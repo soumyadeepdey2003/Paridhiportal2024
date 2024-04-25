@@ -52,6 +52,6 @@ public class MrdController {
                     } else {
                         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
                     }
-                }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+                }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage()));
     }
 }

@@ -20,5 +20,7 @@ public interface PesLanRepository extends JpaRepository<PesLan, Long> {
 
     Optional<PesLan> findByGid5(String gid);
 
+    Optional<PesLan> findByGid6(String gid);
+
     Optional<PesLan> findByTid(String tid);
 }

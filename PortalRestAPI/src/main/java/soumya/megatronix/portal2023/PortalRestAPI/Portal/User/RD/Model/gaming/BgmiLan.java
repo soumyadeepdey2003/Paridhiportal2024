@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.scheduling.annotation.Async;
 
+import javax.validation.constraints.NotNull;
+
 @Entity
 @Getter
 @Setter
@@ -13,13 +15,14 @@ import org.springframework.scheduling.annotation.Async;
 @NoArgsConstructor
 @Async
 public class BgmiLan {
-    public BgmiLan(String teamnname, String gid1, String gid2, String gid3, String gid4, String gid5, String number1){
+    public BgmiLan(String teamnname, String gid1, String gid2, String gid3, String gid4, String gid5, String gid6, String number1){
         this.teamname = teamnname;
         this.gid1=gid1;
         this.gid2=gid2;
         this.gid3=gid3;
         this.gid4=gid4;
         this.gid5=gid5;
+        this.gid6=gid6;
         this.number1 = number1;
     }
 
@@ -33,19 +36,20 @@ public class BgmiLan {
     @Column(name = "selectedgamingevent" )
     private  String selectedgamingevent = "bgmi_lan";
 
+    @NotNull
     private String gid1;
-
-    @Column(nullable = true)
+    @NotNull
     private String gid2;
-
-    @Column(nullable = true)
+    @NotNull
     private String gid3;
-
-    @Column(nullable = true)
+   @NotNull
     private String gid4;
 
     @Column(nullable = true)
     private String gid5;
+
+    @Column(nullable = true)
+    private String gid6;
 
     private String number1;
     private String tid;

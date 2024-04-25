@@ -20,5 +20,7 @@ public interface BgmiLanRepository extends JpaRepository<BgmiLan, Long> {
 
     Optional<BgmiLan> findByGid5(String gid);
 
+    Optional<BgmiLan> findByGid6(String gid);
+
     Optional<BgmiLan> findByTid(String tid);
 }

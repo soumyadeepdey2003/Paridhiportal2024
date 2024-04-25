@@ -26,9 +26,6 @@ public class ElectriQuest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true)
-    private String teamname;
-
     @Column(name = "selectedelectricalevent" )
     private  String selectedelectricalevent = "Electrical 1";
 

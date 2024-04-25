@@ -15,11 +15,5 @@ public interface Electrical2Repository extends JpaRepository<Electrical2, Long> 
 
     Optional<Electrical2> findByGid2(String gid);
 
-    Optional<Electrical2> findByGid3(String gid);
-
-    Optional<Electrical2> findByGid4(String gid);
-
-    Optional<Electrical2> findByGid5(String gid);
-
     Optional<Electrical2> findByTid(String tid);
 }

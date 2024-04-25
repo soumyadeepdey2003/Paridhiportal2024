@@ -5,9 +5,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Model.MrdModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Repository.MrdRepository;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.electrical.Electrical2;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.TableTennis;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Repository.general.TableTennisRepository;
+import soumya.megatronix.portal2023.PortalRestAPI.Verification.Email.Service.EmailService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -20,6 +23,9 @@ public class TableTennisService {
     
     @Autowired
     private MrdRepository repo;
+
+    @Autowired
+    private EmailService emailService;
 
     @Async
     public CompletableFuture<TableTennis> tableTennisRd(TableTennis member) {
@@ -35,6 +41,7 @@ public class TableTennisService {
             CompletableFuture<TableTennis> TableTennis = CompletableFuture.completedFuture(general.save(member));
             member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
             general.save(member);
+            sendEmail(member.getTid());
             return TableTennis;
         }
         throw new RuntimeException("GID not present");
@@ -65,5 +72,18 @@ public class TableTennisService {
         } else {
             return Optional.empty();
         }
+    }
+
+    @Async
+    protected void sendEmail(String tid) {
+        Optional<TableTennis> model = general.findByTid(tid);
+        Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
+        List<String> emails = new ArrayList<>();
+        if (user1.isPresent() && user1.get().getEmail() != null && !user1.get().getEmail().isEmpty()) {
+            emails.add(user1.get().getEmail());
+        }
+
+        System.out.println(emails);
+        emailService.sendEventRegistrationEmail(tid, "Table-Tennis", "Team", emails.toArray(new String[0]));
     }
 }

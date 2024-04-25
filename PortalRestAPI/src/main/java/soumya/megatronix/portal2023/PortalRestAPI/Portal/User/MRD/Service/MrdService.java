@@ -18,9 +18,11 @@ public class MrdService {
     public CompletableFuture<MrdModel> registerMember(MrdModel member) {
         CompletableFuture<MrdModel> mrd = CompletableFuture.completedFuture(MrdRepository.save(member));
         member.setGid("paridhi200002" + member.getId() + "02052" + member.getId() + "024");
-        if(member.isEmailVerified()) {
+        MrdRepository.save(member);
+
+       if(member.isEmailVerified()) {
             MrdRepository.save(member);
-            return mrd;
+           return mrd;
         }else {
             throw new RuntimeException("Email not verified");
         }

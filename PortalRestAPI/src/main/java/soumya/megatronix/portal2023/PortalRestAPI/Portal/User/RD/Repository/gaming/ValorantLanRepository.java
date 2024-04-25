@@ -19,5 +19,7 @@ public interface ValorantLanRepository extends JpaRepository<ValorantLan, Long> 
 
     Optional<ValorantLan> findByGid5(String gid);
 
+    Optional<ValorantLan> findByGid6(String gid);
+
     Optional<ValorantLan> findByTid(String tid);
 }

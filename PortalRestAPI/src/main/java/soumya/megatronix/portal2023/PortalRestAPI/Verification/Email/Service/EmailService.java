@@ -38,7 +38,28 @@ public class EmailService {
     }
 
     @Async
-    public CompletableFuture<Boolean> sendRegistrationMail (String email, String gid, String name) {
+    public CompletableFuture<Void> sendEmail(String subject, String message, String... emails) {
+        CompletableFuture<Void> completableFuture = new CompletableFuture<>();
+
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setTo(emails);
+            helper.setSubject(subject);
+            helper.setText(message, true);
+            javaMailSender.send(mimeMessage);
+
+            completableFuture.complete(null);
+        } catch (MessagingException ex) {
+            System.out.println(ex.getMessage());
+            completableFuture.completeExceptionally(ex);
+        }
+
+        return completableFuture;
+    }
+
+    @Async
+    public CompletableFuture<Boolean> sendRegistrationMail(String email, String gid, String name) {
         String subject = "Welcome to Paridhi!";
         String message = "Hello " + name + ", \n" +
                 "\n" +
@@ -49,14 +70,26 @@ public class EmailService {
                 "Best Regards,\n" +
                 "Team Megatronix.";
 
-
-        CompletableFuture<Void> emailSendingFuture = sendEmail(email, subject, message);
-
-        return emailSendingFuture
+        return sendEmail(email, subject, message)
                 .thenApplyAsync(result -> true)
                 .exceptionally(ex -> {
                     System.out.println(ex.getMessage());
                     return false;
                 });
+    }
+
+    @Async
+    public void sendEventRegistrationEmail(String tid, String eventName, String teamName, String... emails) {
+        String subject = "Welcome to Paridhi!";
+        String message = "Hello " + teamName + ", \n" +
+                "\n" +
+                "Congratulations on registering for " + eventName + " in Paridhi 2024, your TID is " + tid + ".\n" +
+                "\n" +
+                "We're thrilled to have you on board and look forward to your participation in our upcoming events.\n" +
+                "\n" +
+                "Best Regards,\n" +
+                "Team Megatronix.";
+
+        sendEmail(subject, message, emails);
     }
 }
