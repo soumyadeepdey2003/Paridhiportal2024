@@ -9,7 +9,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.CRD.gaming.Servic
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/crd/gaming")
+@RequestMapping("megatronix/paridhi/admin/crd/gaming")
 public class GamingCrdController {
 
     @Autowired

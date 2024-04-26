@@ -9,7 +9,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Update.Tid.gaming
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/updateTid/gaming")
+@RequestMapping("megatronix/paridhi/admin/update-tid/gaming")
 public class
 GamingTidController {
 

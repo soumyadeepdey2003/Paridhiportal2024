@@ -9,7 +9,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.CRD.coding.Servic
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/crd/coding")
+@RequestMapping("megatronix/paridhi/admin/crd/coding")
 public class CodingCrdController {
 
     @Autowired

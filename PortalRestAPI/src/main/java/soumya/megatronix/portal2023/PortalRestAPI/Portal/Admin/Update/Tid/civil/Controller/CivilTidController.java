@@ -9,7 +9,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Update.Tid.civil.
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/updateTid/civil")
+@RequestMapping("megatronix/paridhi/admin/update-tid/civil")
 public class CivilTidController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class CivilTidController {
     }
 
     @Async
-    @PutMapping("/track-o-treausre/{tid}/{paid}")
+    @PutMapping("/tot/{tid}/{paid}")
     public CompletableFuture<ResponseEntity<?>> checkToTTid(
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid

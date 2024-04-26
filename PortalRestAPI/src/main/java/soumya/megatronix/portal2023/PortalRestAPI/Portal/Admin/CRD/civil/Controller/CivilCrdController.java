@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/crd/civil")
+@RequestMapping("megatronix/paridhi/admin/crd/civil")
 public class CivilCrdController {
 
     @Autowired

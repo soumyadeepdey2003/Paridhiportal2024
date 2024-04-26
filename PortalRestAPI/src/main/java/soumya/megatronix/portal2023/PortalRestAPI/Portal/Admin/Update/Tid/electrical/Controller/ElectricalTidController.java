@@ -9,7 +9,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Update.Tid.electr
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/checkTid/")
+@RequestMapping("megatronix/paridhi/admin/update-tid/electrical")
 public class ElectricalTidController {
 
     @Autowired
