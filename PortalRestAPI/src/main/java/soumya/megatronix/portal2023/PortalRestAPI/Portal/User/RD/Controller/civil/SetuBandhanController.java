@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/civil")
+@RequestMapping("/megatronix/paridhi/user/civil")
 public class SetuBandhanController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class SetuBandhanController {
     @Autowired
     private SetuBandhanService service;
 
-    @GetMapping("/SetuBandhan")
+    @GetMapping("/setu-bandhan")
     @Async
     public CompletableFuture<ResponseEntity<SetuBandhanModel>> setuBandhanForm() {
         CompletableFuture<SetuBandhanModel> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class SetuBandhanController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/SetuBandhan")
+    @PostMapping("/setu-bandhan")
     @Async
     public CompletableFuture<ResponseEntity<?>> setuBandhanMember(@RequestBody SetuBandhanModel member) {
         return service.setuBandhanRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class SetuBandhanController {
         });
     }
 
-    @GetMapping("/SetuBandhan/{gid}")
+    @GetMapping("/setu-bandhan/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateSetuBandhan(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

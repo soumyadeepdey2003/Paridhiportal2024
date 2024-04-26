@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/coding")
+@RequestMapping("/megatronix/paridhi/user/coding")
 public class CodeQuestController {
 
     @Qualifier("asyncExecutor")
@@ -24,7 +24,7 @@ public class CodeQuestController {
     @Autowired
     private CodeQuestService service;
 
-    @GetMapping("/CodeQuest")
+    @GetMapping("/code-quest")
     @Async
     public CompletableFuture<ResponseEntity<CodeQuestModel>> CodeQuestForm() {
         CompletableFuture<CodeQuestModel> future = CompletableFuture.supplyAsync(() -> {
@@ -36,7 +36,7 @@ public class CodeQuestController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/CodeQuest")
+    @PostMapping("/code-quest")
     @Async
     public CompletableFuture<ResponseEntity<?>> CodeQuestMember(@RequestBody CodeQuestModel member) {
         return service.CodeQuestRd(member).thenApply(savedMember -> {
@@ -53,7 +53,7 @@ public class CodeQuestController {
         });
     }
 
-    @GetMapping("/CodeQuest/{gid}")
+    @GetMapping("/code-quest/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateCodeQuest(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

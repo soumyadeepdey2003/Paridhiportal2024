@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi")
+@RequestMapping("/megatronix/paridhi/user")
 public class MrdController {
 
     @Autowired
@@ -47,11 +47,11 @@ public class MrdController {
     public CompletableFuture<ResponseEntity<?>> registerMember(@RequestBody MrdModel member) {
 
         return service.registerMember(member).thenApply(savedMember -> {
-                    if (savedMember != null && savedMember.getGid() != null) {
-                        return ResponseEntity.ok().body(savedMember.getGid());
-                    } else {
-                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-                    }
-                }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage()));
+            if (savedMember != null && savedMember.getGid() != null) {
+                return ResponseEntity.ok().body(savedMember.getGid());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        }).exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage()));
     }
 }

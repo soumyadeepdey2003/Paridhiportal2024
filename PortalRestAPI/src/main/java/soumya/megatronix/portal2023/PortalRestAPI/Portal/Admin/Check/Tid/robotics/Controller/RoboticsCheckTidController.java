@@ -12,7 +12,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.robotic
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/checkTid/robotics")
+@RequestMapping("megatronix/paridhi/admin/check-tid/robotics")
 public class RoboticsCheckTidController {
 
     @Autowired
@@ -92,5 +92,5 @@ public class RoboticsCheckTidController {
                     }
                 }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
-    
+
 }

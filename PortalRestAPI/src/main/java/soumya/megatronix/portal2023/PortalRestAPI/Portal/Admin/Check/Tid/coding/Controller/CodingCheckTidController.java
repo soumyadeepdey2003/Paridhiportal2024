@@ -12,7 +12,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.coding.
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/checkTid/coding")
+@RequestMapping("megatronix/paridhi/admin/check-tid/coding")
 public class CodingCheckTidController {
 
     @Autowired

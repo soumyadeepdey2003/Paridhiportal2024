@@ -13,7 +13,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Verification.Email.Service.Ema
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/megatronix/paridhi/registration")
+@RequestMapping("/megatronix/paridhi/user/registration")
 public class EmailController {
 
     @Autowired

@@ -12,7 +12,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.gaming.
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/checkTid/gaming")
+@RequestMapping("megatronix/paridhi/admin/check-tid/gaming")
 public class GamingCheckTidController {
 
     @Autowired

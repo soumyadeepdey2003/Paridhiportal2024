@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/robotics")
+@RequestMapping("/megatronix/paridhi/user/robotics")
 public class TriathlonController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class TriathlonController {
     @Autowired
     private TriathlonService service;
 
-    @GetMapping("/Triathlon")
+    @GetMapping("/triathlon")
     @Async
     public CompletableFuture<ResponseEntity<TriathlonModel>> TriathlonForm() {
         CompletableFuture<TriathlonModel> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class TriathlonController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/Triathlon")
+    @PostMapping("/triathlon")
     @Async
     public CompletableFuture<ResponseEntity<?>> TriathlonMember(@RequestBody TriathlonModel member) {
         return service.TriathlonRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class TriathlonController {
         });
     }
 
-    @GetMapping("/Triathlon/{gid}")
+    @GetMapping("/triathlon/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateTriathlon(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

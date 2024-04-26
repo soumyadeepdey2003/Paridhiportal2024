@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/gaming")
+@RequestMapping("/megatronix/paridhi/user/gaming")
 public class PesLanController {
 
     @Qualifier("asyncExecutor")
@@ -26,7 +26,7 @@ public class PesLanController {
     @Autowired
     private PesLanService service;
 
-    @GetMapping("/pes-lan")
+    @GetMapping("/pes")
     @Async
     public CompletableFuture<ResponseEntity<PesLan>> pesLanForm() {
         CompletableFuture<PesLan> future = CompletableFuture.supplyAsync(() -> {
@@ -38,7 +38,7 @@ public class PesLanController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/pes-lan")
+    @PostMapping("/pes")
     @Async
     public CompletableFuture<ResponseEntity<?>> pesLanMember(@RequestBody PesLan member) {
         return service.pesLanRd(member).thenApply(savedMember -> {
@@ -55,7 +55,7 @@ public class PesLanController {
         });
     }
 
-    @GetMapping("/pes-lan/{gid}")
+    @GetMapping("/pes/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validatepesLan(@PathVariable("gid") String gid) {
         return service.checkgid(gid).thenApply(savedMember -> {

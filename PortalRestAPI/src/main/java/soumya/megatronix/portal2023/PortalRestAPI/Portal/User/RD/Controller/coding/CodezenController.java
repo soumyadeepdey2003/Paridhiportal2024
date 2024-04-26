@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/coding")
+@RequestMapping("/megatronix/paridhi/user/coding")
 public class CodezenController {
 
     @Qualifier("asyncExecutor")

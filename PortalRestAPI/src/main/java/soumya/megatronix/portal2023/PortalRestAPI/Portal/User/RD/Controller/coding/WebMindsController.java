@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/coding")
+@RequestMapping("/megatronix/paridhi/user/coding")
 public class WebMindsController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class WebMindsController {
     @Autowired
     private WebMindsService service;
 
-    @GetMapping("/WebMinds")
+    @GetMapping("/web-minds")
     @Async
     public CompletableFuture<ResponseEntity<WebMindsModel>> WebMindsForm() {
         CompletableFuture<WebMindsModel> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class WebMindsController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/WebMinds")
+    @PostMapping("/web-minds")
     @Async
     public CompletableFuture<ResponseEntity<?>> WebMindsMember(@RequestBody WebMindsModel member) {
         return service.WebMindsRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class WebMindsController {
         });
     }
 
-    @GetMapping("/WebMinds/{gid}")
+    @GetMapping("/web-minds/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateWebMinds(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

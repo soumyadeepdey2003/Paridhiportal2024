@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/electrical")
+@RequestMapping("/megatronix/paridhi/user/electrical")
 public class ElectriQuestController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class ElectriQuestController {
     @Autowired
     private ElectriQuestService service;
 
-    @GetMapping("/ElectriQuest")
+    @GetMapping("/electri-quest")
     @Async
     public CompletableFuture<ResponseEntity<ElectriQuest>> ElectriQuestForm() {
         CompletableFuture<ElectriQuest> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class ElectriQuestController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/ElectriQuest")
+    @PostMapping("/electri-quest")
     @Async
     public CompletableFuture<ResponseEntity<?>> ElectriQuestMember(@RequestBody ElectriQuest member) {
         return service.ElectriQuestRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class ElectriQuestController {
         });
     }
 
-    @GetMapping("/ElectriQuest/{gid}")
+    @GetMapping("/electri-quest/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateElectriQuest(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

@@ -15,9 +15,9 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/general")
+@RequestMapping("/megatronix/paridhi/user/general")
 public class CarromController {
-    
+
     @Qualifier("asyncExecutor")
     @Autowired
     private AsyncTaskExecutor asyncTaskExecutor;

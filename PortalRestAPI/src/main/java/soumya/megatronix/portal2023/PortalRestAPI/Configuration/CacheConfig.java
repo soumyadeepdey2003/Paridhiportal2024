@@ -1,4 +1,4 @@
-package soumya.megatronix.portal2023.PortalRestAPI.Configuration.Verification_by_OTP;
+package soumya.megatronix.portal2023.PortalRestAPI.Configuration;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

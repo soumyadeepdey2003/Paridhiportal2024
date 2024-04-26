@@ -16,7 +16,7 @@ public class ElectricalTidController {
     private ElectricalTidService service;
 
     @Async
-    @PutMapping("/electrical/electri-quest/{tid}/{paid}")
+    @PutMapping("/electri-quest/{tid}/{paid}")
     public CompletableFuture<ResponseEntity<?>> checkElectriQuestTid (
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
@@ -32,7 +32,7 @@ public class ElectricalTidController {
     }
 
     @Async
-    @PutMapping("/electrical/electrical2/{tid}/{paid}")
+    @PutMapping("/electrical2/{tid}/{paid}")
     public CompletableFuture<ResponseEntity<?>> checkElectrical2Tid(
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid

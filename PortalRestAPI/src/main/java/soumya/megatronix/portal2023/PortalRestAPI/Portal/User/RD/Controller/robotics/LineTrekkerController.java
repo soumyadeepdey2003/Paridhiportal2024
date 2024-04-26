@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/robotics")
+@RequestMapping("/megatronix/paridhi/user/robotics")
 public class LineTrekkerController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class LineTrekkerController {
     @Autowired
     private LineTrekkerService service;
 
-    @GetMapping("/LineTrekker")
+    @GetMapping("/line-trekker")
     @Async
     public CompletableFuture<ResponseEntity<LineTrekkerModel>> LineTrekkerForm() {
         CompletableFuture<LineTrekkerModel> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class LineTrekkerController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/LineTrekker")
+    @PostMapping("/line-trekker")
     @Async
     public CompletableFuture<ResponseEntity<?>> LineTrekkerMember(@RequestBody LineTrekkerModel member) {
         return service.LineTrekkerRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class LineTrekkerController {
         });
     }
 
-    @GetMapping("/LineTrekker/{gid}")
+    @GetMapping("/line-trekker/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateLineTrekker(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

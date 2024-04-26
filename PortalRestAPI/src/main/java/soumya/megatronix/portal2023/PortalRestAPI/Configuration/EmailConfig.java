@@ -1,4 +1,4 @@
-package soumya.megatronix.portal2023.PortalRestAPI.Configuration.Verification_by_OTP;
+package soumya.megatronix.portal2023.PortalRestAPI.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

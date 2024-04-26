@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/admin/update/gid")
+@RequestMapping("megatronix/paridhi/admin/update-gid")
 public class UpdateGidController {
 
     @Autowired

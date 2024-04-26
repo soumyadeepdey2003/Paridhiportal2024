@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/gaming")
+@RequestMapping("/megatronix/paridhi/user/gaming")
 public class ValorantLanController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class ValorantLanController {
     @Autowired
     private ValorantLanService service;
 
-    @GetMapping("/valorant-lan")
+    @GetMapping("/valorant")
     @Async
     public CompletableFuture<ResponseEntity<ValorantLan>> valorantLanForm() {
         CompletableFuture<ValorantLan> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class ValorantLanController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/valorant-lan")
+    @PostMapping("/valorant")
     @Async
     public CompletableFuture<ResponseEntity<?>> valorantLanMember(@RequestBody ValorantLan member) {
         return service.valorantLanRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class ValorantLanController {
         });
     }
 
-    @GetMapping("/valorant-lan/{gid}")
+    @GetMapping("/valorant/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validatevalorantLan(@PathVariable("gid") String gid) {
         return service.checkgid(gid).thenApply(savedMember -> {

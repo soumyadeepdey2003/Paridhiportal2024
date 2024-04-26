@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/civil")
+@RequestMapping("/megatronix/paridhi/user/civil")
 public class TrackOTeasureController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class TrackOTeasureController {
     @Autowired
     private TrackOTeasureService service;
 
-    @GetMapping("/ToT")
+    @GetMapping("/tot")
     @Async
     public CompletableFuture<ResponseEntity<TrackOTeasureModel>> totForm() {
         CompletableFuture<TrackOTeasureModel> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class TrackOTeasureController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/ToT")
+    @PostMapping("/tot")
     @Async
     public CompletableFuture<ResponseEntity<?>> totMember(@RequestBody TrackOTeasureModel member) {
         return service.trackOTreasureRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class TrackOTeasureController {
         });
     }
 
-    @GetMapping("/ToT/{gid}")
+    @GetMapping("/tot/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateToT(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

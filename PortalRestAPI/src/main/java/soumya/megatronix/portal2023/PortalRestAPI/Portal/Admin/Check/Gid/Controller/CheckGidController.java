@@ -12,7 +12,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Gid.Service
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/checkGid")
+@RequestMapping("megatronix/paridhi/admin/check-gid")
 public class CheckGidController {
 
     @Autowired
@@ -24,9 +24,9 @@ public class CheckGidController {
             @PathVariable("gid") String gid
     ) {
         return CompletableFuture.completedFuture(service.checkGidAdmin(gid))
-                .thenApply(sucess -> {
-                    if(sucess != null)
-                        return ResponseEntity.ok(sucess);
+                .thenApply(success -> {
+                    if(success != null)
+                        return ResponseEntity.ok(success);
                     else
                         return ResponseEntity.notFound().build();
                 }).exceptionally(ex ->ResponseEntity.badRequest().body(ex.getMessage()));

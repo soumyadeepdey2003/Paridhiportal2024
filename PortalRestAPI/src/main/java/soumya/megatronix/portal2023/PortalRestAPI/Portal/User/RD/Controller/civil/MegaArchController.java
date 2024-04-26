@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/civil")
+@RequestMapping("/megatronix/paridhi/user/civil")
 public class MegaArchController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class MegaArchController {
 
     @Autowired
     private MegaArchService service;
-    @GetMapping("/megaArch")
+    @GetMapping("/mega-arch")
     @Async
     public CompletableFuture<ResponseEntity<MegaArchModel>> megaArchForm() {
         CompletableFuture<MegaArchModel> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class MegaArchController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/megaArch")
+    @PostMapping("/mega-arch")
     @Async
     public CompletableFuture<ResponseEntity<?>> megaArchMember(@RequestBody MegaArchModel member) {
         return service.MegaArchRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class MegaArchController {
         });
     }
 
-    @GetMapping("/megaArch/{gid}")
+    @GetMapping("/mega-arch/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateMegaArch(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

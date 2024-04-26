@@ -14,7 +14,7 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.Profile.service.Pr
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/megatronix/paridhi/profile")
+@RequestMapping("/megatronix/paridhi/user/profile")
 public class ProfileController {
     @Autowired
     private ProfileService profileService;

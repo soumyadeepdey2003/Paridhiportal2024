@@ -11,17 +11,17 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/megatronix/paridhi/registration")
+@RequestMapping("/megatronix/paridhi/user/registration")
 public class OTPController {
 
     @Autowired
     private OTPService otpService;
 
-    @PostMapping("/generateOTP")
+    @PostMapping("/generate-otp")
     public CompletableFuture<ResponseEntity<?>> generateOtp (
             @RequestParam String name,
             @RequestParam String email
-            ) {
+    ) {
 
         CompletableFuture<String> otp = otpService.generateOTPForEmail(email);
         try {
@@ -41,7 +41,7 @@ public class OTPController {
     }
 
     @Async
-    @PostMapping("/verifyOTP")
+    @PostMapping("/verify-otp")
     public CompletableFuture<ResponseEntity<?>> validateOtp (
             @RequestBody OTPModel otpModel
     ) {

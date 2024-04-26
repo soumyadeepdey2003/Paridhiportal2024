@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/robotics")
+@RequestMapping("/megatronix/paridhi/user/robotics")
 public class RoboKlassikerController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class RoboKlassikerController {
     @Autowired
     private RoboKlassikerService service;
 
-    @GetMapping("/RoboKlassiker")
+    @GetMapping("/robo-klassiker")
     @Async
     public CompletableFuture<ResponseEntity<RoboKlassikerModel>> RoboKlassikerForm() {
         CompletableFuture<RoboKlassikerModel> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class RoboKlassikerController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/RoboKlassiker")
+    @PostMapping("/robo-klassiker")
     @Async
     public CompletableFuture<ResponseEntity<?>> RoboKlassikerMember(@RequestBody RoboKlassikerModel member) {
         return service.RoboKlassikerRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class RoboKlassikerController {
         });
     }
 
-    @GetMapping("/RoboKlassiker/{gid}")
+    @GetMapping("/robo-klassiker/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateRoboKlassiker(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

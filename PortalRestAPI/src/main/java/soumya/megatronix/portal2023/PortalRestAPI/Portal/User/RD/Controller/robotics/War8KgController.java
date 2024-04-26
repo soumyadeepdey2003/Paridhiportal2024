@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/robotics")
+@RequestMapping("/megatronix/paridhi/user/robotics")
 public class War8KgController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class War8KgController {
     @Autowired
     private War8KgService service;
 
-    @GetMapping("/war8Kg")
+    @GetMapping("/war-8kg")
     @Async
     public CompletableFuture<ResponseEntity<War8KgModel>> war8KgForm() {
         CompletableFuture<War8KgModel> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class War8KgController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/war8Kg")
+    @PostMapping("/war-8kg")
     @Async
     public CompletableFuture<ResponseEntity<?>> war8KgMember(@RequestBody War8KgModel member) {
         return service.war8KgRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class War8KgController {
         });
     }
 
-    @GetMapping("/war8Kg/{gid}")
+    @GetMapping("/war-8kg/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateWar8Kg(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {

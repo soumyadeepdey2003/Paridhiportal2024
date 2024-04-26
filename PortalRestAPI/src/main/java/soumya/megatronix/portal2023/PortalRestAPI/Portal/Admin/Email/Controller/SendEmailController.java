@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/megatronix/paridhi/admin")
+@RequestMapping("${admin.route}")
 public class SendEmailController {
 
     @Autowired

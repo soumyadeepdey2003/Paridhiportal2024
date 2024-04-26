@@ -12,14 +12,14 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.civil.S
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/admin/checkTid/civil")
+@RequestMapping("megatronix/paridhi/admin/check-tid/civil")
 public class CivilCheckTidController {
 
     @Autowired
     private CivilCheckTidService service;
 
     @Async
-    @GetMapping("/civil/setu-bandhan/{tid}")
+    @GetMapping("/setu-bandhan/{tid}")
     public CompletableFuture<ResponseEntity<?>> checkSetuBandhanTid(
             @PathVariable("tid") String tid
     ) {
@@ -34,7 +34,7 @@ public class CivilCheckTidController {
     }
 
     @Async
-    @GetMapping("/civil/track-o-treausre/{tid}")
+    @GetMapping("/tot/{tid}")
     public CompletableFuture<ResponseEntity<?>> checkToTTid(
             @PathVariable("tid") String tid
     ) {
@@ -49,7 +49,7 @@ public class CivilCheckTidController {
     }
 
     @Async
-    @GetMapping("/civil/mega-arch/{tid}")
+    @GetMapping("/mega-arch/{tid}")
     public CompletableFuture<ResponseEntity<?>> checkMegaArchTid(
             @PathVariable("tid") String tid
     ) {

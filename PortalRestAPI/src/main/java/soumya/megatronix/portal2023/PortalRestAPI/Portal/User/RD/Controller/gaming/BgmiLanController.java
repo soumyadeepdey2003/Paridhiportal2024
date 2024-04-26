@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/gaming")
+@RequestMapping("/megatronix/paridhi/user/gaming")
 public class BgmiLanController {
 
     @Qualifier("asyncExecutor")
@@ -25,7 +25,7 @@ public class BgmiLanController {
     @Autowired
     private BgmiLanService service;
 
-    @GetMapping("/bgmi-lan")
+    @GetMapping("/bgmi")
     @Async
     public CompletableFuture<ResponseEntity<BgmiLan>> bgmiLanForm() {
         CompletableFuture<BgmiLan> future = CompletableFuture.supplyAsync(() -> {
@@ -37,7 +37,7 @@ public class BgmiLanController {
                 .exceptionally(ex-> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
     }
 
-    @PostMapping("/bgmi-lan")
+    @PostMapping("/bgmi")
     @Async
     public CompletableFuture<ResponseEntity<?>> bgmiLanMember(@RequestBody BgmiLan member) {
         return service.bgmiLanRd(member).thenApply(savedMember -> {
@@ -54,7 +54,7 @@ public class BgmiLanController {
         });
     }
 
-    @GetMapping("/bgmi-lan/{gid}")
+    @GetMapping("/bgmi/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validatebgmiLan(@PathVariable("gid") String gid) {
         return service.checkgid(gid).thenApply(savedMember -> {

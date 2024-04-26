@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @EnableAsync
-@RequestMapping("/megatronix/paridhi/event/general")
+@RequestMapping("/megatronix/paridhi/user/general")
 public class TableTennisController {
 
     @Qualifier("asyncExecutor")
@@ -55,7 +55,7 @@ public class TableTennisController {
 
     }
 
-    @GetMapping("/tableTennis/{gid}")
+    @GetMapping("/table-tennis/{gid}")
     @Async
     public CompletableFuture<ResponseEntity<?>> validateTableTennis(@PathVariable("gid") String gid) {
         return service.checkGid(gid).thenApply(savedMember -> {
