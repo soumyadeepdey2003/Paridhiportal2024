@@ -118,7 +118,7 @@ public class ProfileService {
             profile.setWebMindsTid(newProfile.get().getWebMindsTid());
 
             profile.setElectriQuestTid(newProfile.get().getElectriQuestTid());
-            profile.setElectriQuestTid(newProfile.get().getElectrical2Tid());
+            profile.setElectrical2Tid(newProfile.get().getElectrical2Tid());
 
             profile.setBgmiLanTid(newProfile.get().getBgmiLanTid());
             profile.setValorantLanTid(newProfile.get().getValorantLanTid());

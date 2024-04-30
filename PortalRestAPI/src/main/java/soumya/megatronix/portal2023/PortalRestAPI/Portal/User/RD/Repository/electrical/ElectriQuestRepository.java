@@ -14,11 +14,5 @@ public interface ElectriQuestRepository extends JpaRepository<ElectriQuest, Long
 
     Optional<ElectriQuest> findByGid2(String gid);
 
-    Optional<ElectriQuest> findByGid3(String gid);
-
-    Optional<ElectriQuest> findByGid4(String gid);
-
-    Optional<ElectriQuest> findByGid5(String gid);
-
     Optional<ElectriQuest> findByTid(String tid);
 }
