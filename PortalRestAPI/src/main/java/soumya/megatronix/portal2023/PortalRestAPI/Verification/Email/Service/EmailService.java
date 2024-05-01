@@ -61,16 +61,20 @@ public class EmailService {
     @Async
     public CompletableFuture<Boolean> sendRegistrationMail(String email, String gid, String name) {
         String subject = "Welcome to Paridhi!";
-        String message = "Hello " + name + ", \n" +
-                "\n" +
-                "Congratulations on registering for Paridhi 2024, your GID is " + gid + ".\n" +
-                "\n" +
-                "We're thrilled to have you on board and look forward to your participation in our upcoming events.\n" +
-                "\n" +
-                "Best Regards,\n" +
-                "Team Megatronix.";
+        String message = "<html><body>" +
+                "<h1>Hello " + name + ",</h1>" +
+                "<p>" +
+                "<br>" +
+                "Congratulations on registering for <strong>Paridhi 2024</strong>, your GID is <strong>" + gid + "</strong>.<br>" +
+                "<br>" +
+                "We're thrilled to have you on board and look forward to your participation in our upcoming events.<br>" +
+                "<br>" +
+                "Best Regards,<br>" +
+                "<strong>Team Megatronix</strong>." +
+                "</p>" +
+                "</body></html>";
 
-        return sendEmail(email, subject, message)
+        return sendEmail(email, subject, message, "text/html") // specify MIME type as text/html
                 .thenApplyAsync(result -> true)
                 .exceptionally(ex -> {
                     System.out.println(ex.getMessage());
@@ -81,14 +85,18 @@ public class EmailService {
     @Async
     public void sendEventRegistrationEmail(String tid, String eventName, String teamName, String... emails) {
         String subject = "Welcome to Paridhi!";
-        String message = "Hello " + teamName + ", \n" +
-                "\n" +
-                "Congratulations on registering for " + eventName + " in Paridhi 2024, your TID is " + tid + ".\n" +
-                "\n" +
-                "We're thrilled to have you on board and look forward to your participation in our upcoming events.\n" +
-                "\n" +
-                "Best Regards,\n" +
-                "Team Megatronix.";
+        String message = "<html><body>" +
+                "<h1>Hello " + teamName + ",</h1>" +
+                "<p>" +
+                "<br>" +
+                "Congratulations on registering for <strong>" + eventName + "</strong> in Paridhi 2024, your TID is <strong>" + tid + "</strong>.<br>" +
+                "<br>" +
+                "We're thrilled to have you on board and look forward to your participation in our upcoming events.<br>" +
+                "<br>" +
+                "Best Regards,<br>" +
+                "<strong>Team Megatronix</strong>." +
+                "</p>" +
+                "</body></html>";
 
         sendEmail(subject, message, emails);
     }

@@ -14,13 +14,15 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("*")); // Or specify your allowed origin patterns
-        config.addAllowedMethod("*"); // Allow all HTTP methods
-        config.addAllowedHeader("*"); // Allow all headers
-        config.setAllowCredentials(true); // Allow credentials (if needed)
 
+        config.setAllowedOriginPatterns(List.of("https://msitparidhi.in")); // Allow requests only from https://msitparidhi.in
+        config.setAllowedMethods(List.of("GET", "POST", "PUT")); // Allow only GET, POST, and PUT methods
+        config.addAllowedHeader("*"); // Allow all headers
+        config.setAllowCredentials(false); // Allow credentials (if needed)
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
         source.registerCorsConfiguration("/**", config);
+
 
         return new CorsFilter(source);
     }

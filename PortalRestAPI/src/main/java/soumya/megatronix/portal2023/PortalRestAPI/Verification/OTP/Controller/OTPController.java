@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/megatronix/paridhi/user/registration")
+@RequestMapping("/megatronix/paridhi/user/")
 public class OTPController {
 
     @Autowired

@@ -1,6 +1,9 @@
 package soumya.megatronix.portal2023.PortalRestAPI.Portal.User.Profile.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Model.MrdModel;
@@ -39,6 +42,8 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Service.general
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Service.robotics.*;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -95,47 +100,60 @@ public class ProfileService {
     @Autowired
     private War15KgService roboWar15kgService;
 
+
     @Async
-    public CompletableFuture<ProfileModel> findProfile(String gid)throws Exception{
-        Optional<MrdModel> mrdModel = mrdRepository.findByGid(gid);
-        if(!mrdModel.isPresent()){
-            throw new Exception("Invalid gid");
+    public CompletableFuture<List<ProfileModel>> findProfile(String email)throws Exception{
+        List<ProfileModel> profileModels = new ArrayList<>();
+        Optional<List<MrdModel>> mrdModels = mrdRepository.findAllByEmail(email);
+        if (mrdModels.isEmpty())
+            throw new Exception("Invalid email");
+
+
+        for(MrdModel m : mrdModels.get()) {
+            Optional<MrdModel> mrdModel = mrdRepository.findByGid(m.getGid());
+            if (mrdModel.isEmpty()){
+                throw new Exception("Invalid gid");
+            }
+            ProfileModel profile = profileRepository.findByGid(m.getGid());
+            if (profile == null) {
+                CompletableFuture<ProfileModel> newProfile = addToProfile(m.getGid());
+                profileRepository.save(newProfile.join());
+                profileModels.add(newProfile.get());
+
+
+            } else {
+                CompletableFuture<ProfileModel> newProfile = addToProfile(m.getGid());
+
+                profile.setMegaArchTid(newProfile.get().getMegaArchTid());
+                profile.setSetuBandhanTid(newProfile.get().getSetuBandhanTid());
+                profile.setTrackoteasureTid(newProfile.get().getTrackoteasureTid());
+
+                profile.setCodezenTid(newProfile.get().getCodezenTid());
+                profile.setCodeQuestTid(newProfile.get().getCodeQuestTid());
+                profile.setWebMindsTid(newProfile.get().getWebMindsTid());
+
+                profile.setElectriQuestTid(newProfile.get().getElectriQuestTid());
+                profile.setElectrical2Tid(newProfile.get().getElectrical2Tid());
+
+                profile.setBgmiLanTid(newProfile.get().getBgmiLanTid());
+                profile.setValorantLanTid(newProfile.get().getValorantLanTid());
+                profile.setPesLanTid(newProfile.get().getPesLanTid());
+
+                profile.setBingeQuizTid(newProfile.get().getBingeQuizTid());
+                profile.setTableTennisTid(newProfile.get().getTableTennisTid());
+                profile.setCarromTid(newProfile.get().getCarromTid());
+
+                profile.setLineTrekkerTid(newProfile.get().getLineTrekkerTid());
+                profile.setTriathlonTid(newProfile.get().getTriathlonTid());
+                profile.setRoboKlassikerTid(newProfile.get().getRoboKlassikerTid());
+                profile.setRoboWar8kgTid(newProfile.get().getRoboWar8kgTid());
+                profile.setRoboWar15kgTid(newProfile.get().getRoboWar15kgTid());
+                profileRepository.save(profile);
+                profileModels.add(profile);
+            }
         }
-        ProfileModel profile = profileRepository.findByGid(gid);
-        if(profile==null){
-            CompletableFuture<ProfileModel> newProfile = addToProfile(gid);
-            return CompletableFuture.completedFuture(profileRepository.save(newProfile.get()));
-        }
-        else {
-            CompletableFuture<ProfileModel> newProfile = addToProfile(gid);
 
-            profile.setMegaArchTid(newProfile.get().getMegaArchTid());
-            profile.setSetuBandhanTid(newProfile.get().getSetuBandhanTid());
-            profile.setTrackoteasureTid(newProfile.get().getTrackoteasureTid());
-
-            profile.setCodezenTid(newProfile.get().getCodezenTid());
-            profile.setCodeQuestTid(newProfile.get().getCodeQuestTid());
-            profile.setWebMindsTid(newProfile.get().getWebMindsTid());
-
-            profile.setElectriQuestTid(newProfile.get().getElectriQuestTid());
-            profile.setElectrical2Tid(newProfile.get().getElectrical2Tid());
-
-            profile.setBgmiLanTid(newProfile.get().getBgmiLanTid());
-            profile.setValorantLanTid(newProfile.get().getValorantLanTid());
-            profile.setPesLanTid(newProfile.get().getPesLanTid());
-
-            profile.setBingeQuizTid(newProfile.get().getBingeQuizTid());
-            profile.setTableTennisTid(newProfile.get().getTableTennisTid());
-            profile.setCarromTid(newProfile.get().getCarromTid());
-
-            profile.setLineTrekkerTid(newProfile.get().getLineTrekkerTid());
-            profile.setTriathlonTid(newProfile.get().getTriathlonTid());
-            profile.setRoboKlassikerTid(newProfile.get().getRoboKlassikerTid());
-            profile.setRoboWar8kgTid(newProfile.get().getRoboWar8kgTid());
-            profile.setRoboWar15kgTid(newProfile.get().getRoboWar15kgTid());
-            profileRepository.save(profile);
-            return CompletableFuture.completedFuture(profile);
-        }
+        return CompletableFuture.completedFuture(profileModels);
     }
 
     @Async
