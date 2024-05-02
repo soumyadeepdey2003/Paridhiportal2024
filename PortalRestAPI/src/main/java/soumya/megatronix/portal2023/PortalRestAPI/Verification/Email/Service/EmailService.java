@@ -74,7 +74,7 @@ public class EmailService {
                 "</p>" +
                 "</body></html>";
 
-        return sendEmail(email, subject, message, "text/html") // specify MIME type as text/html
+        return sendEmail(email, subject, message) // specify MIME type as text/html
                 .thenApplyAsync(result -> true)
                 .exceptionally(ex -> {
                     System.out.println(ex.getMessage());

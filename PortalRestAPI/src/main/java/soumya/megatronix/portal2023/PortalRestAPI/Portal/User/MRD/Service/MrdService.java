@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Model.MrdModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Repository.MrdRepository;
+import soumya.megatronix.portal2023.PortalRestAPI.Verification.Email.Service.EmailService;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -13,16 +14,18 @@ public class MrdService {
 
     @Autowired
     private MrdRepository MrdRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Async
     public CompletableFuture<MrdModel> registerMember(MrdModel member) {
         CompletableFuture<MrdModel> mrd = CompletableFuture.completedFuture(MrdRepository.save(member));
         member.setGid("paridhi200002" + member.getId() + "02052" + member.getId() + "024");
-        MrdRepository.save(member);
 
        if(member.isEmailVerified()) {
             MrdRepository.save(member);
-           return mrd;
+            emailService.sendRegistrationMail(member.getEmail(), member.getGid(), member.getName());
+            return mrd;
         }else {
             throw new RuntimeException("Email not verified");
         }
