@@ -60,43 +60,51 @@ public class EmailService {
 
     @Async
     public CompletableFuture<Boolean> sendRegistrationMail(String email, String gid, String name) {
-        String subject = "Welcome to Paridhi!";
+        String subject = "Registration Confirmation for Paridhi 2024!";
         String message = "<html><body>" +
-                "<h1>Hello " + name + ",</h1>" +
-                "<p>" +
-                "<br>" +
-                "Congratulations on registering for <strong>Paridhi 2024</strong>, your GID is <strong>" + gid + "</strong>.<br>" +
-                "<br>" +
-                "We're thrilled to have you on board and look forward to your participation in our upcoming events.<br>" +
-                "<br>" +
-                "Best Regards,<br>" +
-                "<strong>Team Megatronix</strong>." +
-                "</p>" +
-                "</body></html>";
+            "<h3>Dear " + name + ",</h3>" +
+            "<p>" +
+            "<br>" +
+            "Thank you for registering for <strong>Paridhi 2024</strong>. Your registration was successful!<br>" +
+            "<br>" +
+            "Registration ID: <strong>" + gid + "</strong><br>" +
+            "<br>" +
+            "Please keep this email for your records. We look forward to seeing you at the event. Further details " +
+            "will follow as the event date approaches.<br>" +
+            "<br>" +
+            "Best Regards,<br>" +
+            "<strong>Team Megatronix</strong>." +
+            "</p>" +
+            "</body></html>";
 
         return sendEmail(email, subject, message) // specify MIME type as text/html
-                .thenApplyAsync(result -> true)
-                .exceptionally(ex -> {
-                    System.out.println(ex.getMessage());
-                    return false;
-                });
+            .thenApplyAsync(result -> true)
+            .exceptionally(ex -> {
+                System.out.println(ex.getMessage());
+                return false;
+            });
     }
 
-    @Async
     public void sendEventRegistrationEmail(String tid, String eventName, String teamName, String... emails) {
-        String subject = "Welcome to Paridhi!";
+        String subject = "Event Registration Confirmation for Paridhi 2024!";
         String message = "<html><body>" +
-                "<h1>Hello " + teamName + ",</h1>" +
-                "<p>" +
-                "<br>" +
-                "Congratulations on registering for <strong>" + eventName + "</strong> in Paridhi 2024, your TID is <strong>" + tid + "</strong>.<br>" +
-                "<br>" +
-                "We're thrilled to have you on board and look forward to your participation in our upcoming events.<br>" +
-                "<br>" +
-                "Best Regards,<br>" +
-                "<strong>Team Megatronix</strong>." +
-                "</p>" +
-                "</body></html>";
+            "<h3>Dear " + teamName + ",</h3>" +
+            "<p>" +
+            "<br>" +
+            "Thank you for registering for <strong>" + eventName + "</strong> for Paridhi 2024, Your registration was successful!<br>" +
+            "<br>" +
+            "Registration ID: <strong>" + tid + "</strong><br>" +
+            "<br>" +
+            "Please keep this email for your records. We look forward to seeing you at the event.<br>" +
+            "<strong>Payment to be done on the event desk on physical mode.</strong> Further details will follow as " +
+            "the event " +
+            "date " +
+            "approaches.<br>" +
+            "<br>" +
+            "Best Regards,<br>" +
+            "<strong>Team Megatronix</strong>." +
+            "</p>" +
+            "</body></html>";
 
         sendEmail(subject, message, emails);
     }

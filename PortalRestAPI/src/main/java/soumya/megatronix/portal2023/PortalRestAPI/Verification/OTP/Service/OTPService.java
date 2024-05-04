@@ -28,7 +28,7 @@ public class OTPService {
 
     @Autowired
     private CacheManager cacheManager;
-    
+
     @Async
     public CompletableFuture<String> generateOTPForEmail(String email) {
 
@@ -68,18 +68,23 @@ public class OTPService {
     @Async
     public CompletableFuture<Boolean> sendOTPByEmail (String email, String otp, String name) {
         String subject = "OTP for Email verification";
-        String message = "Hello " + name + ", \n\n" +
-                "Your OTP for Email verification is:" + otp + "\n\n" +
-                "This OTP is valid for 5 minutes only.\n\n" +
-                "Regards,\n" +
-                "Team Megatronix";
+        String message = "<html><body>" +
+                "<h1>Hello " + name + ",</h1>" +
+                "<p>" +
+                "<br>" +
+                "Your OTP for Email verification is: <strong>" + otp + "</strong><br>" +
+                "<br>" +
+                "This OTP is valid for 5 minutes only.<br>" +
+                "<br>" +
+                "Best Regards,<br>" +
+                "<strong>Team Megatronix</strong>." +
+                "</p>" +
+                "</body></html>";
 
-        CompletableFuture<Void> emailSendingFuture = emailService.sendEmail(email, subject, message);
-
-        return emailSendingFuture
+        return emailService.sendEmail(email, subject, message)
                 .thenApplyAsync(result -> true)
                 .exceptionally(ex -> {
-                    ex.getMessage();
+                    System.out.println(ex.getMessage());
                     return false;
                 });
     }

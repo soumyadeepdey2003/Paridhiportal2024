@@ -17,9 +17,22 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
+    @GetMapping("/{gid}")
+    @Async
+    public CompletableFuture<ResponseEntity<ProfileModel>> handleGetProfileByGid (
+            @PathVariable("gid") String gid
+    ) throws Exception {
+        return profileService.getProfileByGid(gid).thenApply(ResponseEntity::ok)
+                .exceptionally(completableFuture -> {
+                    System.out.println(completableFuture.getMessage());
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                });
+
+    }
+
     @GetMapping("/getProfile")
     @Async
-    public CompletableFuture<ResponseEntity<List<ProfileModel>>> getProfileByGid(
+    public CompletableFuture<ResponseEntity< List<ProfileModel> >> handleGetProfileByEmail(
             @RequestParam String email
     ) throws Exception {
 
@@ -30,6 +43,4 @@ public class ProfileController {
                 });
 
     }
-
-
 }
