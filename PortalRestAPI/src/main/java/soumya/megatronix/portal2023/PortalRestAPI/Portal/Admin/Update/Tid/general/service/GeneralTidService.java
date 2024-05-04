@@ -9,7 +9,12 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.T
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Repository.general.BingeQuizRepository;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Repository.general.CarromRepository;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Repository.general.TableTennisRepository;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Service.general.BingeQuizService;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Service.general.CarromService;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Service.general.TableTennisService;
+import soumya.megatronix.portal2023.PortalRestAPI.Verification.Email.Service.EmailService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,9 +25,16 @@ public class GeneralTidService {
     private BingeQuizRepository bingeQuizRepository;
     @Autowired
     private TableTennisRepository tableTennisRepository;
-
     @Autowired
     private CarromRepository carromRepository;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private BingeQuizService bingeQuizService;
+    @Autowired
+    private TableTennisService tableTennisService;
+    @Autowired
+    private CarromService carromService;
 
     @Async
     public CompletableFuture<BingeQuiz> updateBingeQuizPaidStatus (
@@ -35,6 +47,15 @@ public class GeneralTidService {
             throw new RuntimeException("No such TID found");
         else {
             model.get().setPaid(paid);
+
+            List<String> emails = bingeQuizService.getEmails(tid);
+            emailService.sendEventRegistrationUpdateEmail(
+                    tid,
+                    "Binge-Quiz",
+                    "Team",
+                    emails.toArray(new String[0])
+            );
+
             return CompletableFuture.completedFuture(bingeQuizRepository.save(model.get()));
         }
     }
@@ -50,6 +71,15 @@ public class GeneralTidService {
             throw new RuntimeException("No such TID found");
         else {
             model.get().setPaid(paid);
+
+            List<String> emails = tableTennisService.getEmails(tid);
+            emailService.sendEventRegistrationUpdateEmail(
+                    tid,
+                    "Table-Tennis",
+                    "Team",
+                    emails.toArray(new String[0])
+            );
+
             return CompletableFuture.completedFuture(tableTennisRepository.save(model.get()));
         }
     }
@@ -65,6 +95,15 @@ public class GeneralTidService {
             throw new RuntimeException("No such TID found");
         else {
             model.get().setPaid(paid);
+
+            List<String> emails = carromService.getEmails(tid);
+            emailService.sendEventRegistrationUpdateEmail(
+                    tid,
+                    "Carrom",
+                    "Team",
+                    emails.toArray(new String[0])
+            );
+
             return CompletableFuture.completedFuture(carromRepository.save(model.get()));
         }
     }

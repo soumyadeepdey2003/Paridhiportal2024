@@ -193,7 +193,16 @@ public class ValorantLanService {
                 CompletableFuture<ValorantLan> valorantLan = CompletableFuture.completedFuture(gaming.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 gaming.save(member);
-                sendEmail(member.getTid(), member.getTeamname());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Valorant-Lan",
+                        member.getTeamname(),
+                        emails.toArray(new String[0])
+                );
+
                 return valorantLan;
             }
         }
@@ -248,7 +257,7 @@ public class ValorantLanService {
     }
 
     @Async
-    protected void sendEmail(String tid, String teamName) {
+    public List<String> getEmails (String tid) {
         Optional<ValorantLan> model = gaming.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -276,7 +285,6 @@ public class ValorantLanService {
             emails.add(user6.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Valorant-Lan", teamName, emails.toArray(new String[0]));
+        return emails;
     }
 }

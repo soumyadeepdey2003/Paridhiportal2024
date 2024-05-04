@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Model.MrdModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Repository.MrdRepository;
+import soumya.megatronix.portal2023.PortalRestAPI.Verification.Email.Service.EmailService;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -14,6 +15,8 @@ public class UpdateGidService {
 
     @Autowired
     private MrdRepository mrdRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Async
     public CompletableFuture<MrdModel> updateGid(String gid,Boolean paid) {
@@ -23,8 +26,12 @@ public class UpdateGidService {
             throw new RuntimeException("GID not found");
         } else {
             mrdModel.get().setPaid(paid);
+            emailService.sendRegistrationUpdateMail(
+                    mrdModel.get().getEmail(),
+                    gid,
+                    mrdModel.get().getName()
+            );
             return CompletableFuture.completedFuture(mrdRepository.save(mrdModel.get()));
         }
     }
-
 }

@@ -365,9 +365,5 @@ public class ProfileService {
             return null;
     }
 
-    @Async
-    public CompletableFuture<ProfileModel> getProfileByGid (String gid) {
-        ProfileModel profile = profileRepository.findByGid(gid);
-        return CompletableFuture.completedFuture(profile);
-    }
+
 }

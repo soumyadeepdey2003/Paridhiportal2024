@@ -68,7 +68,16 @@ public class BingeQuizService {
                 CompletableFuture<BingeQuiz> bingeQuiz = CompletableFuture.completedFuture(general.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 general.save(member);
-                sendEmail(member.getTid());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Binge-Quiz",
+                        "Team",
+                        emails.toArray(new String[0])
+                );
+
                 return bingeQuiz;
             }
         }
@@ -109,7 +118,7 @@ public class BingeQuizService {
     }
 
     @Async
-    protected void sendEmail(String tid) {
+    public List<String> getEmails (String tid) {
         Optional<BingeQuiz> model = general.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -121,7 +130,6 @@ public class BingeQuizService {
             emails.add(user2.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Binge-Quiz", "Team", emails.toArray(new String[0]));
+        return emails;
     }
 }

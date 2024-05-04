@@ -67,7 +67,16 @@ public class ElectriQuestService {
                 CompletableFuture<ElectriQuest> electriQuest = CompletableFuture.completedFuture(electrical.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 electrical.save(member);
-                sendEmail(member.getTid());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Electri-Quest",
+                        "Team",
+                        emails.toArray(new String[0])
+                );
+
                 return electriQuest;
             }
         }
@@ -105,7 +114,7 @@ public class ElectriQuestService {
     }
 
     @Async
-    protected void sendEmail(String tid) {
+    public List<String> getEmails (String tid) {
         Optional<ElectriQuest> model = electrical.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -117,7 +126,6 @@ public class ElectriQuestService {
             emails.add(user2.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Electri-Quest", "Team", emails.toArray(new String[0]));
+        return emails;
     }
 }

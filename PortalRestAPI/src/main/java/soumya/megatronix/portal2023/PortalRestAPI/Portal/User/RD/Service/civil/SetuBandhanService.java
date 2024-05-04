@@ -88,7 +88,16 @@ public class SetuBandhanService {
                 CompletableFuture<SetuBandhanModel> setuBandhan = CompletableFuture.completedFuture(civil.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 civil.save(member);
-                sendEmail(member.getTid());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Setu-Bandhan",
+                        "Team",
+                        emails.toArray(new String[0])
+                );
+
                 return setuBandhan;
             }
         }
@@ -131,7 +140,7 @@ public class SetuBandhanService {
     }
 
     @Async
-    protected void sendEmail(String tid) {
+    public List<String> getEmails (String tid) {
         Optional<SetuBandhanModel> model = civil.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -147,7 +156,6 @@ public class SetuBandhanService {
             emails.add(user3.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Setu-Bandhan", "Team", emails.toArray(new String[0]));
+        return emails;
     }
 }

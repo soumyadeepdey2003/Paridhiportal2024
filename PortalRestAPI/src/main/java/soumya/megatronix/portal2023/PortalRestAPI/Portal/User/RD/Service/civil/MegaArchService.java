@@ -146,7 +146,15 @@ public class MegaArchService {
                 CompletableFuture<MegaArchModel> megaArch = CompletableFuture.completedFuture(civil.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 civil.save(member);
-                sendEmail(member.getTid());
+                String tid = member.getTid();
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Mega-Arch",
+                        "Team",
+                        emails.toArray(new String[0])
+                );
+
                 return megaArch;
             }
         }
@@ -196,7 +204,7 @@ public class MegaArchService {
     }
 
     @Async
-    protected void sendEmail(String tid) {
+    public List<String> getEmails (String tid) {
         Optional<MegaArchModel> model = civil.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -212,7 +220,6 @@ public class MegaArchService {
             emails.add(user3.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Mega-Arch", "Team", emails.toArray(new String[0]));
+        return emails;
     }
 }

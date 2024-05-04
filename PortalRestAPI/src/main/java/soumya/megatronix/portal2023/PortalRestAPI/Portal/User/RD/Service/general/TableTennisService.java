@@ -41,7 +41,16 @@ public class TableTennisService {
             CompletableFuture<TableTennis> TableTennis = CompletableFuture.completedFuture(general.save(member));
             member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
             general.save(member);
-            sendEmail(member.getTid());
+            String tid = member.getTid();
+
+            List<String> emails = getEmails(tid);
+            emailService.sendEventRegistrationEmail(
+                    tid,
+                    "Table-Tennis",
+                    "Team",
+                    emails.toArray(new String[0])
+            );
+
             return TableTennis;
         }
         throw new RuntimeException("GID not present");
@@ -75,7 +84,7 @@ public class TableTennisService {
     }
 
     @Async
-    protected void sendEmail(String tid) {
+    public List<String> getEmails (String tid) {
         Optional<TableTennis> model = general.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         List<String> emails = new ArrayList<>();
@@ -83,7 +92,6 @@ public class TableTennisService {
             emails.add(user1.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Table-Tennis", "Team", emails.toArray(new String[0]));
+        return emails;
     }
 }

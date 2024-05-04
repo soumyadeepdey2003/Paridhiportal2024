@@ -54,7 +54,17 @@ public class CodeQuestService {
                 CompletableFuture<CodeQuestModel> codequest = CompletableFuture.completedFuture(coding.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 coding.save(member);
-                sendEmail(member.getTid(), member.getTeamname());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Code-Quest",
+                        member.getTeamname(),
+                        emails.toArray(new String[0])
+
+                );
+
                 return codequest;
             }
         }
@@ -90,7 +100,7 @@ public class CodeQuestService {
     }
 
     @Async
-    protected void sendEmail(String tid, String teamName) {
+    public List<String> getEmails(String tid) {
         Optional<CodeQuestModel> model = coding.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -102,7 +112,6 @@ public class CodeQuestService {
             emails.add(user2.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Code-Quest", teamName, emails.toArray(new String[0]));
+        return emails;
     }
 }

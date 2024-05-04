@@ -66,7 +66,16 @@ public class CarromService {
                 CompletableFuture<Carrom> carrom = CompletableFuture.completedFuture(general.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 general.save(member);
-                sendEmail(member.getTid());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Carrom",
+                        "Team",
+                        emails.toArray(new String[0])
+                );
+
                 return carrom;
             }
         }
@@ -107,7 +116,7 @@ public class CarromService {
     }
 
     @Async
-    protected void sendEmail(String tid) {
+    public List<String> getEmails (String tid) {
         Optional<Carrom> model = general.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -119,7 +128,6 @@ public class CarromService {
             emails.add(user2.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Carrom", "Team", emails.toArray(new String[0]));
+        return emails;
     }
 }

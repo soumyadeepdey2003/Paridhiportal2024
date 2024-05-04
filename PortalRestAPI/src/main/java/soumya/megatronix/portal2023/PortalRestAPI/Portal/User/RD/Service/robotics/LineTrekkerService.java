@@ -146,7 +146,16 @@ public class LineTrekkerService {
                 CompletableFuture<LineTrekkerModel> lineTrekker = CompletableFuture.completedFuture(robotics.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 robotics.save(member);
-                sendEmail(member.getTid(), member.getTeamname());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Line-Trekker",
+                        member.getTeamname(),
+                        emails.toArray(new String[0])
+                );
+
                 return lineTrekker;
             }
         }
@@ -197,7 +206,7 @@ public class LineTrekkerService {
     }
 
     @Async
-    protected void sendEmail(String tid, String teamName) {
+    public List<String> getEmails (String tid) {
         Optional<LineTrekkerModel> model = robotics.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -221,7 +230,6 @@ public class LineTrekkerService {
             emails.add(user5.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Line-Trekker", teamName, emails.toArray(new String[0]));
+        return emails;
     }
 }

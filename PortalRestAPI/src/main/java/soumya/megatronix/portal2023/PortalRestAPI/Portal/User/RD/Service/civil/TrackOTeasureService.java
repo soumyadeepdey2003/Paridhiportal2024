@@ -88,7 +88,16 @@ public class TrackOTeasureService {
                 CompletableFuture<TrackOTeasureModel> trackOTreasure = CompletableFuture.completedFuture(civil.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 civil.save(member);
-                sendEmail(member.getTid());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Track-O-Treasure",
+                        "Team",
+                        emails.toArray(new String[0])
+                );
+
                 return trackOTreasure;
             }
         }
@@ -131,7 +140,7 @@ public class TrackOTeasureService {
     }
 
     @Async
-    protected void sendEmail(String tid) {
+    public List<String> getEmails (String tid) {
         Optional<TrackOTeasureModel> model = civil.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -147,8 +156,7 @@ public class TrackOTeasureService {
             emails.add(user3.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Track-O-Treasure", "Team", emails.toArray(new String[0]));
+        return emails;
     }
 }
 

@@ -193,7 +193,16 @@ public class PesLanService {
                 CompletableFuture<PesLan> pesLan = CompletableFuture.completedFuture(gaming.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 gaming.save(member);
-                sendEmail(member.getTid(), member.getTeamname());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Pes-Lan",
+                        member.getTeamname(),
+                        emails.toArray(new String[0])
+                );
+
                 return pesLan;
             }
         }
@@ -248,7 +257,7 @@ public class PesLanService {
     }
 
     @Async
-    protected void sendEmail(String tid, String teamName) {
+    public List<String> getEmails (String tid) {
         Optional<PesLan> model = gaming.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -276,7 +285,6 @@ public class PesLanService {
             emails.add(user6.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Pes-Lan", teamName, emails.toArray(new String[0]));
+        return emails;
     }
 }

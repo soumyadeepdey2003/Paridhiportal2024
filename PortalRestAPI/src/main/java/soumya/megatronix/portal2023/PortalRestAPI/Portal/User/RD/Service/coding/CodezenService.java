@@ -67,7 +67,16 @@ public class CodezenService {
                 CompletableFuture<CodezenModel> codezen = CompletableFuture.completedFuture(coding.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 coding.save(member);
-                sendEmail(member.getTid(), member.getTeamname());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Codezen",
+                        member.getTeamname(),
+                        emails.toArray(new String[0])
+                );
+
                 return codezen;
             }
         }
@@ -108,7 +117,7 @@ public class CodezenService {
     }
 
     @Async
-    protected void sendEmail(String tid, String teamName) {
+    public List<String> getEmails (String tid) {
         Optional<CodezenModel> model = coding.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -120,7 +129,6 @@ public class CodezenService {
             emails.add(user2.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Mega-Arch", teamName, emails.toArray(new String[0]));
+        return emails;
     }
 }

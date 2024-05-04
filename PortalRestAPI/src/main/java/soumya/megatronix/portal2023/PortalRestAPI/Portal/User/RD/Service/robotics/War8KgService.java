@@ -146,7 +146,16 @@ public class War8KgService {
                 CompletableFuture<War8KgModel> war8Kg = CompletableFuture.completedFuture(robotics.save(member));
                 member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
                 robotics.save(member);
-                sendEmail(member.getTid(), member.getTeamname());
+                String tid = member.getTid();
+
+                List<String> emails = getEmails(tid);
+                emailService.sendEventRegistrationEmail(
+                        tid,
+                        "Throne-Of-Bots 8Kg",
+                        member.getTeamname(),
+                        emails.toArray(new String[0])
+                );
+
                 return war8Kg;
             }
         }
@@ -197,7 +206,7 @@ public class War8KgService {
     }
 
     @Async
-    protected void sendEmail(String tid, String teamName) {
+    public List<String> getEmails (String tid) {
         Optional<War8KgModel> model = robotics.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());
         Optional<MrdModel> user2 = repo.findByGid(model.get().getGid2());
@@ -221,7 +230,6 @@ public class War8KgService {
             emails.add(user5.get().getEmail());
         }
 
-        System.out.println(emails);
-        emailService.sendEventRegistrationEmail(tid, "Throne-Of-Bots", teamName, emails.toArray(new String[0]));
+        return emails;
     }
 }
