@@ -69,7 +69,7 @@ public class OTPService {
     public CompletableFuture<Boolean> sendOTPByEmail (String email, String otp, String name) {
         String subject = "OTP for Email verification";
         String message = "<html><body>" +
-                "<h1>Hello " + name + ",</h1>" +
+                "<h3>Hello " + name + ",</h3>" +
                 "<p>" +
                 "<br>" +
                 "Your OTP for Email verification is: <strong>" + otp + "</strong><br>" +
