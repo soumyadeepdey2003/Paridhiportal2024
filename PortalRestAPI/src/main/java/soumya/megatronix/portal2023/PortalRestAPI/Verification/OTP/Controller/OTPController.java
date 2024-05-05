@@ -17,6 +17,31 @@ public class OTPController {
     @Autowired
     private OTPService otpService;
 
+
+    @Async
+    @PostMapping("/profile/generate-otp")
+    public CompletableFuture<ResponseEntity<?>> generateOtpforProfile (
+            @RequestParam String name,
+            @RequestParam String email
+    ) {
+
+        CompletableFuture<String> otp = otpService.generateOTPForEmail(email);
+        try {
+            CompletableFuture<Boolean> emailSent = otpService.sendOTPByEmailforProfile(email, otp.get());
+
+            boolean isEmailSent = emailSent.get();
+            System.out.println(isEmailSent);
+            if (isEmailSent) {
+                return CompletableFuture.completedFuture(ResponseEntity.ok().body("OTP sent successfully"));
+            } else {
+                return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("Failed to send OTP"));
+            }
+        } catch (InterruptedException | ExecutionException ex) {
+            ex.getMessage();
+            return CompletableFuture.completedFuture(ResponseEntity.badRequest().body(ex.getMessage()));
+        }
+    }
+    @Async
     @PostMapping("/generate-otp")
     public CompletableFuture<ResponseEntity<?>> generateOtp (
             @RequestParam String name,
