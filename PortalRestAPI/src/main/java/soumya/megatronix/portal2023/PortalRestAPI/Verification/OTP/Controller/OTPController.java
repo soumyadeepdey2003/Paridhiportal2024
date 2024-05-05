@@ -21,7 +21,6 @@ public class OTPController {
     @Async
     @PostMapping("/profile/generate-otp")
     public CompletableFuture<ResponseEntity<?>> generateOtpforProfile (
-            @RequestParam String name,
             @RequestParam String email
     ) {
 
