@@ -17,8 +17,6 @@ public class AdminService implements UserDetailsService {
 
     @Autowired
     private ValidationRepository validationRepository;
-    @Autowired
-    private AdminRepository adminRepository;
 
     @Override
     public UserDetails loadUserByUsername ( String username ) throws UsernameNotFoundException {
@@ -37,7 +35,7 @@ public class AdminService implements UserDetailsService {
 
     private String[] getRoles(ValidationResponse admin) {
         if (admin.getRole() == null) {
-            return new String[]{"USER"};
+            return new String[]{"ADMIN"};
         }
         return admin.getRole().split(",");
     }

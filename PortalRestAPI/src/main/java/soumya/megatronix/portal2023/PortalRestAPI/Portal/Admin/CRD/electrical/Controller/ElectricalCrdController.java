@@ -45,7 +45,7 @@ public class ElectricalCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateElectriQuestCrd(tid, played))
+        return service.updateElectriQuestCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -61,7 +61,7 @@ public class ElectricalCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateElectrical2Crd(tid, played))
+        return service.updateElectrical2Crd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);

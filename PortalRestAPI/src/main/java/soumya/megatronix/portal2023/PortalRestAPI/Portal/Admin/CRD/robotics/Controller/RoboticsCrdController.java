@@ -18,7 +18,7 @@ public class RoboticsCrdController {
     @Async
     @GetMapping("/line-trekker")
     public CompletableFuture<ResponseEntity<?>> lineTrekkerCrd () {
-        return CompletableFuture.completedFuture(service.getLineTrekkerCrd())
+        return service.getLineTrekkerCrd()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -31,7 +31,7 @@ public class RoboticsCrdController {
     @Async
     @GetMapping("/robo-klassiker")
     public CompletableFuture<ResponseEntity<?>> roboKlassikerCrd () {
-        return CompletableFuture.completedFuture(service.getRoboKlassikerCrd())
+        return service.getRoboKlassikerCrd()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -44,7 +44,7 @@ public class RoboticsCrdController {
     @Async
     @GetMapping("/triathlon")
     public CompletableFuture<ResponseEntity<?>> triathlonCrd () {
-        return CompletableFuture.completedFuture(service.getTriathlonCrd())
+        return service.getTriathlonCrd()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -57,7 +57,7 @@ public class RoboticsCrdController {
     @Async
     @GetMapping("/war-8kg")
     public CompletableFuture<ResponseEntity<?>> war8kgCrd () {
-        return CompletableFuture.completedFuture(service.getWar8KgCrd())
+        return service.getWar8KgCrd()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -70,7 +70,7 @@ public class RoboticsCrdController {
     @Async
     @GetMapping("/war-15kg")
     public CompletableFuture<ResponseEntity<?>> war15KgCrd () {
-        return CompletableFuture.completedFuture(service.getWar15KgCrd())
+        return service.getWar15KgCrd()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -86,7 +86,7 @@ public class RoboticsCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateLineTrekkerCrd(tid, played))
+        return service.updateLineTrekkerCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -102,7 +102,7 @@ public class RoboticsCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateRoboKlassikerCrd(tid, played))
+        return service.updateRoboKlassikerCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -118,7 +118,7 @@ public class RoboticsCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateTriathlonCrd(tid, played))
+        return service.updateTriathlonCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -134,7 +134,7 @@ public class RoboticsCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateWar8KgCrd(tid, played))
+        return service.updateWar8KgCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -150,7 +150,7 @@ public class RoboticsCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateWar15KgCrd(tid, played))
+        return service.updateWar15KgCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);

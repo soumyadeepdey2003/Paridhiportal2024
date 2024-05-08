@@ -21,7 +21,7 @@ public class CivilCrdController {
     @Async
     @GetMapping("/setu-bandhan")
     public CompletableFuture<ResponseEntity<?>> setuBandhanCrd () {
-        return CompletableFuture.completedFuture(service.getSetuBandhanCRD())
+        return service.getSetuBandhanCRD()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -34,7 +34,7 @@ public class CivilCrdController {
     @Async
     @GetMapping("/tot")
     public CompletableFuture<ResponseEntity<?>> totCrd () {
-        return CompletableFuture.completedFuture(service.getToTCRD())
+        return service.getToTCRD()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -47,7 +47,7 @@ public class CivilCrdController {
     @Async
     @GetMapping("/mega-arch")
     public CompletableFuture<ResponseEntity<?>> megaArchCrd () {
-        return CompletableFuture.completedFuture(service.getMegaArchCRD())
+        return service.getMegaArchCRD()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -63,7 +63,7 @@ public class CivilCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateSetuBandhanCRD(tid, played))
+        return service.updateSetuBandhanCRD(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -79,7 +79,7 @@ public class CivilCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateToTCRD(tid, played))
+        return service.updateToTCRD(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -95,7 +95,7 @@ public class CivilCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateMegaArchCRD(tid, played))
+        return service.updateMegaArchCRD(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);

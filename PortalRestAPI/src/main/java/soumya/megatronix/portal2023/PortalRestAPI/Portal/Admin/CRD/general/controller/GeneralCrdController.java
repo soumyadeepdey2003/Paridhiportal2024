@@ -18,7 +18,7 @@ public class GeneralCrdController {
     @Async
     @GetMapping("/binge-quiz")
     public CompletableFuture<ResponseEntity<?>> handleGetBingeQuizPlayedStatus () {
-        return CompletableFuture.completedFuture(service.getBingeQuizPlayedStatus())
+        return service.getBingeQuizPlayedStatus()
                 .thenApply(success -> {
                     if (success == null)
                         return ResponseEntity.badRequest().build();
@@ -31,7 +31,7 @@ public class GeneralCrdController {
     @Async
     @GetMapping("/table-tennis")
     public CompletableFuture<ResponseEntity<?>> handleGetTableTennisPlayedStatus () {
-        return CompletableFuture.completedFuture(service.getTableTennisPlayedStatus())
+        return service.getTableTennisPlayedStatus()
                 .thenApply(success -> {
                     if (success == null)
                         return ResponseEntity.badRequest().build();
@@ -44,7 +44,7 @@ public class GeneralCrdController {
     @Async
     @GetMapping("/carrom")
     public CompletableFuture<ResponseEntity<?>> handleGetCarromPlayedStatus () {
-        return CompletableFuture.completedFuture(service.getCarromPlayedStatus())
+        return service.getCarromPlayedStatus()
                 .thenApply(success -> {
                     if (success == null)
                         return ResponseEntity.badRequest().build();
@@ -60,7 +60,7 @@ public class GeneralCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateBingeQuizPlayedStatus(tid, played))
+        return service.updateBingeQuizPlayedStatus(tid, played)
                 .thenApply(success -> {
                     if( success != null)
                         return ResponseEntity.ok(success);
@@ -76,7 +76,7 @@ public class GeneralCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateTableTennisPlayedStatus(tid, played))
+        return service.updateTableTennisPlayedStatus(tid, played)
                 .thenApply(success -> {
                     if( success != null)
                         return ResponseEntity.ok(success);
@@ -92,7 +92,7 @@ public class GeneralCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateCarromPlayedStatus(tid, played))
+        return service.updateCarromPlayedStatus(tid, played)
                 .thenApply(success -> {
                     if( success != null)
                         return ResponseEntity.ok(success);

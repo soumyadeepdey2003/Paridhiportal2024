@@ -57,7 +57,7 @@ public class CodingCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateCodezenCrd(tid, played))
+        return service.updateCodezenCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -73,7 +73,7 @@ public class CodingCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateCodeQuestCrd(tid, played))
+        return service.updateCodeQuestCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -89,7 +89,7 @@ public class CodingCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateWebMindsCrd(tid, played))
+        return service.updateWebMindsCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);

@@ -22,8 +22,6 @@ import java.util.concurrent.CompletableFuture;
 public class AdminController {
 
     @Autowired
-    private AdminService adminService;
-    @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ValidationRepository validateRepository;
@@ -65,5 +63,20 @@ public class AdminController {
             }
         }
         return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("Email not verified"));
+    }
+
+    @Async
+    @PostMapping("/login")
+    public CompletableFuture<ResponseEntity<?>> handleAdminLogin (
+            @RequestBody ValidationResponse login
+    ) {
+        Optional< ValidationResponse > admin = validateRepository.findByUsername(login.getUsername());
+        if ( admin.isPresent() ) {
+            ValidationResponse user = admin.get();
+            if ( passwordEncoder.matches(login.getPassword(), user.getPassword()) ) {
+                return CompletableFuture.completedFuture(ResponseEntity.ok().body(user));
+            }
+        }
+        return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("Invalid username or password"));
     }
 }

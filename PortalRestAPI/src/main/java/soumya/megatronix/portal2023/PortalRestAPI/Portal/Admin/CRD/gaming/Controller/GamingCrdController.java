@@ -18,7 +18,7 @@ public class GamingCrdController {
     @Async
     @GetMapping("/bgmi-lan")
     public CompletableFuture<ResponseEntity<?>> bgmiLanCrd () {
-        return CompletableFuture.completedFuture(service.getBgmiLanCrd())
+        return service.getBgmiLanCrd()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -31,7 +31,7 @@ public class GamingCrdController {
     @Async
     @GetMapping("/valorant-lan")
     public CompletableFuture<ResponseEntity<?>> valorantLanCrd () {
-        return CompletableFuture.completedFuture(service.getValorantLanCrd())
+        return service.getValorantLanCrd()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -44,7 +44,7 @@ public class GamingCrdController {
     @Async
     @GetMapping("/pes-lan")
     public CompletableFuture<ResponseEntity<?>> pesLanCrd () {
-        return CompletableFuture.completedFuture(service.getPesLanCrd())
+        return service.getPesLanCrd()
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -60,7 +60,7 @@ public class GamingCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateBgmiLanCrd(tid, played))
+        return service.updateBgmiLanCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -76,7 +76,7 @@ public class GamingCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updateValorantLanCrd(tid, played))
+        return service.updateValorantLanCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);
@@ -92,7 +92,7 @@ public class GamingCrdController {
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return CompletableFuture.completedFuture(service.updatePesLanCrd(tid, played))
+        return service.updatePesLanCrd(tid, played)
                 .thenApply(success -> {
                     if (success != null) {
                         return ResponseEntity.ok().body(success);

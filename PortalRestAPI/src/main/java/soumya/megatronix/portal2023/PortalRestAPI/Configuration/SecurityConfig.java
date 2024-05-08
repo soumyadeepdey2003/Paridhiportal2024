@@ -28,12 +28,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/**").permitAll();
                     auth.requestMatchers("/megatronix/paridhi/user/**", "/megatronix/paridhi/admin/registration", "/megatronix" +
                             "/paridhi/admin/validate").permitAll();
                     auth.requestMatchers("/megatronix/paridhi/admin/**").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
-                })
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
+                });
 
         return http.build();
     }
