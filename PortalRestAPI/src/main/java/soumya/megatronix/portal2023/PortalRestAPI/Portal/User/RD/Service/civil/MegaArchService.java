@@ -28,137 +28,141 @@ public class MegaArchService {
 
     @Async
     public CompletableFuture<MegaArchModel> MegaArchRd(MegaArchModel member) {
-        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
-        Optional<MrdModel> gid3 = Optional.ofNullable(member.getGid3()).flatMap(repo::findByGid);
-        Optional<MrdModel> gid4 = Optional.ofNullable(member.getGid4()).flatMap(repo::findByGid);
-        Optional<MrdModel> gid5 = Optional.ofNullable(member.getGid5()).flatMap(repo::findByGid);
-        if ( gid1.isPresent() &&
-                (gid2.isPresent() || member.getGid2() == null )&&
-                (gid3.isPresent() || member.getGid3() == null)  &&
-                (gid4.isPresent() || member.getGid4() == null)  &&
-                (gid5.isPresent() || member.getGid5() == null)
-        ) {
-            List<MegaArchModel> list = civil.findAll();
-            for (MegaArchModel i : list) {
+        if(member.getNumber1()!=null) {
+            Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+            Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
+            Optional<MrdModel> gid3 = Optional.ofNullable(member.getGid3()).flatMap(repo::findByGid);
+            Optional<MrdModel> gid4 = Optional.ofNullable(member.getGid4()).flatMap(repo::findByGid);
+            Optional<MrdModel> gid5 = Optional.ofNullable(member.getGid5()).flatMap(repo::findByGid);
+            if (gid1.isPresent() &&
+                    (gid2.isPresent() || member.getGid2() == null) &&
+                    (gid3.isPresent() || member.getGid3() == null) &&
+                    (gid4.isPresent() || member.getGid4() == null) &&
+                    (gid5.isPresent() || member.getGid5() == null)
+            ) {
+                List<MegaArchModel> list = civil.findAll();
+                for (MegaArchModel i : list) {
+                    if (
+                            (
+                                    member.getGid1().equals(i.getGid1()) ||
+                                            member.getGid1().equals(i.getGid2()) ||
+                                            member.getGid1().equals(i.getGid3()) ||
+                                            member.getGid1().equals(i.getGid4()) ||
+                                            member.getGid1().equals(i.getGid5()) ||
+
+                                            member.getGid1().equals(member.getGid2()) ||
+                                            member.getGid1().equals(member.getGid3()) ||
+                                            member.getGid1().equals(member.getGid4()) ||
+                                            member.getGid1().equals(member.getGid5())
+                            ) ||
+                                    (
+                                            (member.getGid2() != null && member.getGid2().equals(i.getGid1())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid2())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid3())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid4())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid5())) ||
+
+                                                    (member.getGid2() != null && member.getGid2().equals(member.getGid1())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(member.getGid3())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(member.getGid4())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(member.getGid5()))
+                                    ) ||
+
+                                    (
+                                            (
+                                                    (member.getGid3() != null && member.getGid3().equals(i.getGid3())) ||
+                                                            (member.getGid3() != null && member.getGid3().equals(i.getGid1())) ||
+                                                            (member.getGid3() != null && member.getGid3().equals(i.getGid2())) ||
+                                                            (member.getGid3() != null && member.getGid3().equals(i.getGid4())) ||
+                                                            (member.getGid3() != null && member.getGid3().equals(i.getGid5()))) ||
+
+                                                    (member.getGid3() != null && member.getGid3().equals(member.getGid1())) ||
+                                                    (member.getGid3() != null && member.getGid3().equals(member.getGid2())) ||
+                                                    (member.getGid3() != null && member.getGid3().equals(member.getGid4())) ||
+                                                    (member.getGid3() != null && member.getGid3().equals(member.getGid5())
+                                                    )
+                                    ) ||
+
+                                    (
+                                            (
+                                                    (member.getGid4() != null && member.getGid4().equals(i.getGid3())) ||
+                                                            (member.getGid4() != null && member.getGid4().equals(i.getGid1())) ||
+                                                            (member.getGid4() != null && member.getGid4().equals(i.getGid2())) ||
+                                                            (member.getGid4() != null && member.getGid4().equals(i.getGid4())) ||
+                                                            (member.getGid4() != null && member.getGid4().equals(i.getGid5())) ||
+
+                                                            (member.getGid4() != null && member.getGid4().equals(member.getGid1())) ||
+                                                            (member.getGid4() != null && member.getGid4().equals(member.getGid2())) ||
+                                                            (member.getGid4() != null && member.getGid4().equals(member.getGid3())) ||
+                                                            (member.getGid4() != null && member.getGid4().equals(member.getGid5()))
+                                            )
+                                    ) ||
+
+                                    (
+                                            (
+                                                    (member.getGid5() != null && member.getGid5().equals(i.getGid3())) ||
+                                                            (member.getGid5() != null && member.getGid5().equals(i.getGid1())) ||
+                                                            (member.getGid5() != null && member.getGid5().equals(i.getGid2())) ||
+                                                            (member.getGid5() != null && member.getGid5().equals(i.getGid4())) ||
+                                                            (member.getGid5() != null && member.getGid5().equals(i.getGid5())) ||
+
+                                                            (member.getGid5() != null && member.getGid5().equals(member.getGid1())) ||
+                                                            (member.getGid5() != null && member.getGid5().equals(member.getGid2())) ||
+                                                            (member.getGid5() != null && member.getGid5().equals(member.getGid3())) ||
+                                                            (member.getGid5() != null && member.getGid5().equals(member.getGid4()))
+                                            )
+                                    )
+                    ) {
+                        throw new RuntimeException("GID already exists.");
+                    }
+                }
                 if (
                         (
-                                member.getGid1().equals(i.getGid1()) ||
-                                        member.getGid1().equals(i.getGid2()) ||
-                                        member.getGid1().equals(i.getGid3()) ||
-                                        member.getGid1().equals(i.getGid4()) ||
-                                        member.getGid1().equals(i.getGid5()) ||
-
-                                        member.getGid1().equals(member.getGid2())||
-                                        member.getGid1().equals(member.getGid3())||
-                                        member.getGid1().equals(member.getGid4())||
+                                member.getGid1().equals(member.getGid2()) ||
+                                        member.getGid1().equals(member.getGid3()) ||
+                                        member.getGid1().equals(member.getGid4()) ||
                                         member.getGid1().equals(member.getGid5())
-                        )||
+                        ) ||
                                 (
-                                        (member.getGid2() != null &&member.getGid2().equals(i.getGid1())) ||
-                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid2()) )||
-                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid3())) ||
-                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid4()) )||
-                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid5())) ||
-
-                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid1()))||
-                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid3()))||
-                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid4()))||
-                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid5()))
-                                )||
-
+                                        (member.getGid2() != null && member.getGid2().equals(member.getGid1())) ||
+                                                (member.getGid2() != null && member.getGid2().equals(member.getGid3())) ||
+                                                (member.getGid2() != null && member.getGid2().equals(member.getGid4())) ||
+                                                (member.getGid2() != null && member.getGid2().equals(member.getGid5()))
+                                ) ||
                                 (
-                                        (
-                                                (member.getGid3() != null && member.getGid3().equals(i.getGid3())) ||
-                                                        (member.getGid3() != null &&member.getGid3().equals(i.getGid1())) ||
-                                                        (member.getGid3() != null &&member.getGid3().equals(i.getGid2()) )||
-                                                        (member.getGid3() != null &&member.getGid3().equals(i.getGid4())) ||
-                                                        (member.getGid3() != null &&member.getGid3().equals(i.getGid5()))) ||
-
-                                                (member.getGid3() != null &&member.getGid3().equals(member.getGid1()))||
-                                                (member.getGid3() != null &&member.getGid3().equals(member.getGid2()))||
-                                                (member.getGid3() != null &&member.getGid3().equals(member.getGid4()))||
-                                                (member.getGid3() != null &&member.getGid3().equals(member.getGid5())
-                                                )
-                                )||
-
+                                        (member.getGid3() != null && member.getGid3().equals(member.getGid2())) ||
+                                                (member.getGid3() != null && member.getGid3().equals(member.getGid1())) ||
+                                                (member.getGid3() != null && member.getGid3().equals(member.getGid4())) ||
+                                                (member.getGid3() != null && member.getGid3().equals(member.getGid5()))
+                                ) ||
                                 (
-                                        (
-                                                (member.getGid4() != null && member.getGid4().equals(i.getGid3())) ||
-                                                        (member.getGid4() != null && member.getGid4().equals(i.getGid1()) )||
-                                                        (member.getGid4() != null && member.getGid4().equals(i.getGid2())) ||
-                                                        (member.getGid4() != null && member.getGid4().equals(i.getGid4())) ||
-                                                        (member.getGid4() != null && member.getGid4().equals(i.getGid5()) )||
-
-                                                        ( member.getGid4() != null && member.getGid4().equals(member.getGid1()))||
-                                                        (member.getGid4() != null && member.getGid4().equals(member.getGid2()))||
-                                                        (member.getGid4() != null && member.getGid4().equals(member.getGid3()))||
-                                                        (member.getGid4() != null && member.getGid4().equals(member.getGid5()))
-                                        )
-                                )||
-
-                                (
-                                        (
-                                                (member.getGid5() != null && member.getGid5().equals(i.getGid3())) ||
-                                                        (member.getGid5() != null && member.getGid5().equals(i.getGid1())) ||
-                                                        (member.getGid5() != null && member.getGid5().equals(i.getGid2())) ||
-                                                        (member.getGid5() != null && member.getGid5().equals(i.getGid4())) ||
-                                                        (member.getGid5() != null && member.getGid5().equals(i.getGid5()))||
-
-                                                        (member.getGid5() != null && member.getGid5().equals(member.getGid1()))||
-                                                        (member.getGid5() != null && member.getGid5().equals(member.getGid2()))||
-                                                        (member.getGid5() != null && member.getGid5().equals(member.getGid3()))||
-                                                        (member.getGid5() != null && member.getGid5().equals(member.getGid4()))
-                                        )
+                                        (member.getGid4() != null && member.getGid4().equals(member.getGid2())) ||
+                                                (member.getGid4() != null && member.getGid4().equals(member.getGid1())) ||
+                                                (member.getGid4() != null && member.getGid4().equals(member.getGid3())) ||
+                                                (member.getGid4() != null && member.getGid4().equals(member.getGid5()))
                                 )
-                ) {
-                    throw new RuntimeException("GID already exists.");
+                )
+                    throw new RuntimeException("GID already exists");
+                else {
+                    CompletableFuture<MegaArchModel> megaArch = CompletableFuture.completedFuture(civil.save(member));
+                    member.setTid("paridhi" + member.getId() + "2002" + member.getId() + "05202024");
+                    civil.save(member);
+                    String tid = member.getTid();
+                    List<String> emails = getEmails(tid);
+                    emailService.sendEventRegistrationEmail(
+                            tid,
+                            "Mega-Arch",
+                            "Team",
+                            emails.toArray(new String[0])
+                    );
+
+                    return megaArch;
                 }
             }
-            if(
-                    (
-                            member.getGid1().equals(member.getGid2())||
-                                    member.getGid1().equals(member.getGid3())||
-                                    member.getGid1().equals(member.getGid4())||
-                                    member.getGid1().equals(member.getGid5())
-                    )||
-                            (
-                                    (member.getGid2() != null &&member.getGid2().equals(member.getGid1()))||
-                                            (member.getGid2() != null &&member.getGid2().equals(member.getGid3()))||
-                                            (member.getGid2() != null &&member.getGid2().equals(member.getGid4()))||
-                                            (member.getGid2() != null &&member.getGid2().equals(member.getGid5()))
-                            )||
-                            (
-                                    (member.getGid3() != null &&member.getGid3().equals(member.getGid2()))||
-                                            (member.getGid3() != null &&member.getGid3().equals(member.getGid1()))||
-                                            (member.getGid3() != null &&member.getGid3().equals(member.getGid4()))||
-                                            (member.getGid3() != null &&member.getGid3().equals(member.getGid5()))
-                            )||
-                            (
-                                    (member.getGid4() != null && member.getGid4().equals(member.getGid2()))||
-                                            (member.getGid4() != null && member.getGid4().equals(member.getGid1()))||
-                                            (member.getGid4() != null && member.getGid4().equals(member.getGid3()))||
-                                            (member.getGid4() != null && member.getGid4().equals(member.getGid5()))
-                            )
-            )
-                throw new RuntimeException("GID already exists");
-            else {
-                CompletableFuture<MegaArchModel> megaArch = CompletableFuture.completedFuture(civil.save(member));
-                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
-                civil.save(member);
-                String tid = member.getTid();
-                List<String> emails = getEmails(tid);
-                emailService.sendEventRegistrationEmail(
-                        tid,
-                        "Mega-Arch",
-                        "Team",
-                        emails.toArray(new String[0])
-                );
-
-                return megaArch;
-            }
+            throw new RuntimeException("GID not present");
         }
-        throw new RuntimeException("GID not present");
+        else
+            throw new RuntimeException("Number is required");
     }
 
     public CompletableFuture<MrdModel> checkGid(String gid) {

@@ -28,58 +28,63 @@ public class WebMindsService {
 
     @Async
     public CompletableFuture<WebMindsModel> WebMindsRd(WebMindsModel member) {
-        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
-        if (
-                gid1.isPresent() &&
-                        (gid2.isPresent() || member.getGid2() == null )
-        ) {
-            List<WebMindsModel> list = coding.findAll();
-            for (WebMindsModel i : list) {
+        if(member.getNumber1()!=null) {
+            Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+            Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
+            if (
+                    gid1.isPresent() &&
+                            (gid2.isPresent() || member.getGid2() == null)
+            ) {
+                List<WebMindsModel> list = coding.findAll();
+                for (WebMindsModel i : list) {
+                    if (
+                            (
+                                    member.getGid1().equals(i.getGid1()) ||
+                                            member.getGid1().equals(i.getGid2()) ||
+                                            member.getGid1().equals(member.getGid2())
+
+                            ) ||
+                                    (
+                                            (member.getGid2() != null && member.getGid2().equals(i.getGid1())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid2()))) ||
+                                    (member.getGid2() != null && member.getGid2().equals(i.getGid1())
+                                    )
+
+                    ) {
+                        throw new RuntimeException("GID already exists.");
+                    }
+                }
                 if (
                         (
-                                member.getGid1().equals(i.getGid1()) ||
-                                member.getGid1().equals(i.getGid2())||
                                 member.getGid1().equals(member.getGid2())
-
-                        )||
-                        (
-                                (member.getGid2() != null &&member.getGid2().equals(i.getGid1())) ||
-                                (member.getGid2() != null &&member.getGid2().equals(i.getGid2()) ))||
-                                (member.getGid2() != null && member.getGid2().equals(i.getGid1())
-                        )
-
+                        ) ||
+                                (
+                                        member.getGid2() != null && member.getGid2().equals(member.getGid1())
+                                )
                 ) {
                     throw new RuntimeException("GID already exists.");
+                } else {
+                    CompletableFuture<WebMindsModel> webMinds = CompletableFuture.completedFuture(coding.save(member));
+                    member.setTid("paridhi" + member.getId() + "2002" + member.getId() + "05202024");
+                    coding.save(member);
+                    String tid = member.getTid();
+
+                    List<String> emails = getEmails(tid);
+                    emailService.sendEventRegistrationEmail(
+                            tid,
+                            "Web-Minds",
+                            member.getTeamname(),
+                            emails.toArray(new String[0])
+                    );
+                    return webMinds;
                 }
             }
-            if (
-                    (
-                            member.getGid1().equals(member.getGid2())
-                    )||
-                    (
-                            member.getGid2() != null && member.getGid2().equals(member.getGid1())
-                    )
-            ) {
-                throw new RuntimeException("GID already exists.");
-            }
-            else {
-                CompletableFuture<WebMindsModel> webMinds = CompletableFuture.completedFuture(coding.save(member));
-                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
-                coding.save(member);
-                String tid = member.getTid();
-
-                List<String> emails = getEmails(tid);
-                emailService.sendEventRegistrationEmail(
-                        tid,
-                        "Web-Minds",
-                        member.getTeamname(),
-                        emails.toArray(new String[0])
-                );
-                return webMinds;
-            }
+            throw new RuntimeException("GID not present");
         }
-        throw new RuntimeException("GID not present");
+        else
+        {
+            throw new RuntimeException("Number is required");
+        }
     }
 
     @Async
@@ -99,7 +104,8 @@ public class WebMindsService {
             return CompletableFuture.completedFuture(cp);
         } else {
             throw new RuntimeException("GID not present");
-        }
+            }
+
     }
 
     public Optional<WebMindsModel> findByGid(String gid) {

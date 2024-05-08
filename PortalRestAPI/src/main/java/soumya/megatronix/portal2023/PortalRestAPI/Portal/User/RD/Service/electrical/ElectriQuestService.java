@@ -30,57 +30,61 @@ public class ElectriQuestService {
 
     @Async
     public CompletableFuture<ElectriQuest> ElectriQuestRd(ElectriQuest member) {
-        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
-        if ( gid1.isPresent() &&
-                (gid2.isPresent() || member.getGid2() == null )
-        ) {
-            List<ElectriQuest> list = electrical.findAll();
-            for (ElectriQuest i : list) {
+        if(member.getNumber1()!=null) {
+            Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+            Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
+            if (gid1.isPresent() &&
+                    (gid2.isPresent() || member.getGid2() == null)
+            ) {
+                List<ElectriQuest> list = electrical.findAll();
+                for (ElectriQuest i : list) {
+                    if (
+                            (
+                                    member.getGid1().equals(i.getGid1()) ||
+                                            member.getGid1().equals(i.getGid2()) ||
+
+                                            member.getGid1().equals(member.getGid2())
+                            ) ||
+                                    (
+                                            (member.getGid2() != null && member.getGid2().equals(i.getGid1())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid2())) ||
+
+                                                    (member.getGid2() != null && member.getGid2().equals(member.getGid1()))
+                                    )
+                    ) {
+                        throw new RuntimeException("GID already exists.");
+                    }
+                }
                 if (
                         (
-                                member.getGid1().equals(i.getGid1()) ||
-                                        member.getGid1().equals(i.getGid2()) ||
-
-                                        member.getGid1().equals(member.getGid2())
-                        )||
+                                member.getGid1().equals(member.getGid2())
+                        ) ||
                                 (
-                                        (member.getGid2() != null &&member.getGid2().equals(i.getGid1())) ||
-                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid2()) )||
-
-                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid1()))
+                                        (member.getGid2() != null && member.getGid2().equals(member.getGid1()))
                                 )
-                ) {
-                    throw new RuntimeException("GID already exists.");
+                )
+                    throw new RuntimeException("GID already exists");
+                else {
+                    CompletableFuture<ElectriQuest> electriQuest = CompletableFuture.completedFuture(electrical.save(member));
+                    member.setTid("paridhi" + member.getId() + "2002" + member.getId() + "05202024");
+                    electrical.save(member);
+                    String tid = member.getTid();
+
+                    List<String> emails = getEmails(tid);
+                    emailService.sendEventRegistrationEmail(
+                            tid,
+                            "Electri-Quest",
+                            "Team",
+                            emails.toArray(new String[0])
+                    );
+
+                    return electriQuest;
                 }
             }
-            if(
-                    (
-                            member.getGid1().equals(member.getGid2())
-                    )||
-                            (
-                                    (member.getGid2() != null &&member.getGid2().equals(member.getGid1()))
-                            )
-            )
-                throw new RuntimeException("GID already exists");
-            else {
-                CompletableFuture<ElectriQuest> electriQuest = CompletableFuture.completedFuture(electrical.save(member));
-                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
-                electrical.save(member);
-                String tid = member.getTid();
-
-                List<String> emails = getEmails(tid);
-                emailService.sendEventRegistrationEmail(
-                        tid,
-                        "Electri-Quest",
-                        "Team",
-                        emails.toArray(new String[0])
-                );
-
-                return electriQuest;
-            }
+            throw new RuntimeException("GID not present");
         }
-        throw new RuntimeException("GID not present");
+        else
+            throw new RuntimeException("Number is null");
     }
 
     public CompletableFuture<MrdModel> checkGid(String gid) {

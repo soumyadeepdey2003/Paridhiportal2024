@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.scheduling.annotation.Async;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 @Entity
 @Getter
 @Setter
@@ -47,7 +50,8 @@ public class LineTrekkerModel {
 
     @Column(nullable = true)
     private String gid5;
-
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid Indian phone number")
     private String number1;
     private String tid;
     private boolean played = false;

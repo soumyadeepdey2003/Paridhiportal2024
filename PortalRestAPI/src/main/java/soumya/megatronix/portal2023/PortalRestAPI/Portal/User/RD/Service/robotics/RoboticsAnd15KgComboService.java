@@ -28,48 +28,51 @@ public class RoboticsAnd15KgComboService {
 
     @Async
     public CompletableFuture<RoboticsAnd15KgComboModel> saveComboRobotics (RoboticsAnd15KgComboModel model) {
+        if(model.getNumber1()!=null) {
+            List<String> tid = new ArrayList<>();
 
-        List<String> tid = new ArrayList<>();
+            RoboKlassikerModel roboKlassikerModel = new RoboKlassikerModel();
+            roboKlassikerModel.setTeamname(model.getTeamname());
+            roboKlassikerModel.setGid1(model.getGid1());
+            roboKlassikerModel.setGid2(model.getGid2());
+            roboKlassikerModel.setGid3(model.getGid3());
+            roboKlassikerModel.setGid4(model.getGid4());
+            roboKlassikerModel.setGid5(model.getGid5());
+            roboKlassikerModel.setNumber1(model.getNumber1());
+            CompletableFuture<RoboKlassikerModel> roboKlassikerModel1 = roboKlassiker.RoboKlassikerRd(roboKlassikerModel);
 
-        RoboKlassikerModel roboKlassikerModel = new RoboKlassikerModel();
-        roboKlassikerModel.setTeamname(model.getTeamname());
-        roboKlassikerModel.setGid1(model.getGid1());
-        roboKlassikerModel.setGid2(model.getGid2());
-        roboKlassikerModel.setGid3(model.getGid3());
-        roboKlassikerModel.setGid4(model.getGid4());
-        roboKlassikerModel.setGid5(model.getGid5());
-        roboKlassikerModel.setNumber1(model.getNumber1());
-        CompletableFuture<RoboKlassikerModel> roboKlassikerModel1=roboKlassiker.RoboKlassikerRd(roboKlassikerModel);
+            tid.add(roboKlassikerModel1.join().getTid());
 
-        tid.add(roboKlassikerModel1.join().getTid());
+            TriathlonModel triathlonModel = new TriathlonModel();
+            triathlonModel.setTeamname(model.getTeamname());
+            triathlonModel.setGid1(model.getGid1());
+            triathlonModel.setGid2(model.getGid2());
+            triathlonModel.setGid3(model.getGid3());
+            triathlonModel.setGid4(model.getGid4());
+            triathlonModel.setGid5(model.getGid5());
+            triathlonModel.setNumber1(model.getNumber1());
+            CompletableFuture<TriathlonModel> triathlonModel1 = triathlon.TriathlonRd(triathlonModel);
 
-        TriathlonModel triathlonModel = new TriathlonModel();
-        triathlonModel.setTeamname(model.getTeamname());
-        triathlonModel.setGid1(model.getGid1());
-        triathlonModel.setGid2(model.getGid2());
-        triathlonModel.setGid3(model.getGid3());
-        triathlonModel.setGid4(model.getGid4());
-        triathlonModel.setGid5(model.getGid5());
-        triathlonModel.setNumber1(model.getNumber1());
-        CompletableFuture<TriathlonModel> triathlonModel1=triathlon.TriathlonRd(triathlonModel);
-
-        tid.add(triathlonModel1.join().getTid());
+            tid.add(triathlonModel1.join().getTid());
 
 
-        War15KgModel war15KgModel = new War15KgModel();
-        war15KgModel.setTeamname(model.getTeamname());
-        war15KgModel.setGid1(model.getGid1());
-        war15KgModel.setGid2(model.getGid2());
-        war15KgModel.setGid3(model.getGid3());
-        war15KgModel.setGid4(model.getGid4());
-        war15KgModel.setGid5(model.getGid5());
-        war15KgModel.setNumber1(model.getNumber1());
-        CompletableFuture<War15KgModel> war15KgModel1=war15Kg.war15KgRd(war15KgModel);
+            War15KgModel war15KgModel = new War15KgModel();
+            war15KgModel.setTeamname(model.getTeamname());
+            war15KgModel.setGid1(model.getGid1());
+            war15KgModel.setGid2(model.getGid2());
+            war15KgModel.setGid3(model.getGid3());
+            war15KgModel.setGid4(model.getGid4());
+            war15KgModel.setGid5(model.getGid5());
+            war15KgModel.setNumber1(model.getNumber1());
+            CompletableFuture<War15KgModel> war15KgModel1 = war15Kg.war15KgRd(war15KgModel);
 
-        tid.add(war15KgModel1.join().getTid());
+            tid.add(war15KgModel1.join().getTid());
 
-        model.setTid(tid);
-        return CompletableFuture.completedFuture(roboticsAnd15KgComboRepository.save(model));
+            model.setTid(tid);
+            return CompletableFuture.completedFuture(roboticsAnd15KgComboRepository.save(model));
+        }
+        else
+            throw new RuntimeException("Number1 is null");
     }
 
     @Async

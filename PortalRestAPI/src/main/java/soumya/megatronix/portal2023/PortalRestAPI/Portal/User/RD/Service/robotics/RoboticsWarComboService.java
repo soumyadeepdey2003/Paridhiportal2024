@@ -24,31 +24,34 @@ public class RoboticsWarComboService {
 
     @Async
     public CompletableFuture<RoboticsWarComboModel> saveWarCombo(RoboticsWarComboModel model) {
+        if(model.getNumber1()!=null) {
+            War8KgModel war8KgModel = new War8KgModel();
+            war8KgModel.setTeamname(model.getTeamname());
+            war8KgModel.setGid1(model.getGid1());
+            war8KgModel.setGid2(model.getGid2());
+            war8KgModel.setGid3(model.getGid3());
+            war8KgModel.setGid4(model.getGid4());
+            war8KgModel.setGid5(model.getGid5());
+            war8KgModel.setNumber1(model.getNumber1());
+            CompletableFuture<War8KgModel> war8KgModel1 = war8KgService.war8KgRd(war8KgModel);
 
-        War8KgModel war8KgModel = new War8KgModel();
-        war8KgModel.setTeamname(model.getTeamname());
-        war8KgModel.setGid1(model.getGid1());
-        war8KgModel.setGid2(model.getGid2());
-        war8KgModel.setGid3(model.getGid3());
-        war8KgModel.setGid4(model.getGid4());
-        war8KgModel.setGid5(model.getGid5());
-        war8KgModel.setNumber1(model.getNumber1());
-        CompletableFuture<War8KgModel> war8KgModel1 = war8KgService.war8KgRd(war8KgModel);
+            War15KgModel war15KgModel = new War15KgModel();
+            war15KgModel.setTeamname(model.getTeamname());
+            war15KgModel.setGid1(model.getGid1());
+            war15KgModel.setGid2(model.getGid2());
+            war15KgModel.setGid3(model.getGid3());
+            war15KgModel.setGid4(model.getGid4());
+            war15KgModel.setGid5(model.getGid5());
+            war15KgModel.setNumber1(model.getNumber1());
+            CompletableFuture<War15KgModel> war15KgModel1 = war15KgService.war15KgRd(war15KgModel);
 
-        War15KgModel war15KgModel = new War15KgModel();
-        war15KgModel.setTeamname(model.getTeamname());
-        war15KgModel.setGid1(model.getGid1());
-        war15KgModel.setGid2(model.getGid2());
-        war15KgModel.setGid3(model.getGid3());
-        war15KgModel.setGid4(model.getGid4());
-        war15KgModel.setGid5(model.getGid5());
-        war15KgModel.setNumber1(model.getNumber1());
-        CompletableFuture<War15KgModel> war15KgModel1 = war15KgService.war15KgRd(war15KgModel);
+            List<String> tid = List.of(war8KgModel1.join().getTid(), war15KgModel1.join().getTid());
+            model.setTid(tid);
 
-        List<String> tid= List.of(war8KgModel1.join().getTid(), war15KgModel1.join().getTid());
-        model.setTid(tid);
-
-        return CompletableFuture.completedFuture(repository.save(model));
+            return CompletableFuture.completedFuture(repository.save(model));
+        }
+        else
+            throw new RuntimeException("Number is required ");
 
     }
 

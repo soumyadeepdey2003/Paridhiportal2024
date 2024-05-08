@@ -28,59 +28,65 @@ public class CodezenService {
 
     @Async
     public CompletableFuture<CodezenModel> CodezenRd(CodezenModel member) {
-        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
+        if(member.getNumber1()!=null) {
+            Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+            Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
 
-        if (
-                gid1.isPresent() &&
-                        (gid2.isPresent() || member.getGid2() == null )
-        ) {
-            List<CodezenModel> list = coding.findAll();
-            for (CodezenModel i : list) {
+            if (
+                    gid1.isPresent() &&
+                            (gid2.isPresent() || member.getGid2() == null)
+            ) {
+                List<CodezenModel> list = coding.findAll();
+                for (CodezenModel i : list) {
+                    if (
+                            (
+                                    member.getGid1().equals(i.getGid1()) ||
+                                            member.getGid1().equals(i.getGid2()) ||
+                                            member.getGid1().equals(member.getGid2())
+                            ) ||
+                                    (
+                                            (member.getGid2() != null && member.getGid2().equals(i.getGid1())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid2())) ||
+
+                                                    (member.getGid2() != null && member.getGid2().equals(member.getGid1()))
+                                    )
+                    ) {
+                        throw new RuntimeException("GID already exists.");
+                    }
+                }
                 if (
                         (
-                                member.getGid1().equals(i.getGid1()) ||
-                                        member.getGid1().equals(i.getGid2()) ||
-                                        member.getGid1().equals(member.getGid2())
-                        )||
+                                member.getGid1().equals(member.getGid2())
+                        ) ||
                                 (
-                                        (member.getGid2() != null &&member.getGid2().equals(i.getGid1())) ||
-                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid2()) )||
-
-                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid1()))
+                                        member.getGid2() != null && member.getGid2().equals(member.getGid1())
                                 )
                 ) {
                     throw new RuntimeException("GID already exists.");
+
+                } else {
+                    CompletableFuture<CodezenModel> codezen = CompletableFuture.completedFuture(coding.save(member));
+                    member.setTid("paridhi" + member.getId() + "2002" + member.getId() + "05202024");
+                    coding.save(member);
+                    String tid = member.getTid();
+
+                    List<String> emails = getEmails(tid);
+                    emailService.sendEventRegistrationEmail(
+                            tid,
+                            "Codezen",
+                            member.getTeamname(),
+                            emails.toArray(new String[0])
+                    );
+
+                    return codezen;
                 }
             }
-            if(
-                    (
-                            member.getGid1().equals(member.getGid2())
-                    )||
-                            (
-                                    member.getGid2() != null &&member.getGid2().equals(member.getGid1())
-                            )
-            ){
-                throw new RuntimeException("GID already exists.");
-            }
-            else {
-                CompletableFuture<CodezenModel> codezen = CompletableFuture.completedFuture(coding.save(member));
-                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
-                coding.save(member);
-                String tid = member.getTid();
-
-                List<String> emails = getEmails(tid);
-                emailService.sendEventRegistrationEmail(
-                        tid,
-                        "Codezen",
-                        member.getTeamname(),
-                        emails.toArray(new String[0])
-                );
-
-                return codezen;
-            }
+            throw new RuntimeException("GID not present");
         }
-        throw new RuntimeException("GID not present");
+        else
+        {
+            throw new RuntimeException("Number is required");
+        }
     }
 
     @Async

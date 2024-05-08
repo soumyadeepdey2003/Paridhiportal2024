@@ -28,80 +28,85 @@ public class TrackOTeasureService {
 
     @Async
     public CompletableFuture<TrackOTeasureModel> trackOTreasureRd(TrackOTeasureModel member) {
-        Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
-        Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
-        Optional<MrdModel> gid3 = Optional.ofNullable(member.getGid3()).flatMap(repo::findByGid);
-        if ( gid1.isPresent() &&
-                (gid2.isPresent() || member.getGid2() == null) &&
-                (gid3.isPresent() || member.getGid3() == null)
-        ) {
-            List<TrackOTeasureModel> list = civil.findAll();
-            for (TrackOTeasureModel i : list) {
+        if(member.getNumber1()!=null) {
+            Optional<MrdModel> gid1 = repo.findByGid(member.getGid1());
+            Optional<MrdModel> gid2 = Optional.ofNullable(member.getGid2()).flatMap(repo::findByGid);
+            Optional<MrdModel> gid3 = Optional.ofNullable(member.getGid3()).flatMap(repo::findByGid);
+            if (gid1.isPresent() &&
+                    (gid2.isPresent() || member.getGid2() == null) &&
+                    (gid3.isPresent() || member.getGid3() == null)
+            ) {
+                List<TrackOTeasureModel> list = civil.findAll();
+                for (TrackOTeasureModel i : list) {
+                    if (
+                            (
+                                    member.getGid1().equals(i.getGid1()) ||
+                                            member.getGid1().equals(i.getGid2()) ||
+                                            member.getGid1().equals(i.getGid3()) ||
+
+                                            member.getGid1().equals(member.getGid2()) ||
+                                            member.getGid1().equals(member.getGid3())
+                            ) ||
+                                    (
+                                            (member.getGid2() != null && member.getGid2().equals(i.getGid1())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid2())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(i.getGid3())) ||
+
+                                                    (member.getGid2() != null && member.getGid2().equals(member.getGid1())) ||
+                                                    (member.getGid2() != null && member.getGid2().equals(member.getGid3()))
+                                    ) ||
+
+                                    (
+                                            (
+                                                    (member.getGid3() != null && member.getGid3().equals(i.getGid3())) ||
+                                                            (member.getGid3() != null && member.getGid3().equals(i.getGid1())) ||
+                                                            (member.getGid3() != null && member.getGid3().equals(i.getGid2())) ||
+
+                                                            (member.getGid3() != null && member.getGid3().equals(member.getGid1())) ||
+                                                            (member.getGid3() != null && member.getGid3().equals(member.getGid2()))
+                                            )
+                                    )
+                    ) {
+                        throw new RuntimeException("GID already exists.");
+                    }
+                }
                 if (
                         (
-                                member.getGid1().equals(i.getGid1()) ||
-                                        member.getGid1().equals(i.getGid2()) ||
-                                        member.getGid1().equals(i.getGid3()) ||
-
-                                        member.getGid1().equals(member.getGid2())||
+                                member.getGid1().equals(member.getGid2()) ||
                                         member.getGid1().equals(member.getGid3())
-                        )||
+                        ) ||
                                 (
-                                        (member.getGid2() != null &&member.getGid2().equals(i.getGid1())) ||
-                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid2()) )||
-                                                (member.getGid2() != null &&member.getGid2().equals(i.getGid3())) ||
-
-                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid1()))||
-                                                (member.getGid2() != null &&member.getGid2().equals(member.getGid3()))
-                                )||
-
+                                        (member.getGid2() != null && member.getGid2().equals(member.getGid1())) ||
+                                                (member.getGid2() != null && member.getGid2().equals(member.getGid3()))
+                                ) ||
                                 (
-                                        (
-                                                (member.getGid3() != null && member.getGid3().equals(i.getGid3())) ||
-                                                        (member.getGid3() != null &&member.getGid3().equals(i.getGid1())) ||
-                                                        (member.getGid3() != null &&member.getGid3().equals(i.getGid2()) )||
-
-                                                        (member.getGid3() != null &&member.getGid3().equals(member.getGid1()))||
-                                                        (member.getGid3() != null &&member.getGid3().equals(member.getGid2()))
-                                        )
+                                        (member.getGid3() != null && member.getGid3().equals(member.getGid2())) ||
+                                                (member.getGid3() != null && member.getGid3().equals(member.getGid1()))
                                 )
-                ) {
-                    throw new RuntimeException("GID already exists.");
+                )
+                    throw new RuntimeException("GID already exists");
+                else {
+                    CompletableFuture<TrackOTeasureModel> trackOTreasure = CompletableFuture.completedFuture(civil.save(member));
+                    member.setTid("paridhi" + member.getId() + "2002" + member.getId() + "05202024");
+                    civil.save(member);
+                    String tid = member.getTid();
+
+                    List<String> emails = getEmails(tid);
+                    emailService.sendEventRegistrationEmail(
+                            tid,
+                            "Track-O-Treasure",
+                            "Team",
+                            emails.toArray(new String[0])
+                    );
+
+                    return trackOTreasure;
                 }
             }
-            if(
-                    (
-                            member.getGid1().equals(member.getGid2())||
-                                    member.getGid1().equals(member.getGid3())
-                    )||
-                            (
-                                    (member.getGid2() != null &&member.getGid2().equals(member.getGid1()))||
-                                            (member.getGid2() != null &&member.getGid2().equals(member.getGid3()))
-                            )||
-                            (
-                                    (member.getGid3() != null &&member.getGid3().equals(member.getGid2()))||
-                                            (member.getGid3() != null &&member.getGid3().equals(member.getGid1()))
-                            )
-            )
-                throw new RuntimeException("GID already exists");
-            else {
-                CompletableFuture<TrackOTeasureModel> trackOTreasure = CompletableFuture.completedFuture(civil.save(member));
-                member.setTid("paridhi"+member.getId()+"2002"+member.getId()+"05202024");
-                civil.save(member);
-                String tid = member.getTid();
-
-                List<String> emails = getEmails(tid);
-                emailService.sendEventRegistrationEmail(
-                        tid,
-                        "Track-O-Treasure",
-                        "Team",
-                        emails.toArray(new String[0])
-                );
-
-                return trackOTreasure;
-            }
+            throw new RuntimeException("GID not present");
         }
-        throw new RuntimeException("GID not present");
+        else {
+            throw new RuntimeException("Number is required");
+        }
     }
 
     public CompletableFuture<MrdModel> checkGid(String gid) {
@@ -120,6 +125,8 @@ public class TrackOTeasureService {
             return CompletableFuture.completedFuture(trackOTreasure);
         } else {
             throw new RuntimeException("GID not present");
+
+
         }
     }
 
