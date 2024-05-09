@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.gaming.Service.GamingCheckTidService;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.BgmiLan;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.PesLan;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.ValorantLan;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,46 +21,40 @@ public class GamingCheckTidController {
     @Autowired
     private GamingCheckTidService service;
 
-    @Async
     @GetMapping("/bgmi/{tid}")
-    public CompletableFuture<ResponseEntity<?>> checkBgmiLanTid (
+    public ResponseEntity<?> checkBgmiLanTid (
             @PathVariable("tid") String tid
     ) {
-        return service.checkBgmiLanTid(tid).thenApply(savedMember -> {
-            if (savedMember != null) {
-                return ResponseEntity.ok().body(savedMember);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        BgmiLan model = service.checkBgmiLanTid(tid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
     @GetMapping("/valorant/{tid}")
-    public CompletableFuture<ResponseEntity<?>> checkValorantLanTid(
+    public ResponseEntity<?> checkValorantLanTid(
             @PathVariable("tid") String tid
     ) {
-        return service.checkValorantLanTid(tid).thenApply(savedMember -> {
-            if (savedMember != null) {
-                return ResponseEntity.ok().body(savedMember);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        ValorantLan model = service.checkValorantLanTid(tid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
     @GetMapping("/pes/{tid}")
-    public CompletableFuture<ResponseEntity<?>> checkPesLanTid (
+    public ResponseEntity<?> checkPesLanTid (
             @PathVariable("tid") String tid
     ) {
-        return service.checkPesLanTid(tid).thenApply(savedMember -> {
-            if (savedMember != null) {
-                return ResponseEntity.ok().body(savedMember);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        PesLan model = service.checkPesLanTid(tid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

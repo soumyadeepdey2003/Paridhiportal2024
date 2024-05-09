@@ -36,8 +36,7 @@ public class GeneralTidService {
     @Autowired
     private CarromService carromService;
 
-    @Async
-    public CompletableFuture<BingeQuiz> updateBingeQuizPaidStatus (
+    public BingeQuiz updateBingeQuizPaidStatus (
             String tid,
             boolean paid
     ) {
@@ -56,12 +55,11 @@ public class GeneralTidService {
                     emails.toArray(new String[0])
             );
 
-            return CompletableFuture.completedFuture(bingeQuizRepository.save(model.get()));
+            return bingeQuizRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<TableTennis> updateTableTennisPaidStatus (
+    public TableTennis updateTableTennisPaidStatus (
             String tid,
             boolean paid
     ) {
@@ -80,12 +78,11 @@ public class GeneralTidService {
                     emails.toArray(new String[0])
             );
 
-            return CompletableFuture.completedFuture(tableTennisRepository.save(model.get()));
+            return tableTennisRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<Carrom> updateCarromPaidStatus (
+    public Carrom updateCarromPaidStatus (
             String tid,
             boolean paid
     ) {
@@ -104,11 +101,7 @@ public class GeneralTidService {
                     emails.toArray(new String[0])
             );
 
-            return CompletableFuture.completedFuture(carromRepository.save(model.get()));
+            return carromRepository.save(model.get());
         }
     }
-
-
-
-
 }

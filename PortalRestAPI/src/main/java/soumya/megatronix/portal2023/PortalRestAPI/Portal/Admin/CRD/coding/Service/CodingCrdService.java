@@ -1,7 +1,6 @@
 package soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.CRD.coding.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.coding.CodeQuestModel;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.coding.CodezenModel;
@@ -12,7 +11,6 @@ import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Repository.codi
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class CodingCrdService {
@@ -25,38 +23,34 @@ public class CodingCrdService {
     @Autowired
     private WebMindsRepository webMindsRepository;
 
-    @Async
-    public CompletableFuture<ArrayList<CodezenModel>> getCodezenCrd () {
+    public ArrayList<CodezenModel> getCodezenCrd () {
         ArrayList<CodezenModel> models = new ArrayList<>();
         for (CodezenModel model : codezenRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<ArrayList<CodeQuestModel>> getCodeQuestCrd () {
+    public ArrayList<CodeQuestModel> getCodeQuestCrd () {
         ArrayList<CodeQuestModel> models = new ArrayList<>();
         for (CodeQuestModel model : codeQuestRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<ArrayList<WebMindsModel>> getWebMindsCrd () {
+    public ArrayList<WebMindsModel> getWebMindsCrd () {
         ArrayList<WebMindsModel> models = new ArrayList<>();
         for (WebMindsModel model : webMindsRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<CodezenModel> updateCodezenCrd (
+    public CodezenModel updateCodezenCrd (
             String tid,
             boolean played
     ) {
@@ -65,26 +59,24 @@ public class CodingCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(codezenRepository.save(model.get()));
+            return codezenRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<CodeQuestModel> updateCodeQuestCrd (
+    public CodeQuestModel updateCodeQuestCrd (
             String tid,
             boolean played
     ) {
-        Optional<CodeQuestModel> model = codeQuestRepository.findByTid(tid);
-        if (model.isEmpty())
+        Optional< CodeQuestModel > model = codeQuestRepository.findByTid(tid);
+        if ( model.isEmpty() )
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(codeQuestRepository.save(model.get()));
+            return codeQuestRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<WebMindsModel> updateWebMindsCrd (
+    public WebMindsModel updateWebMindsCrd (
             String tid,
             boolean played
     ) {
@@ -93,7 +85,7 @@ public class CodingCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(webMindsRepository.save(model.get()));
+            return webMindsRepository.save(model.get());
         }
     }
 }

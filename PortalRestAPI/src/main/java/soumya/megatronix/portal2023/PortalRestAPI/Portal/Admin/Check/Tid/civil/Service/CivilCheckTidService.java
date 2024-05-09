@@ -20,40 +20,36 @@ public class CivilCheckTidService {
     @Autowired
     private MegaArchRepository megaArchRepository;
 
-
-    @Async
-    public CompletableFuture<SetuBandhanModel> checkSetuBandhanTid(
+    public SetuBandhanModel checkSetuBandhanTid(
             String tid
     ) {
         Optional<SetuBandhanModel> model = setuBandhanRepository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return CompletableFuture.completedFuture(model.get());
+            return model.get();
         }
     }
 
-    @Async
-    public CompletableFuture<TrackOTeasureModel> checkToTTid(
+    public TrackOTeasureModel checkToTTid(
             String tid
     ) {
         Optional<TrackOTeasureModel> model = trackOTeasureRepository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return CompletableFuture.completedFuture(model.get());
+            return model.get();
         }
     }
 
-    @Async
-    public CompletableFuture<MegaArchModel> checkMegaArchTid(
+    public MegaArchModel checkMegaArchTid(
             String tid
     ) {
         Optional<MegaArchModel> model = megaArchRepository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return CompletableFuture.completedFuture(model.get());
+            return model.get();
         }
     }
 }

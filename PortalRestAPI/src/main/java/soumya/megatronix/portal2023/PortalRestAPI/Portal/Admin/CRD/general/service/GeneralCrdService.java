@@ -24,38 +24,34 @@ public class GeneralCrdService {
     @Autowired
     private CarromRepository carromRepository;
 
-    @Async
-    public CompletableFuture<ArrayList<BingeQuiz>> getBingeQuizPlayedStatus () {
+    public ArrayList<BingeQuiz> getBingeQuizPlayedStatus () {
         ArrayList<BingeQuiz> models = new ArrayList<>();
         for(BingeQuiz model : bingeQuizRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<ArrayList<TableTennis>> getTableTennisPlayedStatus () {
+    public ArrayList<TableTennis> getTableTennisPlayedStatus () {
         ArrayList<TableTennis> models = new ArrayList<>();
         for(TableTennis model : tableTennisRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<ArrayList<Carrom>> getCarromPlayedStatus () {
+    public ArrayList<Carrom> getCarromPlayedStatus () {
         ArrayList<Carrom> models = new ArrayList<>();
         for(Carrom model : carromRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<BingeQuiz> updateBingeQuizPlayedStatus (
+    public BingeQuiz updateBingeQuizPlayedStatus (
             String tid,
             boolean played
     ) {
@@ -65,12 +61,11 @@ public class GeneralCrdService {
             throw new RuntimeException("No such TID found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(bingeQuizRepository.save(model.get()));
+            return bingeQuizRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<TableTennis> updateTableTennisPlayedStatus (
+    public TableTennis updateTableTennisPlayedStatus (
             String tid,
             boolean played
     ) {
@@ -80,12 +75,11 @@ public class GeneralCrdService {
             throw new RuntimeException("No such TID found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(tableTennisRepository.save(model.get()));
+            return tableTennisRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<Carrom> updateCarromPlayedStatus (
+    public Carrom updateCarromPlayedStatus (
             String tid,
             boolean played
     ) {
@@ -95,7 +89,7 @@ public class GeneralCrdService {
             throw new RuntimeException("No such TID found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(carromRepository.save(model.get()));
+            return carromRepository.save(model.get());
         }
     }
 

@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class GamingCheckTidService {
-    
+
     //    gaming Repository
     @Autowired
     private BgmiLanRepository gaming1Repository;
@@ -20,39 +20,36 @@ public class GamingCheckTidService {
     @Autowired
     private PesLanRepository gaming3Repository;
 
-    @Async
-    public CompletableFuture<BgmiLan> checkBgmiLanTid(
+    public BgmiLan checkBgmiLanTid(
             String tid
     ) {
         Optional<BgmiLan> model = gaming1Repository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return CompletableFuture.completedFuture(model.get());
+            return model.get();
         }
     }
 
-    @Async
-    public CompletableFuture<ValorantLan> checkValorantLanTid(
+    public ValorantLan checkValorantLanTid(
             String tid
     ) {
         Optional<ValorantLan> model = gaming2Repository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return CompletableFuture.completedFuture(model.get());
+            return model.get();
         }
     }
 
-    @Async
-    public CompletableFuture<PesLan> checkPesLanTid(
+    public PesLan checkPesLanTid(
             String tid
     ) {
         Optional<PesLan> model = gaming3Repository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return CompletableFuture.completedFuture(model.get());
+            return model.get();
         }
     }
 }

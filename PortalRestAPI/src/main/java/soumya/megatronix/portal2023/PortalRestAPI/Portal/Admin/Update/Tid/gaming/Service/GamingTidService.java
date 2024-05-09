@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class GamingTidService {
-    
+
     //    gaming Repository
     @Autowired
     private BgmiLanRepository gaming1Repository;
@@ -37,8 +37,7 @@ public class GamingTidService {
     @Autowired
     private PesLanService gaming3Service;
 
-    @Async
-    public CompletableFuture<BgmiLan> checkBgmiLanTid(
+    public BgmiLan checkBgmiLanTid(
             String tid,
             boolean paid
     ) {
@@ -54,12 +53,11 @@ public class GamingTidService {
                     model.get().getTeamname(),
                     emails.toArray(new String[0])
             );
-            return CompletableFuture.completedFuture(gaming1Repository.save(model.get()));
+            return gaming1Repository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<ValorantLan> checkValorantLanTid(
+    public ValorantLan checkValorantLanTid(
             String tid,
             boolean paid
     ) {
@@ -75,12 +73,11 @@ public class GamingTidService {
                     model.get().getTeamname(),
                     emails.toArray(new String[0])
             );
-            return CompletableFuture.completedFuture(gaming2Repository.save(model.get()));
+            return gaming2Repository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<PesLan> checkPesLanTid(
+    public PesLan checkPesLanTid(
             String tid,
             boolean paid
     ) {
@@ -96,7 +93,7 @@ public class GamingTidService {
                     model.get().getTeamname(),
                     emails.toArray(new String[0])
             );
-            return CompletableFuture.completedFuture(gaming3Repository.save(model.get()));
+            return gaming3Repository.save(model.get());
         }
     }
 }

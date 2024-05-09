@@ -43,9 +43,7 @@ public class CivilTidService {
     @Autowired
     private MegaArchService megaArchService;
 
-
-    @Async
-    public CompletableFuture<SetuBandhanModel> checkSetuBandhanTid(
+    public SetuBandhanModel checkSetuBandhanTid(
             String tid,
             boolean paid
     ) {
@@ -63,12 +61,11 @@ public class CivilTidService {
                     emails.toArray(new String[0])
             );
 
-            return CompletableFuture.completedFuture(setuBandhanRepository.save(model.get()));
+            return setuBandhanRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<TrackOTeasureModel> checkToTTid(
+    public TrackOTeasureModel checkToTTid(
             String tid,
             boolean paid
     ) {
@@ -80,18 +77,16 @@ public class CivilTidService {
             List<String>emails=trackOTeasureService.getEmails(model.get().getTid());
             emailService.sendEventRegistrationUpdateEmail(
                     tid,
-                    "TrackOTeasure",
+                    "Track-O-Treasure",
                     "Team",
                     emails.toArray(new String[0])
-
             );
 
-            return CompletableFuture.completedFuture(trackOTeasureRepository.save(model.get()));
+            return trackOTeasureRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<MegaArchModel> checkMegaArchTid(
+    public MegaArchModel checkMegaArchTid(
             String tid,
             boolean paid
     ) {
@@ -103,14 +98,11 @@ public class CivilTidService {
             List<String>emails= megaArchService.getEmails(tid);
             emailService.sendEventRegistrationUpdateEmail(
                     tid,
-                    "TrackOTeasure",
+                    "Mega-Arch",
                     "Team",
                     emails.toArray(new String[0])
-
             );
-            return CompletableFuture.completedFuture(megaArchRepository.save(model.get()));
+            return megaArchRepository.save(model.get());
         }
     }
-
-
 }

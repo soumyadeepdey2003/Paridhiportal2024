@@ -25,58 +25,52 @@ public class RoboticsCrdService {
     @Autowired
     private War15KgRepository war15KgRepository;
 
-    @Async
-    public CompletableFuture<ArrayList<LineTrekkerModel>> getLineTrekkerCrd () {
+    public ArrayList<LineTrekkerModel> getLineTrekkerCrd () {
         ArrayList<LineTrekkerModel> models = new ArrayList<>();
         for(LineTrekkerModel model : lineTrekkerRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<ArrayList<RoboKlassikerModel>> getRoboKlassikerCrd () {
+    public ArrayList<RoboKlassikerModel> getRoboKlassikerCrd () {
         ArrayList<RoboKlassikerModel> models = new ArrayList<>();
         for(RoboKlassikerModel model : roboKlassikerRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<ArrayList<TriathlonModel>> getTriathlonCrd() {
+    public ArrayList<TriathlonModel> getTriathlonCrd() {
         ArrayList<TriathlonModel> models = new ArrayList<>();
         for(TriathlonModel model : triathlonRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<ArrayList<War8KgModel>> getWar8KgCrd() {
+    public ArrayList<War8KgModel> getWar8KgCrd() {
         ArrayList<War8KgModel> models = new ArrayList<>();
         for(War8KgModel model : war8KgRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<ArrayList<War15KgModel>> getWar15KgCrd () {
+    public ArrayList<War15KgModel> getWar15KgCrd () {
         ArrayList<War15KgModel> models = new ArrayList<>();
         for(War15KgModel model : war15KgRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return CompletableFuture.completedFuture(models);
+        return models;
     }
 
-    @Async
-    public CompletableFuture<LineTrekkerModel> updateLineTrekkerCrd (
+    public LineTrekkerModel updateLineTrekkerCrd (
             String tid,
             boolean played
     ) {
@@ -85,12 +79,11 @@ public class RoboticsCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(lineTrekkerRepository.save(model.get()));
+            return lineTrekkerRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<RoboKlassikerModel> updateRoboKlassikerCrd (
+    public RoboKlassikerModel updateRoboKlassikerCrd (
             String tid,
             boolean played
     ) {
@@ -99,12 +92,11 @@ public class RoboticsCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(roboKlassikerRepository.save(model.get()));
+            return roboKlassikerRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<TriathlonModel> updateTriathlonCrd (
+    public TriathlonModel updateTriathlonCrd (
             String tid,
             boolean played
     ) {
@@ -113,12 +105,11 @@ public class RoboticsCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(triathlonRepository.save(model.get()));
+            return triathlonRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<War8KgModel> updateWar8KgCrd (
+    public War8KgModel updateWar8KgCrd (
             String tid,
             boolean played
     ) {
@@ -127,12 +118,11 @@ public class RoboticsCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(war8KgRepository.save(model.get()));
+            return war8KgRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<War15KgModel> updateWar15KgCrd (
+    public War15KgModel updateWar15KgCrd (
             String tid,
             boolean played
     ) {
@@ -141,7 +131,7 @@ public class RoboticsCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return CompletableFuture.completedFuture(war15KgRepository.save(model.get()));
+            return war15KgRepository.save(model.get());
         }
     }
 

@@ -5,6 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Update.Tid.gaming.Service.GamingTidService;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.BgmiLan;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.PesLan;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.ValorantLan;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,52 +19,43 @@ GamingTidController {
     @Autowired
     private GamingTidService service;
 
-    @Async
     @PutMapping("/bgmi/{tid}/{paid}")
-    public CompletableFuture<ResponseEntity<?>> checkBgmiLanTid (
+    public ResponseEntity<?> checkBgmiLanTid (
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
     ) {
-        return CompletableFuture.completedFuture(service.checkBgmiLanTid(tid, paid))
-                .thenApply(savedMember -> {
-                    if (savedMember != null) {
-                        return ResponseEntity.ok().body(savedMember);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        BgmiLan model = service.checkBgmiLanTid(tid, paid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
     @PutMapping("/valorant/{tid}/{paid}")
-    public CompletableFuture<ResponseEntity<?>> checkValorantLanTid(
+    public ResponseEntity<?> checkValorantLanTid(
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
     ) {
-        return CompletableFuture.completedFuture(service.checkValorantLanTid(tid, paid))
-                .thenApply(savedMember -> {
-                    if (savedMember != null) {
-                        return ResponseEntity.ok().body(savedMember);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        ValorantLan model = service.checkValorantLanTid(tid, paid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
     @PutMapping("/pes/{tid}/{paid}")
-    public CompletableFuture<ResponseEntity<?>> checkPesLanTid (
+    public ResponseEntity<?> checkPesLanTid (
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
     ) {
-        return CompletableFuture.completedFuture(service.checkPesLanTid(tid, paid))
-                .thenApply(savedMember -> {
-                    if (savedMember != null) {
-                        return ResponseEntity.ok().body(savedMember);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        PesLan model = service.checkPesLanTid(tid, paid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

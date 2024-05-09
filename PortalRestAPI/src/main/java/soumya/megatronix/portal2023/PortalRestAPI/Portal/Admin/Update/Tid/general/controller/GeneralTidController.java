@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Update.Tid.general.service.GeneralTidService;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.BingeQuiz;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.Carrom;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.TableTennis;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,48 +21,45 @@ public class GeneralTidController {
     @Autowired
     private GeneralTidService service;
 
-    @Async
+
     @PutMapping("/binge-quiz/{tid}/{paid}")
-    public CompletableFuture<ResponseEntity<?>> handleUpdateBingeQuizPaidStatus (
+    public ResponseEntity<?> handleUpdateBingeQuizPaidStatus (
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
     ) {
-        return CompletableFuture.completedFuture(service.updateBingeQuizPaidStatus(tid, paid))
-                .thenApply(success -> {
-                    if(success != null)
-                        return ResponseEntity.ok(success);
-                    else
-                        return ResponseEntity.notFound().build();
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        BingeQuiz model = service.updateBingeQuizPaidStatus(tid, paid);
+        if(model != null){
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
+
     @PutMapping("/table-tennis/{tid}/{paid}")
-    public CompletableFuture<ResponseEntity<?>> handleUpdateTableTennisPaidStatus (
+    public ResponseEntity<?> handleUpdateTableTennisPaidStatus (
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
     ) {
-        return CompletableFuture.completedFuture(service.updateTableTennisPaidStatus(tid, paid))
-                .thenApply(success -> {
-                    if(success != null)
-                        return ResponseEntity.ok(success);
-                    else
-                        return ResponseEntity.notFound().build();
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        TableTennis model = service.updateTableTennisPaidStatus(tid, paid);
+        if(model != null){
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
+
     @PutMapping("/carrom/{tid}/{paid}")
-    public CompletableFuture<ResponseEntity<?>> handleUpdateCarromPaidStatus (
+    public ResponseEntity<?> handleUpdateCarromPaidStatus (
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
     ) {
-        return CompletableFuture.completedFuture(service.updateCarromPaidStatus(tid, paid))
-                .thenApply(success -> {
-                    if(success != null)
-                        return ResponseEntity.ok(success);
-                    else
-                        return ResponseEntity.notFound().build();
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        Carrom model = service.updateCarromPaidStatus(tid, paid);
+        if ( model != null ) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

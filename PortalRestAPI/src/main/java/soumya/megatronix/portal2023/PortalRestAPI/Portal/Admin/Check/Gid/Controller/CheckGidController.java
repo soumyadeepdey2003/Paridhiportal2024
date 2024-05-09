@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Gid.Service.CheckGidService;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Model.MrdModel;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,17 +19,15 @@ public class CheckGidController {
     @Autowired
     private CheckGidService service;
 
-    @Async
     @GetMapping("/{gid}")
-    public CompletableFuture<ResponseEntity<?>> checkGid(
+    public ResponseEntity<?> checkGid(
             @PathVariable("gid") String gid
     ) {
-        return CompletableFuture.completedFuture(service.checkGidAdmin(gid))
-                .thenApply(success -> {
-                    if(success != null)
-                        return ResponseEntity.ok(success);
-                    else
-                        return ResponseEntity.notFound().build();
-                }).exceptionally(ex ->ResponseEntity.badRequest().body(ex.getMessage()));
+        MrdModel model = service.checkGidAdmin(gid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

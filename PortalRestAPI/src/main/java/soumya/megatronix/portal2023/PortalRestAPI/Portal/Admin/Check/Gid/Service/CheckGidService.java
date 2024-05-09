@@ -15,11 +15,10 @@ public class CheckGidService {
     @Autowired
     private MrdRepository mrdRepository;
 
-    @Async
-    public CompletableFuture<MrdModel> checkGidAdmin (String gid) {
+    public MrdModel checkGidAdmin (String gid) {
         Optional<MrdModel> mrdModel = mrdRepository.findByGid(gid);
         if(mrdModel.isPresent()) {
-            return CompletableFuture.completedFuture(mrdModel.get());
+            return mrdModel.get();
         }
         throw new RuntimeException("GID not found");
     }

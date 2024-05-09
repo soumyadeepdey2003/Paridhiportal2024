@@ -37,8 +37,7 @@ public class CodingTidService {
     @Autowired
     private EmailService emailService;
 
-    @Async
-    public CompletableFuture<CodezenModel> checkCodezenTid(
+    public CodezenModel checkCodezenTid(
             String tid,
             boolean paid
     ) {
@@ -54,12 +53,11 @@ public class CodingTidService {
                     model.get().getTeamname(),
                     emails.toArray(new String[0])
             );
-            return CompletableFuture.completedFuture(codezenRepository.save(model.get()));
+            return codezenRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<CodeQuestModel> checkCodeQuestTid(
+    public CodeQuestModel checkCodeQuestTid(
             String tid,
             boolean paid
     ) {
@@ -75,12 +73,11 @@ public class CodingTidService {
                     model.get().getTeamname(),
                     emails.toArray(new String[0])
             );
-            return CompletableFuture.completedFuture(codeQuestRepository.save(model.get()));
+            return codeQuestRepository.save(model.get());
         }
     }
 
-    @Async
-    public CompletableFuture<WebMindsModel> checkWebMindsTid(
+    public WebMindsModel checkWebMindsTid(
             String tid,
             boolean paid
     ) {
@@ -96,7 +93,7 @@ public class CodingTidService {
                     model.get().getTeamname(),
                     emails.toArray(new String[0])
             );
-            return CompletableFuture.completedFuture(webMindsRepository.save(model.get()));
+            return webMindsRepository.save(model.get());
         }
     }
 }

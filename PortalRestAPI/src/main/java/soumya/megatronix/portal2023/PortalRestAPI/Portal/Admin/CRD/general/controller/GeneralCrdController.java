@@ -2,11 +2,13 @@ package soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.CRD.general.cont
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.CRD.general.service.GeneralCrdService;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.BingeQuiz;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.Carrom;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.TableTennis;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.List;
 
 @RestController
 @RequestMapping("megatronix/paridhi/admin/crd/general")
@@ -15,90 +17,75 @@ public class GeneralCrdController {
     @Autowired
     private GeneralCrdService service;
 
-    @Async
     @GetMapping("/binge-quiz")
-    public CompletableFuture<ResponseEntity<?>> handleGetBingeQuizPlayedStatus () {
-        return service.getBingeQuizPlayedStatus()
-                .thenApply(success -> {
-                    if (success == null)
-                        return ResponseEntity.badRequest().build();
-                    else
-                        return ResponseEntity.ok(success);
-                })
-                .exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+    public ResponseEntity<?> handleGetBingeQuizPlayedStatus () {
+        List< BingeQuiz > model = service.getBingeQuizPlayedStatus();
+        if ( model != null ) {
+            return ResponseEntity.ok(model);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @Async
     @GetMapping("/table-tennis")
-    public CompletableFuture<ResponseEntity<?>> handleGetTableTennisPlayedStatus () {
-        return service.getTableTennisPlayedStatus()
-                .thenApply(success -> {
-                    if (success == null)
-                        return ResponseEntity.badRequest().build();
-                    else
-                        return ResponseEntity.ok(success);
-                })
-                .exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+    public ResponseEntity<?> handleGetTableTennisPlayedStatus () {
+        List< TableTennis > model = service.getTableTennisPlayedStatus();
+        if ( model != null ) {
+            return ResponseEntity.ok(model);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @Async
     @GetMapping("/carrom")
-    public CompletableFuture<ResponseEntity<?>> handleGetCarromPlayedStatus () {
-        return service.getCarromPlayedStatus()
-                .thenApply(success -> {
-                    if (success == null)
-                        return ResponseEntity.badRequest().build();
-                    else
-                        return ResponseEntity.ok(success);
-                })
-                .exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+    public ResponseEntity<?> handleGetCarromPlayedStatus () {
+        List< Carrom > model = service.getCarromPlayedStatus();
+        if ( model != null ) {
+            return ResponseEntity.ok(model);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @Async
+
     @PutMapping("/binge-quiz/{tid}/{played}")
-    public CompletableFuture<ResponseEntity<?>> handleUpdateBingeQuizPlayedStatus (
+    public ResponseEntity<?> handleUpdateBingeQuizPlayedStatus (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return service.updateBingeQuizPlayedStatus(tid, played)
-                .thenApply(success -> {
-                    if( success != null)
-                        return ResponseEntity.ok(success);
-                    else
-                        return ResponseEntity.notFound().build();
-                })
-                .exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        BingeQuiz model = service.updateBingeQuizPlayedStatus(tid, played);
+        if ( model != null ) {
+            return ResponseEntity.ok(model);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @Async
+
     @PutMapping("/table-tennis/{tid}/{played}")
-    public CompletableFuture<ResponseEntity<?>> handleUpdateTableTennisPlayedStatus (
+    public ResponseEntity<?> handleUpdateTableTennisPlayedStatus (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return service.updateTableTennisPlayedStatus(tid, played)
-                .thenApply(success -> {
-                    if( success != null)
-                        return ResponseEntity.ok(success);
-                    else
-                        return ResponseEntity.notFound().build();
-                })
-                .exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        TableTennis model = service.updateTableTennisPlayedStatus(tid, played);
+        if ( model != null ) {
+            return ResponseEntity.ok(model);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @Async
+
     @PutMapping("/carrom/{tid}/{played}")
-    public CompletableFuture<ResponseEntity<?>> handleUpdateCarromPlayedStatus (
+    public ResponseEntity<?> handleUpdateCarromPlayedStatus (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        return service.updateCarromPlayedStatus(tid, played)
-                .thenApply(success -> {
-                    if( success != null)
-                        return ResponseEntity.ok(success);
-                    else
-                        return ResponseEntity.notFound().build();
-                })
-                .exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        TableTennis model = service.updateTableTennisPlayedStatus(tid, played);
+        if ( model != null ) {
+            return ResponseEntity.ok(model);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

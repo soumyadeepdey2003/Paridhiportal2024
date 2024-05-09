@@ -8,75 +8,63 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.model.Admin;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.repository.AdminRepository;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.repository.ValidationRepository;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.response.ValidationResponse;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.request.ValidationRequest;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.response.AuthResponse;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.service.AdminService;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("megatronix/paridhi/admin")
 public class AdminController {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private ValidationRepository validateRepository;
     @Qualifier("asyncExecutor")
     @Autowired
     private AsyncTaskExecutor asyncTaskExecutor;
     @Autowired
-    private AdminRepository adminRepository;
+    private AdminService adminService;
 
     @Async
     @GetMapping("/registration")
-    public CompletableFuture<ResponseEntity< ValidationResponse >> registrationForm() {
-        CompletableFuture< ValidationResponse > future = CompletableFuture.supplyAsync(() -> {
-            ValidationResponse user = new ValidationResponse();
+    public CompletableFuture<ResponseEntity<ValidationRequest>> registrationForm() {
+        CompletableFuture<ValidationRequest> future = CompletableFuture.supplyAsync(() -> {
+            ValidationRequest user = new ValidationRequest();
             return user;
         }, asyncTaskExecutor);
 
         return future.thenApply(result -> ResponseEntity.ok().body(result))
-                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+                .exceptionally(ex -> {
+                    System.out.println(ex.getMessage());
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+                });
     }
 
     @Async
     @PostMapping("/registration")
-    public CompletableFuture< ResponseEntity <?> > handleAdminRegistration(
-            @RequestBody ValidationResponse admin
+    public CompletableFuture<ResponseEntity<AuthResponse>> handleAdminRegistration (
+            @RequestBody ValidationRequest admin
     ) {
-        if(admin.isEmailVerified()){
-            Optional< Admin > adminOptional = adminRepository.findByUsername(admin.getUsername());
-            if ( adminOptional.isPresent() ) {
-                admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-                return CompletableFuture.completedFuture(validateRepository.save(admin))
-                        .thenApply(savedAdmin -> {
-                            if ( savedAdmin != null ) {
-                                return ResponseEntity.ok().body(savedAdmin);
-                            } else {
-                                return ResponseEntity.notFound().build();
-                            }
-                        }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
-            }
-        }
-        return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("Email not verified"));
+        return adminService.register(admin)
+                .thenApply(ResponseEntity::ok)
+                .exceptionally(ex -> {
+                    Throwable cause = ex.getCause();
+                    String errorMessage = cause != null ? cause.getMessage() : "Unknown error occurred";
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(errorMessage));
+                });
     }
 
     @Async
     @PostMapping("/login")
-    public CompletableFuture<ResponseEntity<?>> handleAdminLogin (
-            @RequestBody ValidationResponse login
+    public CompletableFuture<ResponseEntity<AuthResponse>> handleLogin (
+            @RequestBody ValidationRequest admin
     ) {
-        Optional< ValidationResponse > admin = validateRepository.findByUsername(login.getUsername());
-        if ( admin.isPresent() ) {
-            ValidationResponse user = admin.get();
-            if ( passwordEncoder.matches(login.getPassword(), user.getPassword()) ) {
-                return CompletableFuture.completedFuture(ResponseEntity.ok().body(user));
-            }
-        }
-        return CompletableFuture.completedFuture(ResponseEntity.badRequest().body("Invalid username or password"));
+        return adminService.login(admin)
+                .thenApply(ResponseEntity::ok)
+                .exceptionally(ex -> {
+                    Throwable cause = ex.getCause();
+                    String errorMessage = cause != null ? cause.getMessage() : "Unknown error occurred";
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(errorMessage));
+                });
     }
 }

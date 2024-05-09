@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.robotics.Service.RoboticsCheckTidService;
+import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.robotics.*;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,79 +19,64 @@ public class RoboticsCheckTidController {
     @Autowired
     private RoboticsCheckTidService service;
 
-    @Async
     @GetMapping("/line-trekker/{tid}")
-    public CompletableFuture<ResponseEntity<?>> checkLineTrekkerTid (
+    public ResponseEntity<?> checkLineTrekkerTid (
             @PathVariable("tid") String tid
     ) {
-        return CompletableFuture.completedFuture(service.checkLineTrekkerTid(tid))
-                .thenApply(savedMember -> {
-                    if (savedMember != null) {
-                        return ResponseEntity.ok().body(savedMember);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        LineTrekkerModel model = service.checkLineTrekkerTid(tid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
     @GetMapping("/robo-klassiker/{tid}")
-    public CompletableFuture<ResponseEntity<?>> checkRoboKlassikerTid(
+    public ResponseEntity<?> checkRoboKlassikerTid(
             @PathVariable("tid") String tid
     ) {
-        return CompletableFuture.completedFuture(service.checkRoboKlassikerTid(tid))
-                .thenApply(savedMember -> {
-                    if (savedMember != null) {
-                        return ResponseEntity.ok().body(savedMember);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        RoboKlassikerModel model = service.checkRoboKlassikerTid(tid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
     @GetMapping("/triathlon/{tid}")
-    public CompletableFuture<ResponseEntity<?>> checkTriathlonTid (
+    public ResponseEntity<?> checkTriathlonTid (
             @PathVariable("tid") String tid
     ) {
-        return CompletableFuture.completedFuture(service.checkTriathlonTid(tid))
-                .thenApply(savedMember -> {
-                    if (savedMember != null) {
-                        return ResponseEntity.ok().body(savedMember);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        TriathlonModel model = service.checkTriathlonTid(tid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
     @GetMapping("/war-8kg/{tid}")
-    public CompletableFuture<ResponseEntity<?>> checkWar8kgTid (
+    public ResponseEntity<?> checkWar8kgTid (
             @PathVariable("tid") String tid
     ) {
-        return CompletableFuture.completedFuture(service.checkWar8kgTid(tid))
-                .thenApply(savedMember -> {
-                    if (savedMember != null) {
-                        return ResponseEntity.ok().body(savedMember);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        War8KgModel model = service.checkWar8kgTid(tid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Async
     @GetMapping("/war-15kg/{tid}")
-    public CompletableFuture<ResponseEntity<?>> checkWar15KgTid (
+    public ResponseEntity<?> checkWar15KgTid (
             @PathVariable("tid") String tid
     ) {
-        return CompletableFuture.completedFuture(service.checkWar15KgTid(tid))
-                .thenApply(savedMember -> {
-                    if (savedMember != null) {
-                        return ResponseEntity.ok().body(savedMember);
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
+        War15KgModel model = service.checkWar15KgTid(tid);
+        if (model != null) {
+            return ResponseEntity.ok().body(model);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
