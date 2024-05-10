@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Update.Tid.electrical.Service.ElectricalTidService;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.electrical.ElectriQuest;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.electrical.Electrical2;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,30 +15,36 @@ public class ElectricalTidController {
     @Autowired
     private ElectricalTidService service;
 
+    @Async
     @PutMapping("/electri-quest/{tid}/{paid}")
-    public ResponseEntity<?> checkElectriQuestTid (
+    public CompletableFuture<ResponseEntity<?>> checkElectriQuestTid (
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
     ) {
-        ElectriQuest model = service.checkElectriQuestTid(tid, paid);
-        if(model != null){
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkElectriQeustTid(tid, paid)
+                .thenApply(savedMember -> {
+                    if (savedMember != null) {
+                        return ResponseEntity.ok().body(savedMember);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @PutMapping("/electrical2/{tid}/{paid}")
-    public ResponseEntity<?> checkElectrical2Tid(
+    public CompletableFuture<ResponseEntity<?>> checkElectrical2Tid(
             @PathVariable("tid") String tid,
             @PathVariable("paid") Boolean paid
     ) {
-        Electrical2 model = service.checkElectrical2Tid(tid, paid);
-        if(model != null){
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkElectrical2Tid(tid, paid)
+                .thenApply(savedMember -> {
+                    if (savedMember != null) {
+                        return ResponseEntity.ok().body(savedMember);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
 }

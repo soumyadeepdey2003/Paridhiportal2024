@@ -209,7 +209,6 @@ public class War8KgService {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<War8KgModel> model = robotics.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

@@ -207,7 +207,6 @@ public class MegaArchService {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<MegaArchModel> model = civil.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.coding.Service.CodingCheckTidService;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.coding.CodeQuestModel;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.coding.CodezenModel;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.coding.WebMindsModel;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,39 +18,49 @@ public class CodingCheckTidController {
     @Autowired
     private CodingCheckTidService service;
 
+    @Async
     @GetMapping("/codezen/{tid}")
-    public ResponseEntity<?> checkCodezenTid (
+    public CompletableFuture<ResponseEntity<?>> checkCodezenTid (
             @PathVariable("tid") String tid
     ) {
-        CodezenModel model = service.checkCodezenTid(tid);
-        if (model != null) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkCodezenTid(tid)
+                .thenApply(savedMember -> {
+                    if (savedMember != null) {
+                        return ResponseEntity.ok().body(savedMember);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/code-quest/{tid}")
-    public ResponseEntity<?> checkCodeQuestTid(
+    public CompletableFuture<ResponseEntity<?>> checkCodeQuestTid(
             @PathVariable("tid") String tid
     ) {
-        CodeQuestModel model = service.checkCodeQuestTid(tid);
-        if (model != null) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkCodeQuestTid(tid)
+                .thenApply(savedMember -> {
+                    if (savedMember != null) {
+                        return ResponseEntity.ok().body(savedMember);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/web-minds/{tid}")
-    public ResponseEntity<?> checkWebMindsTid (
+    public CompletableFuture<ResponseEntity<?>> checkWebMindsTid (
             @PathVariable("tid") String tid
     ) {
-        WebMindsModel model = service.checkWebMindsTid(tid);
-        if (model != null) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkWebMindsTid(tid)
+                .thenApply(savedMember -> {
+                    if (savedMember != null) {
+                        return ResponseEntity.ok().body(savedMember);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
+
 }

@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class RoboticsTidService {
-
+    
     //    robotics
     @Autowired
     private LineTrekkerRepository lineTrekkerRepository;
@@ -40,7 +40,8 @@ public class RoboticsTidService {
     @Autowired
     private War15KgService war15KgService;
 
-    public LineTrekkerModel checkLineTrekkerTid(
+    @Async
+    public CompletableFuture<LineTrekkerModel> checkLineTrekkerTid(
             String tid,
             boolean paid
     ) {
@@ -58,11 +59,12 @@ public class RoboticsTidService {
                     emails.toArray(new String[0])
             );
 
-            return lineTrekkerRepository.save(model.get());
+            return CompletableFuture.completedFuture(lineTrekkerRepository.save(model.get()));
         }
     }
 
-    public RoboKlassikerModel checkRoboKlassikerTid(
+    @Async
+    public CompletableFuture<RoboKlassikerModel> checkRoboKlassikerTid(
             String tid,
             boolean paid
     ) {
@@ -80,11 +82,12 @@ public class RoboticsTidService {
                     emails.toArray(new String[0])
             );
 
-            return roboKlassikerRepository.save(model.get());
+            return CompletableFuture.completedFuture(roboKlassikerRepository.save(model.get()));
         }
     }
 
-    public TriathlonModel checkTriathlonTid(
+    @Async
+    public CompletableFuture<TriathlonModel> checkTriathlonTid(
             String tid,
             boolean paid
     ) {
@@ -102,11 +105,12 @@ public class RoboticsTidService {
                     emails.toArray(new String[0])
             );
 
-            return triathlonRepository.save(model.get());
+            return CompletableFuture.completedFuture(triathlonRepository.save(model.get()));
         }
     }
 
-    public War8KgModel checkWar8kgTid(
+    @Async
+    public CompletableFuture<War8KgModel> checkWar8kgTid(
             String tid,
             boolean paid
     ) {
@@ -124,11 +128,12 @@ public class RoboticsTidService {
                     emails.toArray(new String[0])
             );
 
-            return war8KgRepository.save(model.get());
+            return CompletableFuture.completedFuture(war8KgRepository.save(model.get()));
         }
     }
 
-    public War15KgModel checkWar15KgTid(
+    @Async
+    public CompletableFuture<War15KgModel> checkWar15KgTid(
             String tid,
             boolean paid
     ) {
@@ -146,7 +151,7 @@ public class RoboticsTidService {
                     emails.toArray(new String[0])
             );
 
-            return war15KgRepository.save(model.get());
+            return CompletableFuture.completedFuture(war15KgRepository.save(model.get()));
         }
     }
 }

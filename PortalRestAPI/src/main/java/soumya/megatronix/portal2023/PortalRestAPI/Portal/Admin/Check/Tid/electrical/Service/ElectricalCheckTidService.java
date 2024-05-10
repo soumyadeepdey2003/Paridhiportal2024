@@ -11,32 +11,34 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ElectricalCheckTidService {
-
+    
     //    electrical Repository
     @Autowired
     private ElectriQuestRepository electriQuestRepository;
     @Autowired
     private Electrical2Repository electrical2Repository;
 
-    public ElectriQuest checkElectriQeustTid(
+    @Async
+    public CompletableFuture<ElectriQuest> checkElectriQeustTid(
             String tid
     ) {
         Optional<ElectriQuest> model = electriQuestRepository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return model.get();
+            return CompletableFuture.completedFuture(model.get());
         }
     }
 
-    public Electrical2 checkElectrical2Tid(
+    @Async
+    public CompletableFuture<Electrical2> checkElectrical2Tid(
             String tid
     ) {
         Optional<Electrical2> model = electrical2Repository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return model.get();
+            return CompletableFuture.completedFuture(model.get());
         }
     }
 }

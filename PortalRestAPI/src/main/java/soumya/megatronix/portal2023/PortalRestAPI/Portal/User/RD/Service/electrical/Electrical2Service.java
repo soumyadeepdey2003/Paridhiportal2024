@@ -118,7 +118,6 @@ public class Electrical2Service {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<Electrical2> model = electrical.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

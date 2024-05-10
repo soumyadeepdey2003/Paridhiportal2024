@@ -83,7 +83,6 @@ public class TableTennisService {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<TableTennis> model = general.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

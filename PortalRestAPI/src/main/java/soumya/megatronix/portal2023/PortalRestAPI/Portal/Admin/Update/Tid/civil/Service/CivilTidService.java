@@ -43,7 +43,9 @@ public class CivilTidService {
     @Autowired
     private MegaArchService megaArchService;
 
-    public SetuBandhanModel checkSetuBandhanTid(
+
+    @Async
+    public CompletableFuture<SetuBandhanModel> checkSetuBandhanTid(
             String tid,
             boolean paid
     ) {
@@ -61,11 +63,12 @@ public class CivilTidService {
                     emails.toArray(new String[0])
             );
 
-            return setuBandhanRepository.save(model.get());
+            return CompletableFuture.completedFuture(setuBandhanRepository.save(model.get()));
         }
     }
 
-    public TrackOTeasureModel checkToTTid(
+    @Async
+    public CompletableFuture<TrackOTeasureModel> checkToTTid(
             String tid,
             boolean paid
     ) {
@@ -80,13 +83,15 @@ public class CivilTidService {
                     "Track-O-Treasure",
                     "Team",
                     emails.toArray(new String[0])
+
             );
 
-            return trackOTeasureRepository.save(model.get());
+            return CompletableFuture.completedFuture(trackOTeasureRepository.save(model.get()));
         }
     }
 
-    public MegaArchModel checkMegaArchTid(
+    @Async
+    public CompletableFuture<MegaArchModel> checkMegaArchTid(
             String tid,
             boolean paid
     ) {
@@ -101,8 +106,11 @@ public class CivilTidService {
                     "Mega-Arch",
                     "Team",
                     emails.toArray(new String[0])
+
             );
-            return megaArchRepository.save(model.get());
+            return CompletableFuture.completedFuture(megaArchRepository.save(model.get()));
         }
     }
+
+
 }

@@ -260,7 +260,6 @@ public class PesLanService {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<PesLan> model = gaming.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

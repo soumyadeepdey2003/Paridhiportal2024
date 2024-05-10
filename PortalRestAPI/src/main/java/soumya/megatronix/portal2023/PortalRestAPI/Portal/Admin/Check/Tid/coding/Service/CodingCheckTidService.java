@@ -20,36 +20,40 @@ public class CodingCheckTidService {
     @Autowired
     private WebMindsRepository webMindsRepository;
 
-    public CodezenModel checkCodezenTid(
+
+    @Async
+    public CompletableFuture<CodezenModel> checkCodezenTid(
             String tid
     ) {
         Optional<CodezenModel> model = codezenRepository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return model.get();
+            return CompletableFuture.completedFuture(model.get());
         }
     }
 
-    public CodeQuestModel checkCodeQuestTid(
+    @Async
+    public CompletableFuture<CodeQuestModel> checkCodeQuestTid(
             String tid
     ) {
         Optional<CodeQuestModel> model = codeQuestRepository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return model.get();
+            return CompletableFuture.completedFuture(model.get());
         }
     }
 
-    public WebMindsModel checkWebMindsTid(
+    @Async
+    public CompletableFuture<WebMindsModel> checkWebMindsTid(
             String tid
     ) {
         Optional<WebMindsModel> model = webMindsRepository.findByTid(tid);
         if (model.isEmpty()) {
             throw new RuntimeException("No such TID found");
         } else {
-            return model.get();
+            return CompletableFuture.completedFuture(model.get());
         }
     }
 }

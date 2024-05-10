@@ -23,7 +23,8 @@ public class GeneralCheckTidService {
     @Autowired
     private CarromRepository carromRepository;
 
-    public BingeQuiz checkBingeQuizTid (
+    @Async
+    public CompletableFuture<BingeQuiz> checkBingeQuizTid (
             String tid
     ) {
         Optional<BingeQuiz> model = bingeQuizRepository.findByTid(tid);
@@ -31,10 +32,11 @@ public class GeneralCheckTidService {
         if(model.isEmpty())
             throw new RuntimeException("No such TID found");
         else
-            return model.get();
+            return CompletableFuture.completedFuture(model.get());
     }
 
-    public TableTennis checkTableTennisTid (
+    @Async
+    public CompletableFuture<TableTennis> checkTableTennisTid (
             String tid
     ) {
         Optional<TableTennis> model = tableTennisRepository.findByTid(tid);
@@ -42,10 +44,11 @@ public class GeneralCheckTidService {
         if(model.isEmpty())
             throw new RuntimeException("No such TID found");
         else
-            return model.get();
+            return CompletableFuture.completedFuture(model.get());
     }
 
-    public Carrom checkCarromTid (
+    @Async
+    public CompletableFuture<Carrom> checkCarromTid (
             String tid
     ) {
         Optional<Carrom> model = carromRepository.findByTid(tid);
@@ -53,6 +56,6 @@ public class GeneralCheckTidService {
         if(model.isEmpty())
             throw new RuntimeException("No such TID found");
         else
-            return model.get();
+            return CompletableFuture.completedFuture(model.get());
     }
 }

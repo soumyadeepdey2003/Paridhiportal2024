@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.civil.Service.CivilCheckTidService;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.civil.MegaArchModel;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.civil.SetuBandhanModel;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.civil.TrackOTeasureModel;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,39 +18,49 @@ public class CivilCheckTidController {
     @Autowired
     private CivilCheckTidService service;
 
+    @Async
     @GetMapping("/setu-bandhan/{tid}")
-    public ResponseEntity<?> checkSetuBandhanTid(
+    public CompletableFuture<ResponseEntity<?>> checkSetuBandhanTid(
             @PathVariable("tid") String tid
     ) {
-        SetuBandhanModel model = service.checkSetuBandhanTid(tid);
-        if (model != null) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkSetuBandhanTid(tid)
+                .thenApply(savedMember -> {
+                    if (savedMember != null) {
+                        return ResponseEntity.ok().body(savedMember);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/tot/{tid}")
-    public ResponseEntity<?> checkToTTid(
+    public CompletableFuture<ResponseEntity<?>> checkToTTid(
             @PathVariable("tid") String tid
     ) {
-        TrackOTeasureModel model = service.checkToTTid(tid);
-        if (model != null) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkToTTid(tid)
+                .thenApply(savedMember -> {
+                    if (savedMember != null) {
+                        return ResponseEntity.ok().body(savedMember);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/mega-arch/{tid}")
-    public ResponseEntity<?> checkMegaArchTid(
+    public CompletableFuture<ResponseEntity<?>> checkMegaArchTid(
             @PathVariable("tid") String tid
     ) {
-        MegaArchModel model = service.checkMegaArchTid(tid);
-        if (model != null) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkMegaArchTid(tid)
+                .thenApply(savedMember -> {
+                    if (savedMember != null) {
+                        return ResponseEntity.ok().body(savedMember);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
+
 }

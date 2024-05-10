@@ -208,7 +208,6 @@ public class RoboKlassikerService {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<RoboKlassikerModel> model = robotics.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

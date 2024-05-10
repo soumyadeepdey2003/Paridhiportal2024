@@ -2,13 +2,11 @@ package soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.CRD.coding.Contr
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.CRD.coding.Service.CodingCrdService;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.coding.CodeQuestModel;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.coding.CodezenModel;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.coding.WebMindsModel;
 
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("megatronix/paridhi/admin/crd/coding")
@@ -17,73 +15,88 @@ public class CodingCrdController {
     @Autowired
     private CodingCrdService service;
 
+    @Async
     @GetMapping("/codezen")
-    public ResponseEntity<?> codezenCrd () {
-        List< CodezenModel > list = service.getCodezenCrd();
-        if(list != null){
-            return ResponseEntity.ok().body(list);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public CompletableFuture<ResponseEntity<?>> codezenCrd () {
+        return service.getCodezenCrd().thenApply(success->{
+            if (success != null){
+                return ResponseEntity.ok().body(success);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/code-quest")
-    public ResponseEntity<?> codeQuestCrd () {
-        List< CodeQuestModel > list = service.getCodeQuestCrd();
-        if(list != null){
-            return ResponseEntity.ok().body(list);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public CompletableFuture<ResponseEntity<?>> codeQuestCrd () {
+        return service.getCodeQuestCrd().thenApply(success->{
+            if (success != null){
+                return ResponseEntity.ok().body(success);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/web-minds")
-    public ResponseEntity<?> webMindsCrd () {
-        List< WebMindsModel > list = service.getWebMindsCrd();
-        if(list != null){
-            return ResponseEntity.ok().body(list);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public CompletableFuture<ResponseEntity<?>> webMindsCrd () {
+        return service.getWebMindsCrd().thenApply(success->{
+            if (success != null){
+                return ResponseEntity.ok().body(success);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @PutMapping("/codezen/{tid}/{played}")
-    public ResponseEntity<?> updateCodezenCrd (
+    public CompletableFuture<ResponseEntity<?>> updateCodezenCrd (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        CodezenModel model = service.updateCodezenCrd(tid, played);
-        if(model != null){
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.updateCodezenCrd(tid, played)
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @PutMapping("/code-quest/{tid}/{played}")
-    public ResponseEntity<?> updateCodeQuestCrd (
+    public CompletableFuture<ResponseEntity<?>> updateCodeQuestCrd (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        CodeQuestModel model = service.updateCodeQuestCrd(tid, played);
-        if(model != null){
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.updateCodeQuestCrd(tid, played)
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @PutMapping("/web-minds/{tid}/{played}")
-    public ResponseEntity<?> updateWebMindsCrd (
+    public CompletableFuture<ResponseEntity<?>> updateWebMindsCrd (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        WebMindsModel model = service.updateWebMindsCrd(tid, played);
-        if(model != null){
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.updateWebMindsCrd(tid, played)
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
 }

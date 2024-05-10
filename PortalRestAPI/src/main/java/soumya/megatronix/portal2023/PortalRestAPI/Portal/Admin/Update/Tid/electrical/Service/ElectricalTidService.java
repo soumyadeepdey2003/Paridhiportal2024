@@ -1,6 +1,7 @@
 package soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Update.Tid.electrical.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.electrical.ElectriQuest;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.electrical.Electrical2;
@@ -16,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ElectricalTidService {
-
+    
     //    electrical Repository
     @Autowired
     private ElectriQuestRepository electriQuestRepository;
@@ -29,7 +30,8 @@ public class ElectricalTidService {
     @Autowired
     private EmailService emailService;
 
-    public ElectriQuest checkElectriQuestTid (
+    @Async
+    public CompletableFuture<ElectriQuest> checkElectriQeustTid(
             String tid,
             boolean paid
     ) {
@@ -45,11 +47,12 @@ public class ElectricalTidService {
                     "Team",
                     emails.toArray(new String[0])
             );
-            return electriQuestRepository.save(model.get());
+            return CompletableFuture.completedFuture(electriQuestRepository.save(model.get()));
         }
     }
 
-    public Electrical2 checkElectrical2Tid(
+    @Async
+    public CompletableFuture<Electrical2> checkElectrical2Tid(
             String tid,
             boolean paid
     ) {
@@ -65,7 +68,7 @@ public class ElectricalTidService {
                     "Team",
                     emails.toArray(new String[0])
             );
-            return electrical2Repository.save(model.get());
+            return CompletableFuture.completedFuture(electrical2Repository.save(model.get()));
         }
     }
 }

@@ -25,35 +25,38 @@ public class GamingCrdService {
     @Autowired
     private PesLanRepository pesLanRepository;
 
-    public ArrayList<BgmiLan> getBgmiLanCrd () {
-        ArrayList< BgmiLan > models = new ArrayList<>();
-        for ( BgmiLan model : bgmiLanRepository.findAll() ) {
-            if ( ! model.isPlayed() )
+    @Async
+    public CompletableFuture<ArrayList<BgmiLan>> getBgmiLanCrd () {
+        ArrayList<BgmiLan> models = new ArrayList<>();
+        for (BgmiLan model : bgmiLanRepository.findAll()) {
+            if(!model.isPlayed())
                 models.add(model);
         }
-        return models;
+        return CompletableFuture.completedFuture(models);
     }
 
-    public ArrayList<ValorantLan> getValorantLanCrd () {
+    @Async
+    public CompletableFuture<ArrayList<ValorantLan>> getValorantLanCrd () {
         ArrayList<ValorantLan> models = new ArrayList<>();
         for (ValorantLan model : valorantLanRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return models;
+        return CompletableFuture.completedFuture(models);
     }
 
-    public ArrayList<PesLan> getPesLanCrd () {
+    @Async
+    public CompletableFuture<ArrayList<PesLan>> getPesLanCrd () {
         ArrayList<PesLan> models = new ArrayList<>();
         for (PesLan model : pesLanRepository.findAll()) {
             if(!model.isPlayed())
                 models.add(model);
         }
-        return models;
+        return CompletableFuture.completedFuture(models);
     }
 
-
-    public BgmiLan updateBgmiLanCrd (
+    @Async
+    public CompletableFuture<BgmiLan> updateBgmiLanCrd (
             String tid,
             boolean played
     ) {
@@ -62,11 +65,12 @@ public class GamingCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return bgmiLanRepository.save(model.get());
+            return CompletableFuture.completedFuture(bgmiLanRepository.save(model.get()));
         }
     }
 
-    public ValorantLan updateValorantLanCrd (
+    @Async
+    public CompletableFuture<ValorantLan> updateValorantLanCrd (
             String tid,
             boolean played
     ) {
@@ -75,11 +79,12 @@ public class GamingCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return valorantLanRepository.save(model.get());
+            return CompletableFuture.completedFuture(valorantLanRepository.save(model.get()));
         }
     }
 
-    public PesLan updatePesLanCrd (
+    @Async
+    public CompletableFuture<PesLan> updatePesLanCrd (
             String tid,
             boolean played
     ) {
@@ -88,7 +93,7 @@ public class GamingCrdService {
             throw new RuntimeException("No such Tid found");
         else {
             model.get().setPlayed(played);
-            return pesLanRepository.save(model.get());
+            return CompletableFuture.completedFuture(pesLanRepository.save(model.get()));
         }
     }
 }

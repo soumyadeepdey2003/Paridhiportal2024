@@ -117,7 +117,6 @@ public class ElectriQuestService {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<ElectriQuest> model = electrical.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

@@ -122,7 +122,6 @@ public class BingeQuizService {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<BingeQuiz> model = general.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

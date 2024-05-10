@@ -146,7 +146,6 @@ public class TrackOTeasureService {
         }
     }
 
-    @Async
     public List<String> getEmails (String tid) {
         Optional<TrackOTeasureModel> model = civil.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

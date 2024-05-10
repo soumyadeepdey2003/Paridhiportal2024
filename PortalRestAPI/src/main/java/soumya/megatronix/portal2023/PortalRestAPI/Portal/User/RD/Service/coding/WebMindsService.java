@@ -121,7 +121,7 @@ public class WebMindsService {
         }
     }
 
-    @Async
+
     public List<String> getEmails (String tid) {
         Optional<WebMindsModel> model = coding.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

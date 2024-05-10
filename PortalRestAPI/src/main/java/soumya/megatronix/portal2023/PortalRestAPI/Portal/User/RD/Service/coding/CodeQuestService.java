@@ -104,7 +104,6 @@ public class CodeQuestService {
         }
     }
 
-    @Async
     public List<String> getEmails(String tid) {
         Optional<CodeQuestModel> model = coding.findByTid(tid);
         Optional<MrdModel> user1 = repo.findByGid(model.get().getGid1());

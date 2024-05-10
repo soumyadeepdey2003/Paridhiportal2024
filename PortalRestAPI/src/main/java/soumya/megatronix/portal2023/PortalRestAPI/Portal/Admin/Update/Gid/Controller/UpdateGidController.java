@@ -5,12 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Update.Gid.Service.UpdateGidService;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.MRD.Model.MrdModel;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-import static org.springframework.http.ResponseEntity.badRequest;
 
 @RestController
 @RequestMapping("megatronix/paridhi/admin/update-gid")
@@ -18,17 +15,20 @@ public class UpdateGidController {
 
     @Autowired
     private UpdateGidService updateGidService;
-    
+
+    @Async
     @PutMapping("/{gid}/{paid}")
-    public ResponseEntity<?> updateGid(
+    public CompletableFuture<ResponseEntity<?>> updateGid(
             @PathVariable("gid") String gid,
             @PathVariable("paid") Boolean paid
     ) {
-        MrdModel model = updateGidService.updateGid(gid, paid);
-        if (model != null) {
-            return ResponseEntity.ok(model);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+        return updateGidService.updateGid(gid,paid)
+                .thenApply(savedMember -> {
+                  if (savedMember != null && savedMember.getGid() != null) {
+                      return ResponseEntity.ok().body(savedMember);
+                  } else {
+                      return ResponseEntity.notFound().build();
+                  }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 }

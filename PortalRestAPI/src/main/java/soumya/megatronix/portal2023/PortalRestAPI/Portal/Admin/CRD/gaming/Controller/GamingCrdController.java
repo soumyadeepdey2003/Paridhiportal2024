@@ -5,11 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.CRD.gaming.Service.GamingCrdService;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.BgmiLan;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.PesLan;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.gaming.ValorantLan;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -19,72 +15,90 @@ public class GamingCrdController {
     @Autowired
     private GamingCrdService service;
 
+    @Async
     @GetMapping("/bgmi-lan")
-    public ResponseEntity<?> bgmiLanCrd () {
-        List< BgmiLan > models = service.getBgmiLanCrd();
-        if (models != null) {
-            return ResponseEntity.ok().body(models);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public CompletableFuture<ResponseEntity<?>> bgmiLanCrd () {
+        return service.getBgmiLanCrd()
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/valorant-lan")
-    public ResponseEntity<?> valorantLanCrd () {
-        List< ValorantLan > models = service.getValorantLanCrd();
-        if (models != null) {
-            return ResponseEntity.ok().body(models);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public CompletableFuture<ResponseEntity<?>> valorantLanCrd () {
+        return service.getValorantLanCrd()
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/pes-lan")
-    public ResponseEntity<?> pesLanCrd () {
-        List< PesLan > models = service.getPesLanCrd();
-        if (models != null) {
-            return ResponseEntity.ok().body(models);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public CompletableFuture<ResponseEntity<?>> pesLanCrd () {
+        return service.getPesLanCrd()
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @PutMapping("/bgmi-lan/{tid}/{played}")
-    public ResponseEntity<?> updateBgmiLanCrd (
+    public CompletableFuture<ResponseEntity<?>> updateBgmiLanCrd (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        BgmiLan model = service.updateBgmiLanCrd(tid, played);
-        if (model != null) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.updateBgmiLanCrd(tid, played)
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @PutMapping("/valorant-lan/{tid}/{played}")
-    public ResponseEntity<?> updateValorantLanCrd (
+    public CompletableFuture<ResponseEntity<?>> updateValorantLanCrd (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        ValorantLan model = service.updateValorantLanCrd(tid, played);
-        if ( model != null ) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.updateValorantLanCrd(tid, played)
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @PutMapping("/pes-lan/{tid}/{played}")
-    public ResponseEntity<?> updatePesLanCrd (
+    public CompletableFuture<ResponseEntity<?>> updatePesLanCrd (
             @PathVariable("tid") String tid,
             @PathVariable("played") Boolean played
     ) {
-        PesLan model = service.updatePesLanCrd(tid, played);
-        if (model != null) {
-            return ResponseEntity.ok().body(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.updatePesLanCrd(tid, played)
+                .thenApply(success -> {
+                    if (success != null) {
+                        return ResponseEntity.ok().body(success);
+                    } else {
+                        return ResponseEntity.notFound().build();
+                    }
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 }

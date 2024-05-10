@@ -26,37 +26,41 @@ public class CivilCrdService {
     @Autowired
     private MegaArchRepository megaArchRepository;
 
-    public List<SetuBandhanModel> getSetuBandhanCRD () {
+    @Async
+    public CompletableFuture<List<SetuBandhanModel>> getSetuBandhanCRD () {
         ArrayList<SetuBandhanModel> models = new ArrayList<>();
         for (SetuBandhanModel model : setuBandhanRepository.findAll()) {
             if (!model.isPlayed()) {
                 models.add(model);
             }
         }
-        return models;
+        return CompletableFuture.completedFuture(models);
     }
 
-    public List<TrackOTeasureModel> getToTCRD () {
+    @Async
+    public CompletableFuture<List<TrackOTeasureModel>> getToTCRD () {
         ArrayList<TrackOTeasureModel> models = new ArrayList<>();
         for (TrackOTeasureModel model : trackOTeasureRepository.findAll()) {
             if (!model.isPlayed()) {
                 models.add(model);
             }
         }
-        return models;
+        return CompletableFuture.completedFuture(models);
     }
 
-    public List<MegaArchModel> getMegaArchCRD () {
+    @Async
+    public CompletableFuture<List<MegaArchModel>> getMegaArchCRD () {
         ArrayList<MegaArchModel> models = new ArrayList<>();
         for (MegaArchModel model : megaArchRepository.findAll()) {
             if (!model.isPlayed()) {
                 models.add(model);
             }
         }
-        return models;
+        return CompletableFuture.completedFuture(models);
     }
 
-    public SetuBandhanModel updateSetuBandhanCRD(
+    @Async
+    public CompletableFuture<SetuBandhanModel> updateSetuBandhanCRD(
             String tid,
             boolean play
     ) {
@@ -65,11 +69,12 @@ public class CivilCrdService {
             throw new RuntimeException("No such TID found");
         } else {
             model.get().setPlayed(play);
-            return setuBandhanRepository.save(model.get());
+            return CompletableFuture.completedFuture(setuBandhanRepository.save(model.get()));
         }
     }
 
-    public TrackOTeasureModel updateToTCRD(
+    @Async
+    public CompletableFuture<TrackOTeasureModel> updateToTCRD(
             String tid,
             boolean play
     ) {
@@ -78,11 +83,12 @@ public class CivilCrdService {
             throw new RuntimeException("No such TID found");
         } else {
             model.get().setPlayed(play);
-            return trackOTeasureRepository.save(model.get());
+            return CompletableFuture.completedFuture(trackOTeasureRepository.save(model.get()));
         }
     }
 
-    public MegaArchModel updateMegaArchCRD(
+    @Async
+    public CompletableFuture<MegaArchModel> updateMegaArchCRD(
             String tid,
             boolean play
     ) {
@@ -91,7 +97,7 @@ public class CivilCrdService {
             throw new RuntimeException("No such TID found");
         } else {
             model.get().setPlayed(play);
-            return megaArchRepository.save(model.get());
+            return CompletableFuture.completedFuture(megaArchRepository.save(model.get()));
         }
     }
 }

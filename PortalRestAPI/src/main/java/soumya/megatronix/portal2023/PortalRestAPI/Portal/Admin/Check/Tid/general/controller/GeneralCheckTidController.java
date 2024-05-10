@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soumya.megatronix.portal2023.PortalRestAPI.Portal.Admin.Check.Tid.general.service.GeneralCheckTidService;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.BingeQuiz;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.Carrom;
-import soumya.megatronix.portal2023.PortalRestAPI.Portal.User.RD.Model.general.TableTennis;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,39 +18,45 @@ public class GeneralCheckTidController {
     @Autowired
     private GeneralCheckTidService service;
 
+    @Async
     @GetMapping("/binge-quiz/{tid}")
-    public ResponseEntity<?> handleBingeQuizTidChecking (
+    public CompletableFuture<ResponseEntity<?>> handleBingeQuizTidChecking (
             @PathVariable("tid") String tid
     ) {
-        BingeQuiz model = service.checkBingeQuizTid(tid);
-        if(model != null){
-            return ResponseEntity.ok(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkBingeQuizTid(tid)
+                .thenApply(success -> {
+                    if(success != null)
+                        return ResponseEntity.ok(success);
+                    else
+                        return ResponseEntity.notFound().build();
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/table-tennis/{tid}")
-    public ResponseEntity<?> handleTableTennisTidChecking (
+    public CompletableFuture<ResponseEntity<?>> handleTableTennisTidChecking (
             @PathVariable("tid") String tid
     ) {
-        TableTennis model = service.checkTableTennisTid(tid);
-        if(model != null){
-            return ResponseEntity.ok(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkTableTennisTid(tid)
+                .thenApply(success -> {
+                    if(success != null)
+                        return ResponseEntity.ok(success);
+                    else
+                        return ResponseEntity.notFound().build();
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 
+    @Async
     @GetMapping("/carrom/{tid}")
-    public ResponseEntity<?> handleCarromTidChecking (
+    public CompletableFuture<ResponseEntity<?>> handleCarromTidChecking (
             @PathVariable("tid") String tid
     ) {
-        Carrom model = service.checkCarromTid(tid);
-        if(model != null){
-            return ResponseEntity.ok(model);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return service.checkCarromTid(tid)
+                .thenApply(success -> {
+                    if(success != null)
+                        return ResponseEntity.ok(success);
+                    else
+                        return ResponseEntity.notFound().build();
+                }).exceptionally(ex -> ResponseEntity.badRequest().body(ex.getMessage()));
     }
 }
